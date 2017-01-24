@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -60,7 +59,7 @@ public class PostActivity extends AppCompatActivity {
         mDatabaseUsers=FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
         imageSelect= (ImageButton) findViewById(R.id.imageSelect);
-        event = (EditText) findViewById(R.id.eventName);
+        event = (EditText) findViewById(R.id.singleHomeEvent);
         post = (EditText) findViewById(R.id.postWrite);
         submit = (Button) findViewById(R.id.submitPost);
 

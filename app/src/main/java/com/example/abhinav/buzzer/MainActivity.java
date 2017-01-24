@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         mHomePage.setHasFixedSize(true);
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
 
+
         checkUserExist();
     }
 

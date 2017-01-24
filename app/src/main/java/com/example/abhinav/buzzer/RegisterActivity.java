@@ -19,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText mNameField;
     private EditText mEmailField;
     private EditText mPasswordField;
 
@@ -40,7 +39,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         mProgress = new ProgressDialog(this);
 
-        mNameField = (EditText) findViewById(R.id.nameField);
         mEmailField = (EditText) findViewById(R.id.emailField);
         mPasswordField = (EditText) findViewById(R.id.passwordField);
         mRegisterBtn = (Button) findViewById(R.id.registeredButton);
@@ -56,11 +54,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void startRegister() {
 
-        final String name = mNameField.getText().toString().trim();
         String email = mEmailField.getText().toString().trim();
         String password = mPasswordField.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
 
             mProgress.setMessage("Signing Up..");
             mProgress.show();
@@ -70,17 +67,11 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
 
-                        String user_ID= mAuth.getCurrentUser().getUid();
-                        DatabaseReference current_user_db = mDatabase.child(user_ID);
-
-                        current_user_db.child("name").setValue(name);
-                        current_user_db.child("image").setValue("default");
-
                         mProgress.dismiss();
 
-                        Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
-                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(mainIntent);
+                        Intent setupIntent = new Intent(RegisterActivity.this, SetupActivity.class);
+                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(setupIntent);
 
 
                     }
