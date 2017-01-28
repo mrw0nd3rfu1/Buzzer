@@ -51,10 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    FragmentTransaction fragmentTransaction;
 
     NavigationView navigationView;
-
-    private LinearLayoutManager mLayoutManager;
 
     Toolbar mtoolbar;
 
@@ -133,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
         mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
         mHomePage.setHasFixedSize(true);
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
-
 
 
         checkUserExist();
@@ -216,10 +214,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        mLayoutManager = new LinearLayoutManager(MainActivity.this);
-        mLayoutManager.setReverseLayout(true);
-
-        mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
 
