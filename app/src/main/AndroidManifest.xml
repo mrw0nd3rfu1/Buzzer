@@ -25,7 +25,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SetupActivity" />
         <activity android:name=".HomeSingleActivity" />
-        <activity android:name=".YourActivity"></activity>
+        <activity android:name=".YourActivity" />
+        <activity android:name=".LikedActivity"></activity>
     </application>
 
 </manifest>

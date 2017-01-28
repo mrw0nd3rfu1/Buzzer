@@ -88,29 +88,23 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_account:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.add(R.id.main_container , new MyAccountFragment());
-                        fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("My account");
-                        item.setChecked(true);
+                        Intent accountIntent = new Intent(MainActivity.this, YourActivity.class);
+                        accountIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(accountIntent);
                         mDrawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_liked:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.add(R.id.main_container , new LikedPostFragment());
-                        fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Liked Posts");
-                        item.setChecked(true);
+                        Intent likedIntent = new Intent(MainActivity.this, LikedActivity.class);
+                        likedIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(likedIntent);
                         mDrawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_setting:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.add(R.id.main_container , new SettingFragment());
-                        fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Settings");
-                        item.setChecked(true);
+                        Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
+                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(setupIntent);
                         mDrawerLayout.closeDrawers();
                         break;
 
