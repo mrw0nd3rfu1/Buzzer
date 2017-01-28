@@ -91,8 +91,7 @@ public class YourActivity extends AppCompatActivity {
 
     }
 
-    protected void onStart() {
-        super.onStart();
+
 
 
         FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
@@ -165,7 +164,7 @@ public class YourActivity extends AppCompatActivity {
 
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
-    }
+
 
 
     public static class HomeViewHolder extends RecyclerView.ViewHolder {
@@ -249,6 +248,11 @@ public class YourActivity extends AppCompatActivity {
 
         if (mToggle.onOptionsItemSelected(item)){
             return true;
+        }
+
+        if (item.getItemId() == R.id.action_add){
+
+            startActivity(new Intent(YourActivity.this , PostActivity.class));
         }
 
         if (item.getItemId() == R.id.action_logout){
