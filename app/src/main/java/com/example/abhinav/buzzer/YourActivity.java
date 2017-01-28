@@ -27,60 +27,18 @@ import com.squareup.picasso.Picasso;
 
 public class YourActivity extends AppCompatActivity {
 
+    FirebaseAuth.AuthStateListener mAuthListener;
+    Toolbar mtoolbar;
     private RecyclerView mHomePage;
-
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
     private DatabaseReference mDatabaseLike;
-
     private DatabaseReference mDatabaseCurrentUser;
     private Query mQueryCurrentUser;
-
     private FirebaseAuth mAuth;
-    FirebaseAuth.AuthStateListener mAuthListener;
-
     private ActionBarDrawerToggle mToggle;
-
     private boolean mProcessLike = false;
-
-
-
-    Toolbar mtoolbar;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_your);
-
-
-        mAuth = FirebaseAuth.getInstance();
-
-        mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
-        setSupportActionBar(mtoolbar);
-
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
-        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
-        mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
-
-        String currentUserId = mAuth.getCurrentUser().getUid();
-        mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("Post");
-        mQueryCurrentUser = mDatabaseCurrentUser.orderByChild("uid").equalTo(currentUserId);
-
-
-        mDatabaseUsers.keepSynced(true);
-        mDatabaseLike.keepSynced(true);
-        mDatabase.keepSynced(true);
-
-        mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
-        mHomePage.setHasFixedSize(true);
-        mHomePage.setLayoutManager(new LinearLayoutManager(this));
-
-
-    }
-
-
-    FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
+    FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
 
             Home.class,
             R.layout.home_row,
@@ -148,9 +106,72 @@ public class YourActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_your);
+
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
+        setSupportActionBar(mtoolbar);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
+
+        String currentUserId = mAuth.getCurrentUser().getUid();
+        mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("Post");
+        mQueryCurrentUser = mDatabaseCurrentUser.orderByChild("uid").equalTo(currentUserId);
+
+
+        mDatabaseUsers.keepSynced(true);
+        mDatabaseLike.keepSynced(true);
+        mDatabase.keepSynced(true);
+
+        mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
+        mHomePage.setHasFixedSize(true);
+        mHomePage.setLayoutManager(new LinearLayoutManager(this));
+
+
+    }
+
 
     mHomePage.set(firebaseRecyclerAdapter)
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        if (item.getItemId() == R.id.action_add) {
+
+            startActivity(new Intent(YourActivity.this, PostActivity.class));
+        }
+
+        if (item.getItemId() == R.id.action_logout) {
+
+            logout();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        mAuth.signOut();
+    }
 
     public static class HomeViewHolder extends RecyclerView.ViewHolder {
 
@@ -173,7 +194,7 @@ public class YourActivity extends AppCompatActivity {
             mDatabaseLike.keepSynced(true);
         }
 
-        public void setLikeButton(final String post_key){
+        public void setLikeButton(final String post_key) {
             mDatabaseLike.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -195,60 +216,27 @@ public class YourActivity extends AppCompatActivity {
 
         }
 
-        public void setEvent(String event){
+        public void setEvent(String event) {
             TextView post_event = (TextView) mView.findViewById(R.id.post_event);
             post_event.setText(event);
 
         }
 
-        public void setPost(String post){
+        public void setPost(String post) {
             TextView post_text = (TextView) mView.findViewById(R.id.post_text);
             post_text.setText(post);
 
         }
 
-        public void setImage(Context ctx, String image){
+        public void setImage(Context ctx, String image) {
             ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
             Picasso.with(ctx).load(image).into(post_image);
         }
 
-        public void setUsername(String username){
+        public void setUsername(String username) {
             TextView post_username = (TextView) mView.findViewById(R.id.postUsername);
             post_username.setText(username);
         }
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.main_menu , menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-
-        if (mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-
-        if (item.getItemId() == R.id.action_add){
-
-            startActivity(new Intent(YourActivity.this , PostActivity.class));
-        }
-
-        if (item.getItemId() == R.id.action_logout){
-
-            logout();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void logout() {
-        mAuth.signOut();
     }
 }
