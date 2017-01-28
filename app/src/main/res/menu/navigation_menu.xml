@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/nav_account"
+        android:title="My account"/>
+
+    <item android:id="@+id/nav_liked"
+        android:title="Liked Posts"/>
+
+    <item android:id="@+id/nav_setting"
+        android:title="Setting"/>
+
+    <item android:id="@+id/nav_Logout"
+        android:title="Logout"/>
+
+
+</menu>
