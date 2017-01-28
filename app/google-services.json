@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "768496576366-pnj18p2g4rl7qpop6j4375mrfldvthlg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.abhinav.buzzer",
+            "certificate_hash": "EF0209BDCED812C76BC7B823D3BC058D16DA393D"
+          }
+        },
+        {
           "client_id": "768496576366-v7jmhgng5tj900rqc1k0etvgst1itcu8.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768496576366-v7jmhgng5tj900rqc1k0etvgst1itcu8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

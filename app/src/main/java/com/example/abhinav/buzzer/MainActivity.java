@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.media.Image;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    private boolean mProcessLike=false;
+    private boolean mProcessLike = false;
 
 
     @Override
@@ -48,12 +51,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() == null){
-                    Intent loginIntent = new Intent(MainActivity.this , LoginActivity.class);
+                if (firebaseAuth.getCurrentUser() == null) {
+                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                 }
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         mDatabaseLike.keepSynced(true);
         mDatabase.keepSynced(true);
 
-        mHomePage =(RecyclerView) findViewById(R.id.Home_Page);
+        mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
         mHomePage.setHasFixedSize(true);
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
 
@@ -81,10 +85,9 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
 
-
         mAuth.addAuthStateListener(mAuthListener);
 
-        FirebaseRecyclerAdapter<Home , HomeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
+        FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
 
                 Home.class,
                 R.layout.home_row,
@@ -110,8 +113,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
-                        Intent singleHomeIntent = new Intent(MainActivity.this , HomeSingleActivity.class);
-                        singleHomeIntent.putExtra("home_id",post_key);
+                        Intent singleHomeIntent = new Intent(MainActivity.this, HomeSingleActivity.class);
+                        singleHomeIntent.putExtra("home_id", post_key);
                         startActivity(singleHomeIntent);
                     }
                 });
@@ -122,29 +125,29 @@ public class MainActivity extends AppCompatActivity {
                         mProcessLike = true;
 
 
-                            mDatabaseLike.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (mProcessLike) {
+                        mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (mProcessLike) {
 
-                                        if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
+                                    if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
 
-                                            mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).removeValue();
-                                            mProcessLike = false;
+                                        mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).removeValue();
+                                        mProcessLike = false;
 
-                                        } else {
-                                            mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).setValue("Random Value");
-                                            mProcessLike = false;
-                                        }
-
+                                    } else {
+                                        mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).setValue("Random Value");
+                                        mProcessLike = false;
                                     }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
 
                                 }
-                            });
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
 
 
                     }
@@ -154,7 +157,9 @@ public class MainActivity extends AppCompatActivity {
 
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
+
     }
+
     private void checkUserExist() {
 
         if (mAuth.getCurrentUser()!=null) {
@@ -182,9 +187,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static class HomeViewHolder extends RecyclerView.ViewHolder {
+ public static class HomeViewHolder extends RecyclerView.ViewHolder {
 
-        View mView;
+       View mView;
 
         ImageButton mLikeButton;
 

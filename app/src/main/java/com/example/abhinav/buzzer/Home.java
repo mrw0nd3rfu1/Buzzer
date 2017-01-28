@@ -1,10 +1,12 @@
 package com.example.abhinav.buzzer;
 
+import android.support.v4.app.Fragment;
+
 /**
  * Created by Abhinav on 23-Jan-17.
  */
 
-public class Home {
+public class Home{
 
     private String event,post,image, username;
 
@@ -13,7 +15,7 @@ public class Home {
 
     }
 
-    public Home(String event, String post, String image) {
+    public Home(String event, String post, String image , String username) {
         this.event = event;
         this.post = post;
         this.image = image;
