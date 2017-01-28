@@ -2,28 +2,21 @@ package com.example.abhinav.buzzer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
-import android.nfc.Tag;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,8 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mHomePage;
@@ -44,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseUsers;
     private DatabaseReference mDatabaseLike;
 
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -51,9 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    FragmentTransaction fragmentTransaction;
 
     NavigationView navigationView;
+
+
 
     Toolbar mtoolbar;
 
@@ -134,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
 
 
+
         checkUserExist();
     }
 
@@ -154,11 +148,13 @@ public class MainActivity extends AppCompatActivity {
                 mDatabase
 
 
+
         ) {
             @Override
             protected void populateViewHolder(HomeViewHolder viewHolder, Home model, int position) {
 
                 final String post_key = getRef(position).getKey();
+
 
                 viewHolder.setEvent(model.getEvent());
                 viewHolder.setPost(model.getPost());
@@ -214,6 +210,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+
+
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
 
@@ -247,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
  public static class HomeViewHolder extends RecyclerView.ViewHolder {
+
 
        View mView;
 
