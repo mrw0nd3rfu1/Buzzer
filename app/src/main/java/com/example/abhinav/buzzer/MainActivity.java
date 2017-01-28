@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
     private DatabaseReference mDatabaseLike;
+    private LinearLayoutManager mLayoutManager;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -154,11 +155,13 @@ public class MainActivity extends AppCompatActivity {
                 mDatabase
 
 
+
         ) {
             @Override
             protected void populateViewHolder(HomeViewHolder viewHolder, Home model, int position) {
 
                 final String post_key = getRef(position).getKey();
+
 
                 viewHolder.setEvent(model.getEvent());
                 viewHolder.setPost(model.getPost());
@@ -214,6 +217,11 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+
+        mLayoutManager = new LinearLayoutManager(MainActivity.this);
+        mLayoutManager.setReverseLayout(true);
+
+        mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
 
@@ -247,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
  public static class HomeViewHolder extends RecyclerView.ViewHolder {
+
 
        View mView;
 
