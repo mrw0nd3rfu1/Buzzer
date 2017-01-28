@@ -1,15 +1,12 @@
 package com.example.abhinav.buzzer;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -17,8 +14,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class HomeSingleActivity extends AppCompatActivity {
@@ -36,7 +31,7 @@ public class HomeSingleActivity extends AppCompatActivity {
 
     private Button mHomeSingleRemoveBtn;
 
-    private String post_image ;
+    private String post_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +69,7 @@ public class HomeSingleActivity extends AppCompatActivity {
 
                 Picasso.with(HomeSingleActivity.this).load(post_image).into(mHomeSingleImage);
 
-                if (mAuth.getCurrentUser().getUid().equals(post_uid)){
+                if (mAuth.getCurrentUser().getUid().equals(post_uid)) {
                     mHomeSingleRemoveBtn.setVisibility(View.VISIBLE);
                 }
 
@@ -87,14 +82,13 @@ public class HomeSingleActivity extends AppCompatActivity {
         });
 
 
-
         mHomeSingleRemoveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 mDatabase.child(mPost_key).removeValue();
                 //use Mstorage referrence and remove the pic file from t=storage
-                Intent mainIntent = new Intent(HomeSingleActivity.this , MainActivity.class);
+                Intent mainIntent = new Intent(HomeSingleActivity.this, MainActivity.class);
                 startActivity(mainIntent);
 
             }

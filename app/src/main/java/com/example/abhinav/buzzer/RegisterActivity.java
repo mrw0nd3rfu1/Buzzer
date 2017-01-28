@@ -2,9 +2,9 @@ package com.example.abhinav.buzzer;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         String email = mEmailField.getText().toString().trim();
         String password = mPasswordField.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
 
             mProgress.setMessage("Signing Up..");
             mProgress.show();
@@ -65,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
 
                         mProgress.dismiss();
 
