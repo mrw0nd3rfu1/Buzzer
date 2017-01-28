@@ -93,7 +93,7 @@ public class HomeSingleActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 mDatabase.child(mPost_key).removeValue();
-
+                //use Mstorage referrence and remove the pic file from t=storage
                 Intent mainIntent = new Intent(HomeSingleActivity.this , MainActivity.class);
                 startActivity(mainIntent);
 
