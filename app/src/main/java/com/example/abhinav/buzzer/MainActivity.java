@@ -29,27 +29,17 @@ import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
+    NavigationView navigationView;
+    Toolbar mtoolbar;
     private RecyclerView mHomePage;
-
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
     private DatabaseReference mDatabaseLike;
-
-
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
     private boolean mProcessLike = false;
-
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-
-    NavigationView navigationView;
-
-
-
-    Toolbar mtoolbar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
         mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
         setSupportActionBar(mtoolbar);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main) ;
-        mToggle= new ActionBarDrawerToggle(this , mDrawerLayout , R.string.open , R.string.close);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.nav_account:
                         Intent accountIntent = new Intent(MainActivity.this, YourActivity.class);
                         accountIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -127,10 +117,8 @@ public class MainActivity extends AppCompatActivity {
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
 
 
-
         checkUserExist();
     }
-
 
 
     @Override
@@ -146,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
                 R.layout.home_row,
                 HomeViewHolder.class,
                 mDatabase
-
 
 
         ) {
@@ -211,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
 
@@ -219,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkUserExist() {
 
-        if (mAuth.getCurrentUser()!=null) {
+        if (mAuth.getCurrentUser() != null) {
 
             final String user_ID = mAuth.getCurrentUser().getUid();
 
@@ -244,10 +230,42 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
- public static class HomeViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        if (item.getItemId() == R.id.action_add) {
+
+            startActivity(new Intent(MainActivity.this, PostActivity.class));
+        }
+
+        if (item.getItemId() == R.id.action_logout) {
+
+            logout();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        mAuth.signOut();
+    }
+
+    public static class HomeViewHolder extends RecyclerView.ViewHolder {
 
 
-       View mView;
+        View mView;
 
         ImageButton mLikeButton;
 
@@ -266,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
             mDatabaseLike.keepSynced(true);
         }
 
-        public void setLikeButton(final String post_key){
+        public void setLikeButton(final String post_key) {
             mDatabaseLike.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -288,59 +306,27 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        public void setEvent(String event){
+        public void setEvent(String event) {
             TextView post_event = (TextView) mView.findViewById(R.id.post_event);
             post_event.setText(event);
 
         }
 
-        public void setPost(String post){
+        public void setPost(String post) {
             TextView post_text = (TextView) mView.findViewById(R.id.post_text);
             post_text.setText(post);
 
         }
 
-        public void setImage(Context ctx, String image){
+        public void setImage(Context ctx, String image) {
             ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
             Picasso.with(ctx).load(image).into(post_image);
         }
 
-        public void setUsername(String username){
+        public void setUsername(String username) {
             TextView post_username = (TextView) mView.findViewById(R.id.postUsername);
             post_username.setText(username);
         }
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.main_menu , menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-
-        if (item.getItemId() == R.id.action_add){
-
-            startActivity(new Intent(MainActivity.this , PostActivity.class));
-        }
-
-        if (item.getItemId() == R.id.action_logout){
-
-            logout();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void logout() {
-        mAuth.signOut();
     }
 }
