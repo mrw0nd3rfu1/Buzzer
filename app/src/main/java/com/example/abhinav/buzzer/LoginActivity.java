@@ -2,9 +2,9 @@ package com.example.abhinav.buzzer;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -33,20 +33,16 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final int RC_SIGN_IN = 1;
+    private static final String TAG = "LoginActivity";
     private EditText mLoginEmailField;
     private EditText mLoginPasswordField;
     private Button mLoginBtn;
     private Button mRegisterBtn;
-
     private SignInButton mGoogleButton;
     private GoogleApiClient mGoogleApiClient;
-
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseUsers;
-
-    private static final int RC_SIGN_IN = 1;
-    private static final String TAG = "LoginActivity";
-
     private ProgressDialog mProgress;
 
 
@@ -78,12 +74,11 @@ public class LoginActivity extends AppCompatActivity {
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainIntent = new Intent(LoginActivity.this , RegisterActivity.class);
+                Intent mainIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(mainIntent);
             }
         });
-
 
 
         // Configure Google Sign In
@@ -93,13 +88,13 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this , new GoogleApiClient.OnConnectionFailedListener() {
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
                     }
                 })
-                .addApi(Auth.GOOGLE_SIGN_IN_API , gso)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
         mGoogleButton.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                 // Google Sign In failed, update UI appropriately
                 // ...
                 mProgress.dismiss();
-                Toast.makeText(LoginActivity.this , "Failed" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -161,8 +156,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        } else {
                             mProgress.dismiss();
                             checkUserExist();
 
@@ -172,27 +166,26 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
     private void checkLogin() {
 
         String email = mLoginEmailField.getText().toString().trim();
         String password = mLoginPasswordField.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
 
             mProgress.setMessage("Logging In..");
             mProgress.show();
 
-            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
 
                         mProgress.dismiss();
                         checkUserExist();
 
-                    }else {
+                    } else {
                         mProgress.dismiss();
                         Toast.makeText(LoginActivity.this, "Wrong Email or Password", Toast.LENGTH_SHORT).show();
                     }
@@ -206,7 +199,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void checkUserExist() {
 
-        if (mAuth.getCurrentUser()!= null) {
+        if (mAuth.getCurrentUser() != null) {
 
             final String user_ID = mAuth.getCurrentUser().getUid();
 
