@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.media.Image;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -49,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    FragmentTransaction fragmentTransaction;
+
+    NavigationView navigationView;
+
+    Toolbar mtoolbar;
 
 
     @Override
@@ -69,8 +76,52 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
+        setSupportActionBar(mtoolbar);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main) ;
         mToggle= new ActionBarDrawerToggle(this , mDrawerLayout , R.string.open , R.string.close);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_account:
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.add(R.id.main_container , new MyAccountFragment());
+                        fragmentTransaction.commit();
+                        getSupportActionBar().setTitle("My account");
+                        item.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        break;
+
+                    case R.id.nav_liked:
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.add(R.id.main_container , new LikedPostFragment());
+                        fragmentTransaction.commit();
+                        getSupportActionBar().setTitle("Liked Posts");
+                        item.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        break;
+
+                    case R.id.nav_setting:
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.add(R.id.main_container , new SettingFragment());
+                        fragmentTransaction.commit();
+                        getSupportActionBar().setTitle("Settings");
+                        item.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        break;
+
+                    case R.id.nav_Logout:
+                        mAuth.signOut();
+                        break;
+                }
+
+                return true;
+            }
+        });
 
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
