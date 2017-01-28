@@ -2,28 +2,18 @@ package com.example.abhinav.buzzer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
-import android.nfc.Tag;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
+import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,8 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 public class YourActivity extends AppCompatActivity {
 
@@ -54,6 +42,7 @@ public class YourActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
 
     private boolean mProcessLike = false;
+
 
 
     Toolbar mtoolbar;
@@ -88,83 +77,79 @@ public class YourActivity extends AppCompatActivity {
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
 
 
-
     }
 
 
+    FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
+
+            Home.class,
+            R.layout.home_row,
+            HomeViewHolder.class,
+            mQueryCurrentUser
 
 
-        FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
+    ) {
+        @Override
+        protected void populateViewHolder(HomeViewHolder viewHolder, Home model, int position) {
 
-                Home.class,
-                R.layout.home_row,
-                HomeViewHolder.class,
-                mQueryCurrentUser
+            final String post_key = getRef(position).getKey();
 
+            viewHolder.setEvent(model.getEvent());
+            viewHolder.setPost(model.getPost());
+            viewHolder.setImage(getApplicationContext(), model.getImage());
+            viewHolder.setUsername(model.getUsername());
 
-        ) {
-            @Override
-            protected void populateViewHolder(HomeViewHolder viewHolder, Home model, int position) {
+            viewHolder.setLikeButton(post_key);
 
-                final String post_key = getRef(position).getKey();
+            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
-                viewHolder.setEvent(model.getEvent());
-                viewHolder.setPost(model.getPost());
-                viewHolder.setImage(getApplicationContext(), model.getImage());
-                viewHolder.setUsername(model.getUsername());
+                    Intent singleHomeIntent = new Intent(YourActivity.this, HomeSingleActivity.class);
+                    singleHomeIntent.putExtra("home_id", post_key);
+                    startActivity(singleHomeIntent);
+                }
+            });
 
-                viewHolder.setLikeButton(post_key);
-
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
-
-                        Intent singleHomeIntent = new Intent(YourActivity.this, HomeSingleActivity.class);
-                        singleHomeIntent.putExtra("home_id", post_key);
-                        startActivity(singleHomeIntent);
-                    }
-                });
-
-                viewHolder.mLikeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mProcessLike = true;
+            viewHolder.mLikeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mProcessLike = true;
 
 
-                        mDatabaseLike.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                if (mProcessLike) {
+                    mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (mProcessLike) {
 
-                                    if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
+                                if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
 
-                                        mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).removeValue();
-                                        mProcessLike = false;
+                                    mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).removeValue();
+                                    mProcessLike = false;
 
-                                    } else {
-                                        mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).setValue("Random Value");
-                                        mProcessLike = false;
-                                    }
-
+                                } else {
+                                    mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).setValue("Random Value");
+                                    mProcessLike = false;
                                 }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
 
                             }
-                        });
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
 
-                    }
-                });
-            }
-        };
-
-        mHomePage.setAdapter(firebaseRecyclerAdapter);
+                }
+            });
+        }
+    };
 
 
+    mHomePage.set(firebaseRecyclerAdapter)
 
 
     public static class HomeViewHolder extends RecyclerView.ViewHolder {
