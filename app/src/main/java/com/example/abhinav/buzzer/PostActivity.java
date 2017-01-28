@@ -43,6 +43,7 @@ public class PostActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
 
+
     private ProgressDialog progressDialog;
 
     @Override

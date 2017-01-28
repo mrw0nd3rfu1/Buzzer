@@ -62,7 +62,7 @@ public class YourActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_your);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -93,13 +93,6 @@ public class YourActivity extends AppCompatActivity {
 
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-
-
-        mAuth.addAuthStateListener(mAuthListener);
 
         FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
 
@@ -172,7 +165,6 @@ public class YourActivity extends AppCompatActivity {
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
 
-    }
 
 
     public static class HomeViewHolder extends RecyclerView.ViewHolder {

@@ -1,6 +1,7 @@
 package com.example.abhinav.buzzer;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class HomeSingleActivity extends AppCompatActivity {
@@ -32,6 +35,8 @@ public class HomeSingleActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private Button mHomeSingleRemoveBtn;
+
+    private String post_image ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +63,10 @@ public class HomeSingleActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String post_event = (String) dataSnapshot.child("event").getValue();
                 String post_post = (String) dataSnapshot.child("post").getValue();
-                String post_image = (String) dataSnapshot.child("image").getValue();
+                post_image = (String) dataSnapshot.child("image").getValue();
                 String post_uid = (String) dataSnapshot.child("uid").getValue();
                 String post_username = (String) dataSnapshot.child("username").getValue();
+
 
                 mHomeSingleEvent.setText(post_event);
                 mHomeSinglePost.setText(post_post);
@@ -80,6 +86,8 @@ public class HomeSingleActivity extends AppCompatActivity {
             }
         });
 
+
+
         mHomeSingleRemoveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,4 +101,6 @@ public class HomeSingleActivity extends AppCompatActivity {
         });
 
     }
+
+
 }
