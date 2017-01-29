@@ -29,11 +29,7 @@ public class YourActivity extends AppCompatActivity {
 
     FirebaseAuth.AuthStateListener mAuthListener;
     Toolbar mtoolbar;
-    private RecyclerView mHomePage;
-    private DatabaseReference mDatabase;
-    private DatabaseReference mDatabaseUsers;
     private DatabaseReference mDatabaseLike;
-    private DatabaseReference mDatabaseCurrentUser;
     private Query mQueryCurrentUser;
     private FirebaseAuth mAuth;
     private ActionBarDrawerToggle mToggle;
@@ -117,12 +113,12 @@ public class YourActivity extends AppCompatActivity {
         mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
         setSupportActionBar(mtoolbar);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
-        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
+        DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
 
         String currentUserId = mAuth.getCurrentUser().getUid();
-        mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("Post");
+        DatabaseReference mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("Post");
         mQueryCurrentUser = mDatabaseCurrentUser.orderByChild("uid").equalTo(currentUserId);
 
 
@@ -130,15 +126,15 @@ public class YourActivity extends AppCompatActivity {
         mDatabaseLike.keepSynced(true);
         mDatabase.keepSynced(true);
 
-        mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
+        RecyclerView mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
         mHomePage.setHasFixedSize(true);
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
+        mHomePage.setAdapter(firebaseRecyclerAdapter);
 
 
     }
 
 
-    mHomePage.set(firebaseRecyclerAdapter)
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
