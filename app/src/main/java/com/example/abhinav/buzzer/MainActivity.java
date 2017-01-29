@@ -30,7 +30,7 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends AppCompatActivity {
 
     NavigationView navigationView;
-    Toolbar mtoolbar;
+    Toolbar mToolbar;
     private RecyclerView mHomePage;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
-        setSupportActionBar(mtoolbar);
+        mToolbar = (Toolbar) findViewById(R.id.nav_actionBar);
+        setSupportActionBar(mToolbar);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
