@@ -91,7 +91,8 @@ public class YourActivity extends AppCompatActivity {
 
     }
 
-
+    protected void onStart() {
+        super.onStart();
 
 
         FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
@@ -164,7 +165,7 @@ public class YourActivity extends AppCompatActivity {
 
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
-
+    }
 
 
     public static class HomeViewHolder extends RecyclerView.ViewHolder {
