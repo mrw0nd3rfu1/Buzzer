@@ -9,6 +9,6 @@
     android:minHeight="?attr/actionBarSize"
     android:fitsSystemWindows="true"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:layout_scrollFlags="scroll|enterAlways">
+    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 </android.support.v7.widget.Toolbar>

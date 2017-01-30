@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -12,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar mtoolbar;
 
+
     FloatingActionButton mfab;
 
 
@@ -86,17 +89,10 @@ public class MainActivity extends AppCompatActivity {
         };
 
         mfab = (FloatingActionButton) findViewById(R.id.fab);
-        mfab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
-                postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(postIntent);
-            }
-        });
 
         mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
         setSupportActionBar(mtoolbar);
+
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main) ;
         mToggle= new ActionBarDrawerToggle(this , mDrawerLayout , R.string.open , R.string.close);
@@ -107,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_account:
-                        Intent accountIntent = new Intent(MainActivity.this, YourActivity.class);
+                        Intent accountIntent = new Intent(MainActivity.this, ProfileActivity.class);
                         accountIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(accountIntent);
                         mDrawerLayout.closeDrawers();
@@ -153,6 +149,16 @@ public class MainActivity extends AppCompatActivity {
         mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
         mHomePage.setHasFixedSize(true);
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
+
+        mfab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
+                postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(postIntent);
+            }
+        });
+
 
 
 
