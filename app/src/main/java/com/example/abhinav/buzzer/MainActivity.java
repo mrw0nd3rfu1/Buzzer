@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.media.Image;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -22,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +38,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar mtoolbar;
 
+    FloatingActionButton mfab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +84,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
+        mfab = (FloatingActionButton) findViewById(R.id.fab);
+        mfab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
+                postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(postIntent);
+            }
+        });
 
         mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
         setSupportActionBar(mtoolbar);
@@ -121,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -334,16 +354,16 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_add){
-
-            startActivity(new Intent(MainActivity.this , PostActivity.class));
-        }
-
-        if (item.getItemId() == R.id.action_logout){
+       if (item.getItemId() == R.id.action_logout){
 
             logout();
         }
 
+        if (item.getItemId() == R.id.action_profile){
+            Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(profileIntent);
+        }
         return super.onOptionsItemSelected(item);
     }
 

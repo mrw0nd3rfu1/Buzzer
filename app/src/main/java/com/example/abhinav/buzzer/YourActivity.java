@@ -251,11 +251,6 @@ public class YourActivity extends AppCompatActivity {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_add){
-
-            startActivity(new Intent(YourActivity.this , PostActivity.class));
-        }
-
         if (item.getItemId() == R.id.action_logout){
 
             logout();

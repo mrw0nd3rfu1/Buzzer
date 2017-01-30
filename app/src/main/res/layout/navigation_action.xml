@@ -8,6 +8,7 @@
     android:background="@color/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     android:fitsSystemWindows="true"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:layout_scrollFlags="scroll|enterAlways">
 
 </android.support.v7.widget.Toolbar>
