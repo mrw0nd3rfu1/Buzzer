@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,7 +31,8 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends AppCompatActivity {
 
     NavigationView navigationView;
-    Toolbar mToolbar;
+    Toolbar mtoolbar;
+    FloatingActionButton mfab;
     private RecyclerView mHomePage;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean mProcessLike = false;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,19 +62,22 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        mToolbar = (Toolbar) findViewById(R.id.nav_actionBar);
-        setSupportActionBar(mToolbar);
+        mfab = (FloatingActionButton) findViewById(R.id.fab);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
+        setSupportActionBar(mtoolbar);
+
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main) ;
+        mToggle= new ActionBarDrawerToggle(this , mDrawerLayout , R.string.open , R.string.close);
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
+                switch (item.getItemId()){
                     case R.id.nav_account:
-                        Intent accountIntent = new Intent(MainActivity.this, YourActivity.class);
+                        Intent accountIntent = new Intent(MainActivity.this, ProfileActivity.class);
                         accountIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(accountIntent);
                         mDrawerLayout.closeDrawers();
@@ -104,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
@@ -116,9 +124,21 @@ public class MainActivity extends AppCompatActivity {
         mHomePage.setHasFixedSize(true);
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
 
+        mfab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
+                postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(postIntent);
+            }
+        });
+
+
+
 
         checkUserExist();
     }
+
 
 
     @Override
@@ -141,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
             protected void populateViewHolder(HomeViewHolder viewHolder, Home model, int position) {
 
                 final String post_key = getRef(position).getKey();
-
 
                 viewHolder.setEvent(model.getEvent());
                 viewHolder.setPost(model.getPost());
@@ -197,7 +216,10 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        mLayoutManager = new LinearLayoutManager(MainActivity.this);
+        mLayoutManager.setReverseLayout(true);
 
+        mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
 
@@ -205,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkUserExist() {
 
-        if (mAuth.getCurrentUser() != null) {
+        if (mAuth.getCurrentUser()!=null) {
 
             final String user_ID = mAuth.getCurrentUser().getUid();
 
@@ -233,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu , menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -241,20 +263,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (mToggle.onOptionsItemSelected(item)) {
+        if (mToggle.onOptionsItemSelected(item)){
             return true;
         }
 
-        if (item.getItemId() == R.id.action_add) {
-
-            startActivity(new Intent(MainActivity.this, PostActivity.class));
-        }
-
-        if (item.getItemId() == R.id.action_logout) {
+        if (item.getItemId() == R.id.action_logout){
 
             logout();
         }
 
+        if (item.getItemId() == R.id.action_profile){
+            Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(profileIntent);
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -263,7 +285,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static class HomeViewHolder extends RecyclerView.ViewHolder {
-
 
         View mView;
 
@@ -284,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
             mDatabaseLike.keepSynced(true);
         }
 
-        public void setLikeButton(final String post_key) {
+        public void setLikeButton(final String post_key){
             mDatabaseLike.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -306,24 +327,24 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        public void setEvent(String event) {
+        public void setEvent(String event){
             TextView post_event = (TextView) mView.findViewById(R.id.post_event);
             post_event.setText(event);
 
         }
 
-        public void setPost(String post) {
+        public void setPost(String post){
             TextView post_text = (TextView) mView.findViewById(R.id.post_text);
             post_text.setText(post);
 
         }
 
-        public void setImage(Context ctx, String image) {
+        public void setImage(Context ctx, String image){
             ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
             Picasso.with(ctx).load(image).into(post_image);
         }
 
-        public void setUsername(String username) {
+        public void setUsername(String username){
             TextView post_username = (TextView) mView.findViewById(R.id.postUsername);
             post_username.setText(username);
         }

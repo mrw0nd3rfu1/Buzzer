@@ -29,6 +29,7 @@ import com.google.firebase.storage.UploadTask;
 public class PostActivity extends AppCompatActivity {
 
     private static final int GALLERY_REQUEST = 1;
+    private String imageHash="";
     private ImageButton imageSelect;
     private EditText event;
     private EditText post;
@@ -95,7 +96,7 @@ public class PostActivity extends AppCompatActivity {
 
             progressDialog.show();
 
-            StorageReference filePath = mStorage.child("Post Images").child(imageUri.getLastPathSegment());
+            StorageReference filePath = mStorage.child("Post Images").child(imageHash);
 
             filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -142,6 +143,7 @@ public class PostActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
             imageUri = data.getData();
+            imageHash=Integer.toString(imageUri.getLastPathSegment().hashCode());
             imageSelect.setImageURI(imageUri);
         }
 
