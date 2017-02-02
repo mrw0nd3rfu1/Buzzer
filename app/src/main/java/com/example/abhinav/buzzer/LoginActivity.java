@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mLoginEmailField;
     private EditText mLoginPasswordField;
     private Button mLoginBtn;
-    private Button mRegisterBtn;
+    private TextView mRegisterBtn;
 
     private SignInButton mGoogleButton;
     private GoogleApiClient mGoogleApiClient;
@@ -72,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         mLoginEmailField = (EditText) findViewById(R.id.loginEmailfield);
         mLoginPasswordField = (EditText) findViewById(R.id.loginPasswordfield);
         mLoginBtn = (Button) findViewById(R.id.loginButton);
-        mRegisterBtn = (Button) findViewById(R.id.registerButton);
+        mRegisterBtn = (TextView) findViewById(R.id.registerButton);
 
         relativeLayout = (RelativeLayout)findViewById(R.id.activity_login);
         animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
