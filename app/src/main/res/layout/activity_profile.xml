@@ -36,6 +36,16 @@
 
             </android.support.v7.widget.Toolbar>
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_neith"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/colorPrimaryDark"
+                android:id="@+id/circleImageView" />
+
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -51,6 +61,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingTop="10dp">
+
+
 
             <include layout="@layout/card_layout" />
 
