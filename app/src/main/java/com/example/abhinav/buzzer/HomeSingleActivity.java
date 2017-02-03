@@ -46,6 +46,7 @@ public class HomeSingleActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
 
+
         mAuth = FirebaseAuth.getInstance();
 
         mPost_key = getIntent().getExtras().getString("home_id");
@@ -57,7 +58,7 @@ public class HomeSingleActivity extends AppCompatActivity {
 
         mHomeSingleRemoveBtn = (Button) findViewById(R.id.removeButton);
 
-        Toast.makeText(HomeSingleActivity.this , mPost_key , Toast.LENGTH_SHORT).show();
+       // Toast.makeText(HomeSingleActivity.this , mPost_key , Toast.LENGTH_SHORT).show();
 
         mDatabase.child(mPost_key).addValueEventListener(new ValueEventListener() {
             @Override
