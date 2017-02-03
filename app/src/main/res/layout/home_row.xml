@@ -4,27 +4,34 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:layout_margin="20dp">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="60dp"
+        android:layout_height="55dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_neith"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/colorPrimaryDark"
+        android:id="@+id/circleImageView"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="350dp"
-            android:layout_height="200dp"
-            android:id="@+id/post_image"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:src="@mipmap/add_btn" />
+
 
         <TextView
             android:text="Username"
-            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_width="290dp"
             android:layout_height="wrap_content"
             android:id="@+id/postUsername"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:textStyle="normal|bold" />
 
         <TextView
@@ -36,7 +43,8 @@
             android:textStyle="normal|bold"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="15dp" />
+            android:paddingTop="15dp"
+            android:layout_gravity="center"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -47,7 +55,16 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingBottom="15dp"
-            android:paddingTop="15dp" />
+            android:paddingTop="15dp"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:layout_width="350dp"
+            android:layout_height="200dp"
+            android:id="@+id/post_image"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/add_btn" />
 
         <LinearLayout
             android:orientation="horizontal"
