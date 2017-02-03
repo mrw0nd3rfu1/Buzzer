@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
         setSupportActionBar(mtoolbar);
 
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main) ;
         mToggle= new ActionBarDrawerToggle(this , mDrawerLayout , R.string.open , R.string.close);
 
