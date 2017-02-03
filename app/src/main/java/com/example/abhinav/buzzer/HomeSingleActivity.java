@@ -2,18 +2,24 @@ package com.example.abhinav.buzzer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class HomeSingleActivity extends AppCompatActivity {
@@ -21,7 +27,7 @@ public class HomeSingleActivity extends AppCompatActivity {
     private String mPost_key = null;
 
     private DatabaseReference mDatabase;
-
+     private StorageReference mStorage;
     private ImageView mHomeSingleImage;
     private TextView mHomeSingleEvent;
     private TextView mHomeSinglePost;
@@ -51,7 +57,7 @@ public class HomeSingleActivity extends AppCompatActivity {
 
         mHomeSingleRemoveBtn = (Button) findViewById(R.id.removeButton);
 
-        //Toast.makeText(HomeSingleActivity.this , post_key , Toast.LENGTH_SHORT).show();
+        Toast.makeText(HomeSingleActivity.this , mPost_key , Toast.LENGTH_SHORT).show();
 
         mDatabase.child(mPost_key).addValueEventListener(new ValueEventListener() {
             @Override
@@ -87,7 +93,18 @@ public class HomeSingleActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 mDatabase.child(mPost_key).removeValue();
-                //use Mstorage referrence and remove the pic file from t=storage
+                mStorage= FirebaseStorage.getInstance().getReference().child("Posts/"+mPost_key);
+                mStorage.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(HomeSingleActivity.this,"Removed Succesfully",Toast.LENGTH_SHORT).show();                    }
+
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(HomeSingleActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                    }
+                });
                 Intent mainIntent = new Intent(HomeSingleActivity.this, MainActivity.class);
                 startActivity(mainIntent);
 
