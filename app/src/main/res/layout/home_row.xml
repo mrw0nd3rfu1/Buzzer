@@ -15,6 +15,18 @@
         android:paddingBottom="4dp"
         android:paddingTop="4dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timestamp"
+        android:textSize="16dp"
+        android:textStyle="normal|bold"
+        android:hint="Time stamp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        android:layout_gravity="right"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,14 +37,16 @@
         <TextView
             android:text="Username"
             android:layout_gravity="center"
-            android:layout_width="290dp"
+            android:layout_width="271dp"
             android:layout_height="wrap_content"
             android:id="@+id/postUsername"
+            android:textSize="16dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
             android:textStyle="normal|bold" />
+
 
         <TextView
             android:layout_width="match_parent"
