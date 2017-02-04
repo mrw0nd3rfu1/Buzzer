@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.abhinav.buzzer.RegisterActivity"
-    android:background="@drawable/animation_list">
+    android:background="@drawable/animation_list"
+    >
 
     <EditText
         android:layout_width="match_parent"
