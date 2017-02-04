@@ -25,7 +25,7 @@ import com.squareup.picasso.Picasso;
 public class HomeSingleActivity extends AppCompatActivity {
 
     private String mPost_key = null;
-
+    private String postId=null;
     private DatabaseReference mDatabase;
      private StorageReference mStorage;
     private ImageView mHomeSingleImage;
@@ -68,8 +68,7 @@ public class HomeSingleActivity extends AppCompatActivity {
                 post_image = (String) dataSnapshot.child("image").getValue();
                 String post_uid = (String) dataSnapshot.child("uid").getValue();
                 String post_username = (String) dataSnapshot.child("username").getValue();
-
-
+                postId=(String)dataSnapshot.child("post_id").getValue();
                 mHomeSingleEvent.setText(post_event);
                 mHomeSinglePost.setText(post_post);
                 mHomeSingleUsername.setText(post_username);
@@ -94,7 +93,7 @@ public class HomeSingleActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 mDatabase.child(mPost_key).removeValue();
-                mStorage= FirebaseStorage.getInstance().getReference().child("Posts/"+mPost_key);
+                mStorage= FirebaseStorage.getInstance().getReference().child("Posts/"+postId);
                 mStorage.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

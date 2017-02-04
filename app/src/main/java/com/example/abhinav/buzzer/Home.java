@@ -6,7 +6,7 @@ package com.example.abhinav.buzzer;
 
 public class Home {
 
-    private String event, post, image, username;
+    private String event, post, image, username,post_id;
 
 
     public Home() {
@@ -24,32 +24,23 @@ public class Home {
         return event;
     }
 
-    public void setEvent(String event) {
-        this.event = event;
-    }
 
     public String getPost() {
         return post;
     }
 
-    public void setPost(String post) {
-        this.post = post;
-    }
 
     public String getImage() {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public String getUsername() {
         return username;
     }
+    public String getPost_id(){return post_id;}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+
+
 
 }

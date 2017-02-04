@@ -21,6 +21,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -29,11 +31,12 @@ import com.google.firebase.storage.UploadTask;
 public class PostActivity extends AppCompatActivity {
 
     private static final int GALLERY_REQUEST = 1;
-
+    private String postId="";
     private ImageButton imageSelect;
     private EditText event;
     private EditText post;
     private Button submit;
+    private Long sequence;
     private Uri imageUri = null;
     private StorageReference mStorage;
     private DatabaseReference mDatabase;
@@ -79,33 +82,32 @@ public class PostActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startPosting();
+                progressDialog.setMessage("Posting");
+                progressDialog.show();
+                progressDialog.setCanceledOnTouchOutside(false);
+                getPostId();
+
             }
         });
     }
 
     private void startPosting() {
 
-        progressDialog.setMessage("Posting");
-
-
         final String title_event = event.getText().toString().trim();
         final String title_post = post.getText().toString().trim();
 
         if (!TextUtils.isEmpty(title_event) && !TextUtils.isEmpty(title_post) && imageUri != null) {
 
-            progressDialog.show();
-            final DatabaseReference newpost = mDatabase.push();
-            final String postId=newpost.getKey();
 
-            StorageReference filePath = mStorage.child("Posts/"+postId);
+            final DatabaseReference newpost = mDatabase.push();
+
+           StorageReference filePath = mStorage.child("Posts/"+postId);
+
 
             filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     final Uri downloadUrl = taskSnapshot.getDownloadUrl();
-
-
 
                     mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -115,6 +117,7 @@ public class PostActivity extends AppCompatActivity {
                             newpost.child("post").setValue(title_post);
                             newpost.child("image").setValue(downloadUrl.toString());
                             newpost.child("uid").setValue(mCurrentUser.getUid());
+                            newpost.child("post_id").setValue(postId);
                             newpost.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -144,14 +147,43 @@ public class PostActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
-            imageUri = data.getData();
-
+            imageUri=data.getData();
             imageSelect.setImageURI(imageUri);
         }
+
+    }
+    private void getPostId()
+    {
+        final DatabaseReference postNo=FirebaseDatabase.getInstance().getReference().child("post_count");
+        postNo.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+
+                sequence= (Long)mutableData.getValue();
+                if(sequence==null)
+                    return  Transaction.success(mutableData);
+                else{
+
+                    postId=Integer.toString(sequence.intValue());
+                    sequence--;
+                    mutableData.setValue(sequence);
+                    return  Transaction.success(mutableData);
+                }}
+
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+
+                startPosting();
+
+            }
+        });
+
+    }
 
     }
 
 
 
 
-}
+

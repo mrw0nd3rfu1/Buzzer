@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseUsers;
     private DatabaseReference mDatabaseLike;
     private FirebaseAuth mAuth;
+    private Query orderData;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private boolean mProcessLike = false;
     private DrawerLayout mDrawerLayout;
@@ -110,13 +112,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
-
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
+        orderData=mDatabase.orderByChild("post_id");
+        orderData.keepSynced(true);
 
         mDatabaseUsers.keepSynced(true);
         mDatabaseLike.keepSynced(true);
-        mDatabase.keepSynced(true);
+
 
         mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
         mHomePage.setHasFixedSize(true);
@@ -130,10 +133,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(postIntent);
             }
         });
-
-
-
-
         checkUserExist();
     }
 
@@ -146,12 +145,12 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth.addAuthStateListener(mAuthListener);
 
-        FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
+        final FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
 
                 Home.class,
                 R.layout.home_row,
                 HomeViewHolder.class,
-                mDatabase
+                orderData
 
 
         ) {
@@ -215,10 +214,9 @@ public class MainActivity extends AppCompatActivity {
         };
 
         mLayoutManager = new LinearLayoutManager(MainActivity.this);
-        mLayoutManager.setReverseLayout(true);
-
         mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
+
 
 
     }

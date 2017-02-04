@@ -2,11 +2,10 @@ package com.example.abhinav.buzzer;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -37,26 +36,19 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final int RC_SIGN_IN = 1;
+    private static final String TAG = "LoginActivity";
+    AnimationDrawable animationDrawable;
+    RelativeLayout relativeLayout;
     private EditText mLoginEmailField;
     private EditText mLoginPasswordField;
     private Button mLoginBtn;
     private TextView mRegisterBtn;
-
     private SignInButton mGoogleButton;
     private GoogleApiClient mGoogleApiClient;
-
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseUsers;
-
-    private static final int RC_SIGN_IN = 1;
-    private static final String TAG = "LoginActivity";
-
     private ProgressDialog mProgress;
-
-    AnimationDrawable animationDrawable;
-    RelativeLayout relativeLayout;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
 
             mProgress.setMessage("Signing In..");
             mProgress.show();
+            mProgress.setCanceledOnTouchOutside(false);
 
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
