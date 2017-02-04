@@ -1,16 +1,17 @@
 package com.example.abhinav.buzzer;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +27,7 @@ public class HomeSingleActivity extends AppCompatActivity {
     private String mPost_key = null;
 
     private DatabaseReference mDatabase;
-
+     private StorageReference mStorage;
     private ImageView mHomeSingleImage;
     private TextView mHomeSingleEvent;
     private TextView mHomeSinglePost;
@@ -36,7 +37,7 @@ public class HomeSingleActivity extends AppCompatActivity {
 
     private Button mHomeSingleRemoveBtn;
 
-    private String post_image ;
+    private String post_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class HomeSingleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_single);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -56,7 +58,7 @@ public class HomeSingleActivity extends AppCompatActivity {
 
         mHomeSingleRemoveBtn = (Button) findViewById(R.id.removeButton);
 
-        //Toast.makeText(HomeSingleActivity.this , post_key , Toast.LENGTH_SHORT).show();
+       // Toast.makeText(HomeSingleActivity.this , mPost_key , Toast.LENGTH_SHORT).show();
 
         mDatabase.child(mPost_key).addValueEventListener(new ValueEventListener() {
             @Override
@@ -74,7 +76,7 @@ public class HomeSingleActivity extends AppCompatActivity {
 
                 Picasso.with(HomeSingleActivity.this).load(post_image).into(mHomeSingleImage);
 
-                if (mAuth.getCurrentUser().getUid().equals(post_uid)){
+                if (mAuth.getCurrentUser().getUid().equals(post_uid)) {
                     mHomeSingleRemoveBtn.setVisibility(View.VISIBLE);
                 }
 
@@ -87,14 +89,24 @@ public class HomeSingleActivity extends AppCompatActivity {
         });
 
 
-
         mHomeSingleRemoveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 mDatabase.child(mPost_key).removeValue();
+                mStorage= FirebaseStorage.getInstance().getReference().child("Posts/"+mPost_key);
+                mStorage.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(HomeSingleActivity.this,"Removed Succesfully",Toast.LENGTH_SHORT).show();                    }
 
-                Intent mainIntent = new Intent(HomeSingleActivity.this , MainActivity.class);
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(HomeSingleActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                    }
+                });
+                Intent mainIntent = new Intent(HomeSingleActivity.this, MainActivity.class);
                 startActivity(mainIntent);
 
             }
