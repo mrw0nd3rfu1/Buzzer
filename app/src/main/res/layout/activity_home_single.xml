@@ -11,11 +11,12 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="400dp"
             android:id="@+id/singleHomeImage"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:adjustViewBounds="true"
-            android:src="@mipmap/add_btn" />
+            android:src="@mipmap/add_btn"
+            />
 
         <TextView
             android:text="Username"
@@ -52,19 +53,23 @@
 
     </LinearLayout>
 
-    <Button
-        android:text="Remove Post"
+
+
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="normal"
         android:id="@+id/removeButton"
-        android:layout_marginTop="490dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        android:visibility="invisible"
-        android:layout_gravity="bottom"/>
+        android:visibility="visible"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
+    </android.support.design.widget.CoordinatorLayout>
 
 
 
