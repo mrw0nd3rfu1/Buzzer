@@ -26,19 +26,28 @@
         <activity android:name=".SetupActivity" />
         <activity android:name=".HomeSingleActivity" />
         <activity android:name=".LikedActivity" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity" />
 
         <service android:name=".MyFirebaseInstance">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"></action>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".MyFirebaseMessaging">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".MyFirebaseMessaging">
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"></action>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </service>
+        </activity>
+        <activity android:name=".EventActivity" />
+        <activity android:name=".PostActivity2"></activity>
     </application>
 
 </manifest>

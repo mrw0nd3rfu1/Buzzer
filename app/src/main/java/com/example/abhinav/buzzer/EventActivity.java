@@ -1,9 +1,7 @@
 package com.example.abhinav.buzzer;
 
-import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -31,7 +29,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class MainActivity extends AppCompatActivity {
+public class EventActivity extends AppCompatActivity {
 
     NavigationView navigationView;
     Toolbar mtoolbar;
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_event);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    Intent loginIntent = new Intent(EventActivity.this, LoginActivity.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                 }
@@ -70,8 +68,9 @@ public class MainActivity extends AppCompatActivity {
 
         mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
         setSupportActionBar(mtoolbar);
+        mtoolbar.setTitle("Event");
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main) ;
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_event) ;
         mToggle= new ActionBarDrawerToggle(this , mDrawerLayout , R.string.open , R.string.close);
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -80,21 +79,21 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_account:
-                        Intent accountIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                        Intent accountIntent = new Intent(EventActivity.this, ProfileActivity.class);
                         accountIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(accountIntent);
                         mDrawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_liked:
-                        Intent likedIntent = new Intent(MainActivity.this, LikedActivity.class);
+                        Intent likedIntent = new Intent(EventActivity.this, LikedActivity.class);
                         likedIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(likedIntent);
                         mDrawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_setting:
-                        Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
+                        Intent setupIntent = new Intent(EventActivity.this, SetupActivity.class);
                         setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(setupIntent);
                         mDrawerLayout.closeDrawers();
@@ -113,11 +112,10 @@ public class MainActivity extends AppCompatActivity {
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Post").child("Event");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
         orderData=mDatabase.orderByChild("post_id");
-
         orderData.keepSynced(true);
 
         mDatabaseUsers.keepSynced(true);
@@ -131,12 +129,12 @@ public class MainActivity extends AppCompatActivity {
         mfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
+                Intent postIntent = new Intent(EventActivity.this, PostActivity2.class);
                 postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(postIntent);
             }
         });
-        checkUserExist();
+
     }
 
 
@@ -162,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
 
                 final String post_key = getRef(position).getKey();
 
-                viewHolder.setEvent(model.getEvent());
                 viewHolder.setPost(model.getPost());
                 viewHolder.setImage(getApplicationContext(), model.getImage());
                 viewHolder.setUsername(model.getUsername());
@@ -174,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
-                        Intent singleHomeIntent = new Intent(MainActivity.this, EventActivity.class);
+                        Intent singleHomeIntent = new Intent(EventActivity.this, HomeSingleActivity.class);
                         singleHomeIntent.putExtra("home_id", post_key);
                         startActivity(singleHomeIntent);
                     }
@@ -216,41 +213,14 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        mLayoutManager = new LinearLayoutManager(MainActivity.this);
+        mLayoutManager = new LinearLayoutManager(EventActivity.this);
         mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
 
 
-
     }
 
-    private void checkUserExist() {
-
-        if (mAuth.getCurrentUser()!=null) {
-
-            final String user_ID = mAuth.getCurrentUser().getUid();
-
-            mDatabaseUsers.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (!dataSnapshot.hasChild(user_ID)) {
-
-                        Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
-                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(setupIntent);
-
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -273,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.action_profile){
-            Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+            Intent profileIntent = new Intent(EventActivity.this, ProfileActivity.class);
             profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(profileIntent);
         }
@@ -327,11 +297,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        public void setEvent(String event){
-            TextView post_event = (TextView) mView.findViewById(R.id.post_event);
-            post_event.setText(event);
 
-        }
 
         public void setPost(String post){
             TextView post_text = (TextView) mView.findViewById(R.id.post_text);

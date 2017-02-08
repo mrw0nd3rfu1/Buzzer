@@ -4,6 +4,10 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:layout_margin="20dp">
 
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,6 +57,8 @@
 
     </LinearLayout>
 
+    </android.support.v4.widget.NestedScrollView>
+
 
 
     <android.support.design.widget.CoordinatorLayout
@@ -67,7 +73,7 @@
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal"
         android:id="@+id/removeButton"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:srcCompat="@android:drawable/ic_menu_delete" />
     </android.support.design.widget.CoordinatorLayout>
 

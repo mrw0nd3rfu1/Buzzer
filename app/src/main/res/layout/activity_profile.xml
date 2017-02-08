@@ -71,6 +71,14 @@
 
             <include layout="@layout/card_layout" />
 
+            <include layout="@layout/card_layout" />
+
+            <include layout="@layout/card_layout" />
+
+            <include layout="@layout/card_layout" />
+
+            <include layout="@layout/card_layout" />
+
         </LinearLayout>
 
 

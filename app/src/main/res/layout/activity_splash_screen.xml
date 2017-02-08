@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_splash_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:orientation = "horizontal"
+    android:background="@drawable/animation_list"
+    tools:context="com.example.abhinav.buzzer.SplashScreenActivity">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="350dp"
+        android:id="@+id/buzzer_logo"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_neith"
+        />
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/progressBar"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="-370dp"
+        android:layout_marginBottom="50dp"
+        />
+
+</LinearLayout>
