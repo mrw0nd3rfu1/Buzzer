@@ -20,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,14 +45,18 @@ public class EventActivity extends AppCompatActivity {
     private Query orderData;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private boolean mProcessLike = false;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mToggle;
     private LinearLayoutManager mLayoutManager;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7607893686244125~3347511713");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -70,49 +77,8 @@ public class EventActivity extends AppCompatActivity {
         setSupportActionBar(mtoolbar);
         mtoolbar.setTitle("Event");
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_event) ;
-        mToggle= new ActionBarDrawerToggle(this , mDrawerLayout , R.string.open , R.string.close);
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.nav_account:
-                        Intent accountIntent = new Intent(EventActivity.this, ProfileActivity.class);
-                        accountIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(accountIntent);
-                        mDrawerLayout.closeDrawers();
-                        break;
-
-                    case R.id.nav_liked:
-                        Intent likedIntent = new Intent(EventActivity.this, LikedActivity.class);
-                        likedIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(likedIntent);
-                        mDrawerLayout.closeDrawers();
-                        break;
-
-                    case R.id.nav_setting:
-                        Intent setupIntent = new Intent(EventActivity.this, SetupActivity.class);
-                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(setupIntent);
-                        mDrawerLayout.closeDrawers();
-                        break;
-
-                    case R.id.nav_Logout:
-                        mAuth.signOut();
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Post").child("Event");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("post_id");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
         orderData=mDatabase.orderByChild("post_id");
@@ -233,9 +199,6 @@ public class EventActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
 
         if (item.getItemId() == R.id.action_logout){
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<RelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
@@ -34,36 +35,30 @@
     </LinearLayout>
 
 
-
-
-
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal"
-        android:id="@+id/fab"
-        android:src="@android:drawable/ic_menu_edit" />
-    </android.support.design.widget.CoordinatorLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id">
+    </com.google.android.gms.ads.AdView>
 
 
-        <android.support.design.widget.NavigationView
+    <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:menu="@menu/navigation_menu"
-            android:id="@+id/nav_view"
-            android:layout_gravity="start"
-            app:headerLayout="@layout/navigation_header"
-            >
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="normal"
+            android:id="@+id/fab"
+            android:src="@android:drawable/ic_menu_edit"
+            android:layout_above="@+id/adView"
+            android:layout_alignRight="@+id/adView"
+            android:layout_alignEnd="@+id/adView"
+            android:layout_marginBottom="17dp" />
 
-        </android.support.design.widget.NavigationView>
 
 
-
-
-</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>

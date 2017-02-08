@@ -22,6 +22,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,15 +47,18 @@ public class MainActivity extends AppCompatActivity {
     private Query orderData;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private boolean mProcessLike = false;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mToggle;
     private LinearLayoutManager mLayoutManager;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7607893686244125~3347511713");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -68,50 +74,12 @@ public class MainActivity extends AppCompatActivity {
 
         mfab = (FloatingActionButton) findViewById(R.id.fab);
 
+
+
         mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
         setSupportActionBar(mtoolbar);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main) ;
-        mToggle= new ActionBarDrawerToggle(this , mDrawerLayout , R.string.open , R.string.close);
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.nav_account:
-                        Intent accountIntent = new Intent(MainActivity.this, ProfileActivity.class);
-                        accountIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(accountIntent);
-                        mDrawerLayout.closeDrawers();
-                        break;
-
-                    case R.id.nav_liked:
-                        Intent likedIntent = new Intent(MainActivity.this, LikedActivity.class);
-                        likedIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(likedIntent);
-                        mDrawerLayout.closeDrawers();
-                        break;
-
-                    case R.id.nav_setting:
-                        Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
-                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(setupIntent);
-                        mDrawerLayout.closeDrawers();
-                        break;
-
-                    case R.id.nav_Logout:
-                        mAuth.signOut();
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -263,9 +231,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
+
 
         if (item.getItemId() == R.id.action_logout){
 
