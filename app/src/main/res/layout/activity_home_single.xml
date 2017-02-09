@@ -14,45 +14,45 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/singleHomeImage"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:id="@+id/singleHomeImage"
-            android:scaleType="fitXY"
             android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             android:src="@mipmap/add_btn"
             />
 
         <TextView
-            android:text="Username"
+            android:id="@+id/singleHomeUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/singleHomeUsername"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="15dp"
+            android:text="Username"
             android:textStyle="normal|bold" />
 
         <TextView
+            android:id="@+id/singleHomeEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/singleHomeEvent"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
             android:text="Event Comes Here"
             android:textSize="16dp"
-            android:textStyle="normal|bold"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="15dp" />
+            android:textStyle="normal|bold" />
 
         <TextView
+            android:id="@+id/singleHomePost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/singleHomePost"
-            android:text="Post Comes Here"
-            android:textSize="16dp"
+            android:paddingBottom="15dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp" />
+            android:paddingTop="15dp"
+            android:text="Post Comes Here"
+            android:textSize="16dp" />
 
 
     </LinearLayout>
@@ -66,14 +66,14 @@
         android:layout_height="match_parent">
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/removeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:visibility="invisible"
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal"
-        android:id="@+id/removeButton"
-        android:visibility="invisible"
         app:srcCompat="@android:drawable/ic_menu_delete" />
     </android.support.design.widget.CoordinatorLayout>
 
