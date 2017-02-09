@@ -1,9 +1,7 @@
 package com.example.abhinav.buzzer;
 
-import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -22,10 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +32,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class MainActivity extends AppCompatActivity {
+public class EventActivity extends AppCompatActivity {
 
     NavigationView navigationView;
     Toolbar mtoolbar;
@@ -52,41 +48,23 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager mLayoutManager;
     private AdView mAdView;
 
-
-    InterstitialAd mInterstitialAd;
-    private InterstitialAd interstitial;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_event);
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-7607893686244125~3347511713");
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-                // Prepare the Interstitial Ad
-        interstitial = new InterstitialAd(MainActivity.this);
-                // Insert the Ad Unit ID
-        interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
-
-        interstitial.loadAd(adRequest);
-                // Prepare an Interstitial Ad Listener
-        interstitial.setAdListener(new AdListener() {
-            public void onAdLoaded() {
-                // Call displayInterstitial() function
-                displayInterstitial();
-            }
-        });
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    Intent loginIntent = new Intent(EventActivity.this, LoginActivity.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                 }
@@ -95,18 +73,15 @@ public class MainActivity extends AppCompatActivity {
 
         mfab = (FloatingActionButton) findViewById(R.id.fab);
 
-
-
         mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
         setSupportActionBar(mtoolbar);
+        mtoolbar.setTitle("Event");
 
 
-
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("post_id");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
         orderData=mDatabase.orderByChild("post_id");
-
         orderData.keepSynced(true);
 
         mDatabaseUsers.keepSynced(true);
@@ -120,20 +95,15 @@ public class MainActivity extends AppCompatActivity {
         mfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
+                Intent postIntent = new Intent(EventActivity.this, PostActivity2.class);
                 postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(postIntent);
             }
         });
-        checkUserExist();
+
     }
 
-    public void displayInterstitial() {
-// If Ads are loaded, show Interstitial else show nothing.
-        if (interstitial.isLoaded()) {
-            interstitial.show();
-        }
-    }
+
 
     @Override
     protected void onStart() {
@@ -156,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
 
                 final String post_key = getRef(position).getKey();
 
-                viewHolder.setEvent(model.getEvent());
                 viewHolder.setPost(model.getPost());
                 viewHolder.setImage(getApplicationContext(), model.getImage());
                 viewHolder.setUsername(model.getUsername());
@@ -168,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
-                        Intent singleHomeIntent = new Intent(MainActivity.this, EventActivity.class);
+                        Intent singleHomeIntent = new Intent(EventActivity.this, HomeSingleActivity.class);
                         singleHomeIntent.putExtra("home_id", post_key);
                         startActivity(singleHomeIntent);
                     }
@@ -210,41 +179,14 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        mLayoutManager = new LinearLayoutManager(MainActivity.this);
+        mLayoutManager = new LinearLayoutManager(EventActivity.this);
         mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
 
 
-
     }
 
-    private void checkUserExist() {
-
-        if (mAuth.getCurrentUser()!=null) {
-
-            final String user_ID = mAuth.getCurrentUser().getUid();
-
-            mDatabaseUsers.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (!dataSnapshot.hasChild(user_ID)) {
-
-                        Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
-                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(setupIntent);
-
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -258,14 +200,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
 
-
         if (item.getItemId() == R.id.action_logout){
 
             logout();
         }
 
         if (item.getItemId() == R.id.action_profile){
-            Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+            Intent profileIntent = new Intent(EventActivity.this, ProfileActivity.class);
             profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(profileIntent);
         }
@@ -319,11 +260,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        public void setEvent(String event){
-            TextView post_event = (TextView) mView.findViewById(R.id.post_event);
-            post_event.setText(event);
 
-        }
 
         public void setPost(String post){
             TextView post_text = (TextView) mView.findViewById(R.id.post_text);

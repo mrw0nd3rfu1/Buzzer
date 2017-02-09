@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="180dp"
     android:background="@color/colorPrimary"
     android:padding="10dp">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_gravity="left|bottom"
+    android:src="@drawable/ic_neith"
+    app:civ_border_width="2dp"
+    app:civ_border_color="@color/colorPrimaryDark"
+    android:id="@+id/profilePicture"
+    android:paddingBottom="10dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
     <TextView
-        android:text="Header Navigation"
+        android:text="Username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/profilePicture"
+        android:id="@+id/userName"
+        />
+
+    <TextView
+        android:text="CollegeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/collegeName"
+        android:layout_below="@+id/profilePicture"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="11dp"
-        android:id="@+id/textView"
-        android:textColor="@android:color/white"
-        android:textSize="20dp" />
+        android:textSize="16dp"/>
 </RelativeLayout>

@@ -17,28 +17,13 @@
         android:adjustViewBounds="true"
         android:scaleType="fitXY"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/input_outline"
-        android:id="@+id/singleHomeEvent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:hint="Event Name"
-        android:padding="10dp"
-        android:singleLine="true" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:ems="10"
-        android:layout_below="@+id/singleHomeEvent"
+        android:layout_below="@+id/imageSelect"
         android:background="@drawable/input_outline"
         android:layout_marginTop="20dp"
         android:id="@+id/postWrite"

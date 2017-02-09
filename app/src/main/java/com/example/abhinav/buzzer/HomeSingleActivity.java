@@ -3,6 +3,7 @@ package com.example.abhinav.buzzer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -35,7 +36,7 @@ public class HomeSingleActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private Button mHomeSingleRemoveBtn;
+    private FloatingActionButton mHomeSingleRemoveBtn;
 
     private String post_image;
 
@@ -56,7 +57,7 @@ public class HomeSingleActivity extends AppCompatActivity {
         mHomeSingleUsername = (TextView) findViewById(R.id.singleHomeUsername);
         mHomeSingleImage = (ImageView) findViewById(R.id.singleHomeImage);
 
-        mHomeSingleRemoveBtn = (Button) findViewById(R.id.removeButton);
+        mHomeSingleRemoveBtn = (FloatingActionButton) findViewById(R.id.removeButton);
 
        // Toast.makeText(HomeSingleActivity.this , mPost_key , Toast.LENGTH_SHORT).show();
 
