@@ -1,66 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_profile"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.abhinav.buzzer.MainActivity"
-    android:fitsSystemWindows="true">
+    >
 
-    <android.support.design.widget.AppBarLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/appbar"
-        android:layout_height="250dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/navigation_action"
+            />
+
+
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:fitsSystemWindows="true"
-                android:id="@+id/profile_pic"
-                android:background="@color/colorPrimary"
-                app:layout_collapseMode="pin"/>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar2"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin">
-
-            </android.support.v7.widget.Toolbar>
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_gravity="center"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_neith"
-                app:civ_border_width="2dp"
-                app:civ_border_color="@color/colorPrimaryDark"
-                android:id="@+id/circleImageView"
-                android:paddingBottom="10dp" />
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_main" />
+            android:id="@+id/Home_Page"
+            >
+        </android.support.v7.widget.RecyclerView>
 
 
-<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
+    </LinearLayout>
 
 
     <com.google.android.gms.ads.AdView
@@ -75,23 +47,18 @@
 
 
     <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            app:backgroundTint="@color/colorPrimary"
-            app:fabSize="normal"
-            android:id="@+id/fab"
-            android:src="@android:drawable/ic_menu_edit"
-            android:layout_above="@+id/adView"
-            android:layout_alignRight="@+id/adView"
-            android:layout_alignEnd="@+id/adView"
-            android:layout_marginBottom="17dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="normal"
+        android:id="@+id/fab"
+        android:src="@android:drawable/ic_menu_edit"
+        android:layout_above="@+id/adView"
+        android:layout_alignRight="@+id/adView"
+        android:layout_alignEnd="@+id/adView"
+        android:layout_marginBottom="17dp" />
 
 
 
 </RelativeLayout>
-
-
-
-
-</android.support.design.widget.CoordinatorLayout>

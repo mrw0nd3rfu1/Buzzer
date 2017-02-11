@@ -100,10 +100,8 @@ public class MainActivity extends AppCompatActivity {
 
         mfab = (FloatingActionButton) findViewById(R.id.fab);
 
-        mtoolbar = (Toolbar) findViewById(R.id.toolbar);
+        mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
         setSupportActionBar(mtoolbar);
-
-        initCollapsingToolbar();
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -131,33 +129,6 @@ public class MainActivity extends AppCompatActivity {
         checkUserExist();
     }
 
-    private void initCollapsingToolbar() {
-        final CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(" ");
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        appBarLayout.setExpanded(true);
-
-        // hiding & showing the title when toolbar expanded & collapsed
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle(getString(R.string.app_name));
-                    isShow = true;
-                } else if (isShow) {
-                    collapsingToolbar.setTitle(" ");
-                    isShow = false;
-                }
-            }
-        });
-    }
 
     public void displayInterstitial() {
 // If Ads are loaded, show Interstitial else show nothing.
