@@ -61,7 +61,8 @@
                android:id="@+id/post_image"
                android:scaleType="centerCrop"
                android:adjustViewBounds="true"
-               android:src="@mipmap/add_btn" />
+               android:src="@mipmap/add_btn"
+               android:transitionName="myImage"/>
 
 
            <ImageButton
