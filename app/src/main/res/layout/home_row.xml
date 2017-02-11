@@ -86,6 +86,7 @@
             android:text="Post Event Here"
             android:textSize="16dp"
             android:textStyle="normal|bold"
+               android:transitionName="myEvent"
            />
 
 
@@ -99,7 +100,8 @@
             android:paddingRight="15dp"
             android:paddingTop="15dp"
             android:text="Write Post Here"
-            android:textSize="16dp"/>
+            android:textSize="16dp"
+               android:transitionName="myPost"/>
 
            <LinearLayout
             android:layout_width="match_parent"

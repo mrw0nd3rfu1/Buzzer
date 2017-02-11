@@ -13,6 +13,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -175,7 +176,10 @@ public class MainActivity extends AppCompatActivity {
                         //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
                         Intent singleHomeIntent = new Intent(MainActivity.this, HomeSingleActivity.class);
-                        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,findViewById(R.id.post_image),"myImage");
+                        Pair<View , String> pair1 = Pair.create(findViewById(R.id.post_image),"myImage");
+                        Pair<View , String> pair2 = Pair.create(findViewById(R.id.post_image),"myEvent");
+                        Pair<View , String> pair3 = Pair.create(findViewById(R.id.post_image),"myPost");
+                        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,pair1,pair2,pair3);
                         singleHomeIntent.putExtra("home_id", post_key);
                         startActivity(singleHomeIntent, optionsCompat.toBundle());
                     }
