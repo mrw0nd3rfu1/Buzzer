@@ -3,8 +3,8 @@
 
     <item android:drawable="@color/colorPrimary"/>
     <item>
-        <bitmap android:src="@drawable/ic_neith"
-            android:gravity="center">
+        <bitmap android:gravity="center"
+            android:src="@drawable/ic_neith">
 
         </bitmap>
     </item>

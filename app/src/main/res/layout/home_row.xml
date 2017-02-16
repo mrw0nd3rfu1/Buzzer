@@ -55,12 +55,12 @@
 
 
            <ImageView
+               android:id="@+id/post_image"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:paddingTop="5dp"
-               android:id="@+id/post_image"
-               android:scaleType="centerCrop"
                android:adjustViewBounds="true"
+               android:paddingTop="5dp"
+               android:scaleType="centerCrop"
                android:src="@mipmap/add_btn"
                android:transitionName="myImage"/>
 

@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +26,7 @@ public class HomeSingleActivity extends AppCompatActivity {
 
     private String mPost_key = null;
     private String postId=null;
+    private int hasImage=1;
     private DatabaseReference mDatabase;
      private StorageReference mStorage;
     private ImageView mHomeSingleImage;
@@ -67,6 +67,7 @@ public class HomeSingleActivity extends AppCompatActivity {
                 String post_event = (String) dataSnapshot.child("event").getValue();
                 String post_post = (String) dataSnapshot.child("post").getValue();
                 post_image = (String) dataSnapshot.child("image").getValue();
+               //  hasImage=(Integer) dataSnapshot.child("With_image").getValue();
                 String post_uid = (String) dataSnapshot.child("uid").getValue();
                 String post_username = (String) dataSnapshot.child("username").getValue();
                 postId=(String)dataSnapshot.child("post_id").getValue();
@@ -94,6 +95,7 @@ public class HomeSingleActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 mDatabase.child(mPost_key).removeValue();
+               // if(hasImage==1){
                 mStorage= FirebaseStorage.getInstance().getReference().child("Posts/"+postId);
                 mStorage.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -106,6 +108,10 @@ public class HomeSingleActivity extends AppCompatActivity {
                         Toast.makeText(HomeSingleActivity.this,"Failed",Toast.LENGTH_SHORT).show();
                     }
                 });
+                //}
+               // else
+              //      Toast.makeText(HomeSingleActivity.this,"Removed Succesfully",Toast.LENGTH_SHORT).show();
+
                 Intent mainIntent = new Intent(HomeSingleActivity.this, MainActivity.class);
                 startActivity(mainIntent);
 
