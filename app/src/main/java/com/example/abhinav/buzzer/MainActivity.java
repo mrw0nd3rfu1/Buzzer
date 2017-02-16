@@ -4,22 +4,31 @@ import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdListener;
@@ -38,9 +47,9 @@ import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
-    NavigationView navigationView;
     Toolbar mtoolbar;
     FloatingActionButton mfab;
+    private ImageView overflow;
     private RecyclerView mHomePage;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
@@ -95,12 +104,8 @@ public class MainActivity extends AppCompatActivity {
 
         mfab = (FloatingActionButton) findViewById(R.id.fab);
 
-
-
         mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
         setSupportActionBar(mtoolbar);
-
-
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -127,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         });
         checkUserExist();
     }
+
 
     public void displayInterstitial() {
 // If Ads are loaded, show Interstitial else show nothing.
@@ -164,13 +170,18 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.setLikeButton(post_key);
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onClick(View v) {
                         //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
-                        Intent singleHomeIntent = new Intent(MainActivity.this, EventActivity.class);
+                        Intent singleHomeIntent = new Intent(MainActivity.this, HomeSingleActivity.class);
+                        Pair<View , String> pair1 = Pair.create(findViewById(R.id.post_image),"myImage");
+                        Pair<View , String> pair2 = Pair.create(findViewById(R.id.post_image),"myEvent");
+                        Pair<View , String> pair3 = Pair.create(findViewById(R.id.post_image),"myPost");
+                        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,pair1,pair2,pair3);
                         singleHomeIntent.putExtra("home_id", post_key);
-                        startActivity(singleHomeIntent);
+                        startActivity(singleHomeIntent, optionsCompat.toBundle());
                     }
                 });
 
@@ -207,6 +218,8 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+
+
             }
         };
 
@@ -245,6 +258,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

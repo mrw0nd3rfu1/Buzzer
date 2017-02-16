@@ -5,7 +5,8 @@
     android:id="@+id/activity_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.abhinav.buzzer.ProfileActivity">
+    tools:context="com.example.abhinav.buzzer.ProfileActivity"
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
