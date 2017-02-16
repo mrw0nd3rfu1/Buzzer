@@ -9,54 +9,54 @@
     android:fitsSystemWindows="true">
 
     <ImageButton
+        android:id="@+id/imageSelect"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        app:srcCompat="@mipmap/add_btn"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/imageSelect"
         android:adjustViewBounds="true"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        app:srcCompat="@mipmap/add_btn"/>
 
     <EditText
+        android:id="@+id/singleHomeEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/input_outline"
-        android:id="@+id/singleHomeEvent"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
+        android:background="@drawable/input_outline"
+        android:ems="10"
         android:hint="Event Name"
+        android:inputType="textPersonName"
         android:padding="10dp"
         android:singleLine="true" />
 
     <EditText
+        android:id="@+id/postWrite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:layout_below="@+id/singleHomeEvent"
-        android:background="@drawable/input_outline"
-        android:layout_marginTop="20dp"
-        android:id="@+id/postWrite"
-        android:hint="Write Post"
-        android:layout_alignLeft="@+id/singleHomeEvent"
-        android:layout_alignStart="@+id/singleHomeEvent"
-        android:layout_alignRight="@+id/singleHomeEvent"
         android:layout_alignEnd="@+id/singleHomeEvent"
+        android:layout_alignLeft="@+id/singleHomeEvent"
+        android:layout_alignRight="@+id/singleHomeEvent"
+        android:layout_alignStart="@+id/singleHomeEvent"
+        android:layout_below="@+id/singleHomeEvent"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/input_outline"
+        android:ems="10"
+        android:hint="Write Post"
+        android:inputType="textMultiLine"
         android:padding="10dp" />
 
     <Button
-        android:text="Submit Post"
+        android:id="@+id/submitPost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@color/colorPrimary"
-        android:id="@+id/submitPost"
+        android:text="Submit Post"
         android:textColor="@android:color/white" />
 </RelativeLayout>
