@@ -80,7 +80,7 @@ public class SetupActivity extends AppCompatActivity {
             mProgress.setMessage("Saving the Profile");
             mProgress.show();
 
-            StorageReference filePath = mStorageImage.child(mImageUri.getLastPathSegment());
+            StorageReference filePath = mStorageImage.child("Profile_images/"+user_ID);
             filePath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

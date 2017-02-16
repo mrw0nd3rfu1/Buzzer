@@ -28,7 +28,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity
+{
 
     private static final int GALLERY_REQUEST = 1;
     private String postId="";
@@ -91,23 +92,21 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
-    private void startPosting() {
+    private void startPosting()
+    {
 
         final String title_event = event.getText().toString().trim();
         final String title_post = post.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(title_event) && !TextUtils.isEmpty(title_post) && imageUri != null) {
+        if (!TextUtils.isEmpty(title_event) && !TextUtils.isEmpty(title_post) ) {
 
 
             final DatabaseReference newpost = mDatabase.push();
 
-           StorageReference filePath = mStorage.child("Posts/"+postId);
+         final   StorageReference filePath = mStorage.child("Posts/"+postId);
 
 
-            filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    final Uri downloadUrl = taskSnapshot.getDownloadUrl();
+
 
                     mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -115,7 +114,16 @@ public class PostActivity extends AppCompatActivity {
 
                             newpost.child("event").setValue(title_event);
                             newpost.child("post").setValue(title_post);
-                            newpost.child("image").setValue(downloadUrl.toString());
+                            if(imageUri!=null){
+                            filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    final Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                    newpost.child("image").setValue(downloadUrl.toString());
+                                    newpost.child("With_image").setValue(1);
+                                }});
+                                }
+                            newpost.child("With_image").setValue(0);
                             newpost.child("uid").setValue(mCurrentUser.getUid());
                             newpost.child("post_id").setValue(postId);
                             newpost.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -138,10 +146,10 @@ public class PostActivity extends AppCompatActivity {
 
 
                 }
-            });
+
         }
 
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -182,6 +190,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     }
+
 
 
 
