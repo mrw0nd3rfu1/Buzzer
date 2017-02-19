@@ -9,22 +9,15 @@
     android:background="@drawable/animation_list"
     >
 
-    <EditText
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/passwordField"
-        android:hint="Password"
-        android:layout_centerVertical="true"
+        android:src="@drawable/ic_buzzer3"
+        android:id="@+id/logo"
+        android:layout_alignBottom="@+id/loginEmailfield"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/input_outline"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:padding="15dp"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="14dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -50,7 +43,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/registeredButton"
-        android:layout_below="@+id/passwordField"
+        android:layout_below="@+id/logo"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_marginTop="98dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/passwordField"
+        android:hint="Password"
+        android:background="@drawable/input_outline"
+        android:layout_marginTop="21dp"
+        android:padding="15dp"
+        android:layout_below="@+id/logo"
+        android:layout_alignLeft="@+id/emailField"
+        android:layout_alignStart="@+id/emailField"
+        android:layout_alignRight="@+id/emailField"
+        android:layout_alignEnd="@+id/emailField" />
 </RelativeLayout>
