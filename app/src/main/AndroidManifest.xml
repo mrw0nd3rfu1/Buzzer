@@ -12,13 +12,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".EventActivity" />
         <activity android:name=".PostActivity2" />
-        <activity android:name=".SplashScreen"
-            android:theme="@style/SplashScreenTheme">
-            <intent-filter>
-               <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
-        </activity>
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -26,6 +19,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
