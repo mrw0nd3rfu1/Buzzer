@@ -37,7 +37,8 @@
                     android:background="@drawable/ic_neith"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-                    app:layout_collapseMode="pin"/>
+                    app:layout_collapseMode="pin"
+                    />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar2"
@@ -49,10 +50,10 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_pic"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
                     android:layout_centerInParent="true"
-                    android:layout_gravity="center"
+                    android:layout_gravity="left|center"
                     android:paddingBottom="10dp"
                     android:src="@drawable/ic_neith"
                     app:civ_border_color="@color/colorPrimaryDark"

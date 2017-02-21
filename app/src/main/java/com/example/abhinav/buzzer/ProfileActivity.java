@@ -23,6 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar =getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(null);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Profile");

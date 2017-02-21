@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mtoolbar);
         ActionBar actionBar =getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        mtoolbar.setNavigationIcon(null);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Home");
