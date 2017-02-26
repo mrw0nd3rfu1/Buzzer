@@ -10,7 +10,7 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView"
+        android:id="@+id/user_pic"
         android:layout_width="60dp"
         android:layout_height="55dp"
         android:layout_centerInParent="true"

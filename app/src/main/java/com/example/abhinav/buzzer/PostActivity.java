@@ -28,6 +28,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class PostActivity extends AppCompatActivity
 {
 
@@ -36,6 +38,7 @@ public class PostActivity extends AppCompatActivity
     private ImageButton imageSelect;
     private EditText event;
     private EditText post;
+    private CircleImageView image;
     private Button submit;
     private Long sequence;
     private Uri imageUri = null;
@@ -66,6 +69,7 @@ public class PostActivity extends AppCompatActivity
         event = (EditText) findViewById(R.id.singleHomeEvent);
         post = (EditText) findViewById(R.id.postWrite);
         submit = (Button) findViewById(R.id.submitPost);
+        image = (CircleImageView) findViewById(R.id.user_pic);
 
         progressDialog = new ProgressDialog(this);
 
@@ -114,6 +118,7 @@ public class PostActivity extends AppCompatActivity
 
                             newpost.child("event").setValue(title_event);
                             newpost.child("post").setValue(title_post);
+
                             if(imageUri!=null){
                             filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
@@ -126,6 +131,7 @@ public class PostActivity extends AppCompatActivity
                             newpost.child("With_image").setValue(0);
                             newpost.child("uid").setValue(mCurrentUser.getUid());
                             newpost.child("post_id").setValue(postId);
+                            newpost.child("profile_pic").setValue(dataSnapshot.child("profile_pic").getValue());
                             newpost.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -134,6 +140,7 @@ public class PostActivity extends AppCompatActivity
                                     }
                                 }
                             });
+
                         }
 
                         @Override
