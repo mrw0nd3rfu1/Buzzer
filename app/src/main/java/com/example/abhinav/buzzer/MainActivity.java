@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdListener;
@@ -50,12 +52,15 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseUsers;
     private DatabaseReference mDatabaseLike;
     private FirebaseAuth mAuth;
-private Query orderData;
+    private Query orderData;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private boolean mProcessLike = false;
     private LinearLayoutManager mLayoutManager;
     private AdView mAdView;
     private InterstitialAd interstitial;
+    private boolean isUserClickedBackButton=false;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +72,13 @@ private Query orderData;
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-                // Prepare the Interstitial Ad
+        // Prepare the Interstitial Ad
         interstitial = new InterstitialAd(MainActivity.this);
-                // Insert the Ad Unit ID
+        // Insert the Ad Unit ID
         interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
 
         interstitial.loadAd(adRequest);
-                // Prepare an Interstitial Ad Listener
+        // Prepare an Interstitial Ad Listener
         interstitial.setAdListener(new AdListener() {
             public void onAdLoaded() {
                 // Call displayInterstitial() function
@@ -98,10 +103,11 @@ private Query orderData;
         mtoolbar = (Toolbar) findViewById(R.id.nav_actionBar);
         setSupportActionBar(mtoolbar);
 
+
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
-        orderData=mDatabase.orderByChild("post_id");
+        orderData = mDatabase.orderByChild("post_id");
         mDatabaseUsers.keepSynced(true);
         mDatabaseLike.keepSynced(true);
         orderData.keepSynced(true);
@@ -122,11 +128,35 @@ private Query orderData;
         checkUserExist();
     }
 
+    @Override
+    public void onBackPressed() {
+        if(!isUserClickedBackButton){
+            Toast.makeText(this, "Press Back button again to Exit",Toast.LENGTH_SHORT).show();
+            isUserClickedBackButton=true;
+        }
+        else {
+            super.onBackPressed();
+        }
+
+        new CountDownTimer(3000,1000){
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                isUserClickedBackButton=false;
+            }
+        }.start();
+    }
+
     public void displayInterstitial() {
 // If Ads are loaded, show Interstitial else show nothing.
-       // if (interstitial.isLoaded()) {
-         //   interstitial.show();
-       // }
+        // if (interstitial.isLoaded()) {
+        //   interstitial.show();
+        // }
     }
 
     @Override
@@ -144,13 +174,11 @@ private Query orderData;
                 orderData
 
 
-        )
-        {
+        ) {
             @Override
             public int getItemViewType(int position) {
-                Home obj=getItem(position);
-                switch(obj.getHas_image())
-                {
+                Home obj = getItem(position);
+                switch (obj.getHas_image()) {
                     case 0:
                         return 0;
                     case 1:
@@ -161,16 +189,15 @@ private Query orderData;
 
             @Override
             public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                switch(viewType)
-                {
+                switch (viewType) {
                     case 0:
-                        View type1= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_wihtout_image,parent,false);
+                        View type1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_wihtout_image, parent, false);
                         return new HomeViewHolder(type1);
                     case 1:
-                        View type2=LayoutInflater.from(parent.getContext()).inflate(R.layout.home_row,parent,false);
-                        return  new HomeViewHolder(type2);
+                        View type2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_row, parent, false);
+                        return new HomeViewHolder(type2);
                 }
-                return super.onCreateViewHolder(parent,viewType);
+                return super.onCreateViewHolder(parent, viewType);
             }
 
             @Override
@@ -180,8 +207,8 @@ private Query orderData;
 
                 viewHolder.setEvent(model.getEvent());
                 viewHolder.setPost(model.getPost());
-                if(model.getHas_image()==1)
-                viewHolder.setImage(getApplicationContext(), model.getImage());
+                if (model.getHas_image() == 1)
+                    viewHolder.setImage(getApplicationContext(), model.getImage());
                 viewHolder.setUsername(model.getUsername());
 
                 viewHolder.setLikeButton(post_key);
@@ -193,10 +220,10 @@ private Query orderData;
                         //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
                         Intent singleHomeIntent = new Intent(MainActivity.this, HomeSingleActivity.class);
-                        Pair<View , String> pair1 = Pair.create(findViewById(R.id.post_image),"myImage");
-                        Pair<View , String> pair2 = Pair.create(findViewById(R.id.post_image),"myEvent");
-                        Pair<View , String> pair3 = Pair.create(findViewById(R.id.post_image),"myPost");
-                        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,pair1,pair2,pair3);
+                        Pair<View, String> pair1 = Pair.create(findViewById(R.id.post_image), "myImage");
+                        Pair<View, String> pair2 = Pair.create(findViewById(R.id.post_image), "myEvent");
+                        Pair<View, String> pair3 = Pair.create(findViewById(R.id.post_image), "myPost");
+                        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, pair1, pair2, pair3);
                         singleHomeIntent.putExtra("home_id", post_key);
                         startActivity(singleHomeIntent, optionsCompat.toBundle());
                     }
@@ -245,12 +272,11 @@ private Query orderData;
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
 
-
     }
 
     private void checkUserExist() {
 
-        if (mAuth.getCurrentUser()!=null) {
+        if (mAuth.getCurrentUser() != null) {
 
             final String user_ID = mAuth.getCurrentUser().getUid();
 
@@ -278,7 +304,7 @@ private Query orderData;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.main_menu , menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -325,7 +351,7 @@ private Query orderData;
             mDatabaseLike.keepSynced(true);
         }
 
-        public void setLikeButton(final String post_key){
+        public void setLikeButton(final String post_key) {
             mDatabaseLike.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -347,29 +373,33 @@ private Query orderData;
 
         }
 
-        public void setEvent(String event){
+        public void setEvent(String event) {
             TextView post_event = (TextView) mView.findViewById(R.id.post_event);
             post_event.setText(event);
 
         }
 
-        public void setPost(String post){
+        public void setPost(String post) {
+
             TextView post_text = (TextView) mView.findViewById(R.id.post_text);
             post_text.setText(post);
 
+
         }
 
-        public void setImage(Context ctx, String image){
+        public void setImage(Context ctx, String image) {
             ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
             Picasso.with(ctx).load(image).into(post_image);
         }
 
-        public void setUsername(String username){
+        public void setUsername(String username) {
             TextView post_username = (TextView) mView.findViewById(R.id.postUsername);
             post_username.setText(username);
         }
 
     }
+
+
 
     public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
         RecyclerView.LayoutManager mLayoutManager;
@@ -404,8 +434,7 @@ private Query orderData;
             for (int i = 0; i < lastVisibleItemPositions.length; i++) {
                 if (i == 0) {
                     maxSize = lastVisibleItemPositions[i];
-                }
-                else if (lastVisibleItemPositions[i] > maxSize) {
+                } else if (lastVisibleItemPositions[i] > maxSize) {
                     maxSize = lastVisibleItemPositions[i];
                 }
             }
@@ -469,4 +498,5 @@ private Query orderData;
         public abstract void onLoadMore(int page, int totalItemsCount, RecyclerView view);
 
     }
+
 }
