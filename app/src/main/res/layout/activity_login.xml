@@ -74,14 +74,14 @@
         android:layout_marginBottom="20dp" />
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_buzzer3"
         android:id="@+id/logo"
+        android:src="@drawable/ic_buzzer3"
         android:layout_alignBottom="@+id/loginEmailfield"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="14dp" />
+        android:layout_alignLeft="@+id/registerButton"
+        android:layout_alignStart="@+id/registerButton"
+        android:layout_marginBottom="36dp" />
 
 
 </RelativeLayout>
