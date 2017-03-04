@@ -32,6 +32,25 @@
         android:layout_marginTop="20dp"
         android:hint="Name" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_below="@+id/setupNamefield"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/setupCollegefield"
+        android:layout_marginTop="20dp"
+        android:hint="College Name" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/setupCollegefield"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/setupLocationfield"
+        android:layout_marginTop="20dp"
+        android:hint="From Where you belong?" />
+
     <Button
         android:text="Save Information"
         android:layout_width="match_parent"

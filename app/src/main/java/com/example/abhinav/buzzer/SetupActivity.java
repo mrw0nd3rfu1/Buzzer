@@ -26,6 +26,8 @@ public class SetupActivity extends AppCompatActivity {
     private static final int GALLERY_REQUEST = 1;
     private ImageButton mSetupImageButton;
     private EditText mNameField;
+    private EditText mCollegeField;
+    private EditText mLocationField;
     private Button mSubmitButton;
     private DatabaseReference mDatabaseUsers;
     private FirebaseAuth mAuth;
@@ -46,6 +48,8 @@ public class SetupActivity extends AppCompatActivity {
 
         mSetupImageButton = (ImageButton) findViewById(R.id.profileImageButton);
         mNameField = (EditText) findViewById(R.id.setupNamefield);
+        mCollegeField = (EditText) findViewById(R.id.setupCollegefield);
+        mLocationField = (EditText) findViewById(R.id.setupLocationfield);
         mSubmitButton = (Button) findViewById(R.id.setupSubmitButton);
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +76,8 @@ public class SetupActivity extends AppCompatActivity {
     private void startSetupAccount() {
 
         final String name = mNameField.getText().toString().trim();
+        final String college_name = mCollegeField.getText().toString().trim();
+        final String location = mLocationField.getText().toString().trim();
 
         final String user_ID = mAuth.getCurrentUser().getUid();
 
@@ -89,6 +95,8 @@ public class SetupActivity extends AppCompatActivity {
                     String downloadUrl = taskSnapshot.getDownloadUrl().toString();
 
                     mDatabaseUsers.child(user_ID).child("name").setValue(name);
+                    mDatabaseUsers.child(user_ID).child("college_name").setValue(college_name);
+                    mDatabaseUsers.child(user_ID).child("location").setValue(location);
                     mDatabaseUsers.child(user_ID).child("profile_pic").setValue(downloadUrl);
 
                     Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -57,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mtoolbar;
     FloatingActionButton mfab;
     InterstitialAd mInterstitialAd;
-    private ImageView overflow;
+    String LIST_STATE_KEY = "";
+
     private RecyclerView mHomePage;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
@@ -73,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     private InterstitialAd interstitial;
     private boolean isUserClickedBackButton=false;
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
+    private CircleImageView mProfileImage;
+    private TextView mNameUser;
 
 
     @Override
@@ -121,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Home");
-
+        mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
+        mNameUser = (TextView) findViewById(R.id.user_name);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -130,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
         mDatabaseUsers.keepSynced(true);
         mDatabaseLike.keepSynced(true);
         orderData.keepSynced(true);
-
 
         mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
         mHomePage.setHasFixedSize(true);
@@ -147,6 +151,27 @@ public class MainActivity extends AppCompatActivity {
         checkUserExist();
     }
 
+   /* protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+
+        state.putParcelable(LIST_STATE_KEY, layoutManager.onSaveInstanceState());
+    }
+
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+
+        Parcelable listState = state.getParcelable(LIST_STATE_KEY);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (listState != null) {
+            mlayoutManager.onRestoreInstanceState(listState);
+        }
+    }
+*/
     @Override
     public void onBackPressed() {
         if(!isUserClickedBackButton){
@@ -309,6 +334,23 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(setupIntent);
 
                     }
+                    else
+                    {
+                        mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String post_image = (String) dataSnapshot.child("profile_pic").getValue();
+                                Picasso.with(MainActivity.this).load(post_image).into(mProfileImage);
+                                String post_name = (String) dataSnapshot.child("name").getValue();
+                                mNameUser.setText(post_name);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
                 }
 
                 @Override
@@ -377,9 +419,9 @@ public class MainActivity extends AppCompatActivity {
 
                     if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
 
-                        mLikeButton.setImageResource(R.mipmap.ic_thumb_up_black_24dp);
+                        mLikeButton.setImageResource(R.drawable.ic_like2_hdpi);
                     } else {
-                        mLikeButton.setImageResource(R.mipmap.ic_thumb_up_white_24dp);
+                        mLikeButton.setImageResource(R.drawable.ic_like_hdpi);
 
                     }
                 }
@@ -419,6 +461,7 @@ public class MainActivity extends AppCompatActivity {
         public void setProfile_Pic(Context ctx, String image){
             CircleImageView profile_pic = (CircleImageView) mView.findViewById(R.id.user_pic);
             Picasso.with(ctx).load(image).into(profile_pic);
+
         }
 
 
