@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         orderData.keepSynced(true);
 
         mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
+        mHomePage.setNestedScrollingEnabled(false);
         mHomePage.setHasFixedSize(true);
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
 
