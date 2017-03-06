@@ -5,24 +5,16 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.Pair;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.abhinav.buzzer.tabs.SlidingTabLayout;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -42,7 +33,6 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton mfab;
     InterstitialAd mInterstitialAd;
     String LIST_STATE_KEY = "";
-
+    private static final int HEADER_VIEW = 2;
     private RecyclerView mHomePage;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
@@ -73,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager mLayoutManager;
     private AdView mAdView;
     private InterstitialAd interstitial;
-    private boolean isUserClickedBackButton=false;
+    private boolean isUserClickedBackButton = false;
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     private CircleImageView mProfileImage;
     private TextView mNameUser;
@@ -87,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-7607893686244125~3347511713");
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+     //   mAdView.loadAd(adRequest);
 
         // Prepare the Interstitial Ad
         interstitial = new InterstitialAd(MainActivity.this);
@@ -119,13 +109,13 @@ public class MainActivity extends AppCompatActivity {
 
         mtoolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(mtoolbar);
-        ActionBar actionBar =getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         mtoolbar.setNavigationIcon(null);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Home");
-        mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
+        //  mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
         mNameUser = (TextView) findViewById(R.id.user_name);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
@@ -151,38 +141,37 @@ public class MainActivity extends AppCompatActivity {
         checkUserExist();
     }
 
-   /* protected void onSaveInstanceState(Bundle state) {
-        super.onSaveInstanceState(state);
+    /* protected void onSaveInstanceState(Bundle state) {
+         super.onSaveInstanceState(state);
 
-        state.putParcelable(LIST_STATE_KEY, layoutManager.onSaveInstanceState());
-    }
+         state.putParcelable(LIST_STATE_KEY, layoutManager.onSaveInstanceState());
+     }
 
-    protected void onRestoreInstanceState(Bundle state) {
-        super.onRestoreInstanceState(state);
+     protected void onRestoreInstanceState(Bundle state) {
+         super.onRestoreInstanceState(state);
 
-        Parcelable listState = state.getParcelable(LIST_STATE_KEY);
-    }
+         Parcelable listState = state.getParcelable(LIST_STATE_KEY);
+     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+     @Override
+     protected void onResume() {
+         super.onResume();
 
-        if (listState != null) {
-            mlayoutManager.onRestoreInstanceState(listState);
-        }
-    }
-*/
+         if (listState != null) {
+             mlayoutManager.onRestoreInstanceState(listState);
+         }
+     }
+ */
     @Override
     public void onBackPressed() {
-        if(!isUserClickedBackButton){
-            Toast.makeText(this, "Press Back button again to Exit",Toast.LENGTH_SHORT).show();
-            isUserClickedBackButton=true;
-        }
-        else {
+        if (!isUserClickedBackButton) {
+            Toast.makeText(this, "Press Back button again to Exit", Toast.LENGTH_SHORT).show();
+            isUserClickedBackButton = true;
+        } else {
             super.onBackPressed();
         }
 
-        new CountDownTimer(3000,1000){
+        new CountDownTimer(3000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -191,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                isUserClickedBackButton=false;
+                isUserClickedBackButton = false;
             }
         }.start();
     }
@@ -220,27 +209,51 @@ public class MainActivity extends AppCompatActivity {
 
         ) {
             @Override
+            public int getItemCount() {
+                return (super.getItemCount() + 1);
+            }
+
+            @Override
             public int getItemViewType(int position) {
-                Home obj = getItem(position);
-                switch (obj.getHas_image()) {
-                    case 0:
-                        return 0;
-                    case 1:
-                        return 1;
-                }
+                if (position != 0) {
+                    Home obj = getItem(position - 1);
+                    switch (obj.getHas_image()) {
+                        case 0:
+                            return 0;
+                        case 1:
+                            return 1;
+                    }
+                } else return HEADER_VIEW;
                 return super.getItemViewType(position);
             }
 
             @Override
-            public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                switch (viewType) {
-                    case 0:
-                        View type1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_wihtout_image, parent, false);
-                        return new HomeViewHolder(type1);
-                    case 1:
-                        View type2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_row, parent, false);
-                        return new HomeViewHolder(type2);
+            public void onBindViewHolder(HomeViewHolder viewHolder, int position) {
+                if (getItemViewType(position) == HEADER_VIEW) {
+                    //put the code to do things in card here
+                } else {
+                    Home model = getItem(position - 1);
+                    populateViewHolder(viewHolder, model, position - 1);
                 }
+            }
+
+            @Override
+            public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                if (viewType == HEADER_VIEW) {
+
+                    View header = LayoutInflater.from(parent.getContext()).inflate(R.layout.header, parent, false);
+                    return new headerView(header);
+                } else {
+                    switch (viewType) {
+                        case 0:
+                            View type1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_wihtout_image, parent, false);
+                            return new HomeViewHolder(type1);
+                        case 1:
+                            View type2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_row, parent, false);
+                            return new HomeViewHolder(type2);
+                    }
+                }
+
                 return super.onCreateViewHolder(parent, viewType);
             }
 
@@ -333,14 +346,12 @@ public class MainActivity extends AppCompatActivity {
                         setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(setupIntent);
 
-                    }
-                    else
-                    {
+                    } else {
                         mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 String post_image = (String) dataSnapshot.child("profile_pic").getValue();
-                                Picasso.with(MainActivity.this).load(post_image).into(mProfileImage);
+                                //  Picasso.with(MainActivity.this).load(post_image).into(mProfileImage);
                                 String post_name = (String) dataSnapshot.child("name").getValue();
                                 mNameUser.setText(post_name);
                             }
@@ -400,7 +411,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference mDatabaseLike;
         FirebaseAuth mAuth;
 
-        public HomeViewHolder(View itemView) {
+        HomeViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
 
@@ -410,7 +421,9 @@ public class MainActivity extends AppCompatActivity {
             mAuth = FirebaseAuth.getInstance();
 
             mDatabaseLike.keepSynced(true);
+
         }
+
 
         public void setLikeButton(final String post_key) {
             mDatabaseLike.addValueEventListener(new ValueEventListener() {
@@ -419,9 +432,9 @@ public class MainActivity extends AppCompatActivity {
 
                     if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
 
-                        mLikeButton.setImageResource(R.drawable.ic_like2_hdpi);
+                        mLikeButton.setImageResource(R.mipmap.ic_thumb_up_black_24dp);
                     } else {
-                        mLikeButton.setImageResource(R.drawable.ic_like_hdpi);
+                        mLikeButton.setImageResource(R.mipmap.ic_thumb_up_white_24dp);
 
                     }
                 }
@@ -458,13 +471,20 @@ public class MainActivity extends AppCompatActivity {
             post_username.setText(username);
         }
 
-        public void setProfile_Pic(Context ctx, String image){
+        public void setProfile_Pic(Context ctx, String image) {
             CircleImageView profile_pic = (CircleImageView) mView.findViewById(R.id.user_pic);
             Picasso.with(ctx).load(image).into(profile_pic);
 
         }
 
 
+    }
+
+    public static class headerView extends HomeViewHolder {
+        public headerView(View itemView) {
+            super(itemView);
+
+        }
     }
 
 
