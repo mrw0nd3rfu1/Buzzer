@@ -1,64 +1,37 @@
 package com.example.abhinav.buzzer;
-
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.app.Activity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.TextView;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import java.util.List;
 
-import java.util.ArrayList;
 
-public class CollegeActivity extends AppCompatActivity {
+public class CollegeActivity extends ArrayAdapter<CollegeName> {
+    private Activity context;
+    List<CollegeName> cname;
 
-    private ListView listView;
-    private DatabaseReference mDatabase;
-    ArrayList<String> list = new ArrayList<>();
-    ArrayAdapter<String> adapter;
+    public CollegeActivity(Activity context, List<CollegeName> artists) {
+        super(context, R.layout.college_list, artists);
+        this.context = context;
+        this.cname = artists;
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_college);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = context.getLayoutInflater();
+        View listViewItem = inflater.inflate(R.layout.college_list, null, true);
 
-        listView = (ListView)findViewById(R.id.listView);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("College");
-        adapter = new ArrayAdapter<String>(this , android.R.layout.simple_dropdown_item_1line);
-        listView.setAdapter(adapter);
-        mDatabase.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String value =dataSnapshot.getValue(String.class);
-                list.add(value);
-                adapter.notifyDataSetChanged();
-            }
+        TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+        CollegeName name = cname.get(position);
+        textViewName.setText(name.getCollegeName());
 
-            }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                String value =dataSnapshot.getValue(String.class);
-                list.remove(value);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        return listViewItem;
     }
 
 

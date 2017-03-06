@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -274,6 +275,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+      /*          viewHolder.mCommentButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent commentIntent = new Intent(MainActivity.this, CollegeListActivity.class);
+                        commentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(commentIntent);
+                    }
+                });
+/*
+               viewHolder.mProfileImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+*/
                 viewHolder.mLikeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -374,7 +391,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-
+        if (item.getItemId()== R.id.action_college){
+            Intent collegeIntent = new Intent(MainActivity.this, CollegeListActivity.class);
+            collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(collegeIntent);
+        }
         if (item.getItemId() == R.id.action_logout) {
 
             logout();
@@ -397,6 +418,9 @@ public class MainActivity extends AppCompatActivity {
         View mView;
 
         ImageButton mLikeButton;
+        ImageButton mCommentButton;
+
+        CircleImageView mProfileImage;
 
         DatabaseReference mDatabaseLike;
         FirebaseAuth mAuth;
@@ -406,6 +430,8 @@ public class MainActivity extends AppCompatActivity {
             mView = itemView;
 
             mLikeButton = (ImageButton) mView.findViewById(R.id.likeButton);
+            mCommentButton = (ImageButton) mView.findViewById(R.id.commentButton);
+            mProfileImage = (CircleImageView) mView.findViewById(R.id.user_pic);
 
             mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
             mAuth = FirebaseAuth.getInstance();

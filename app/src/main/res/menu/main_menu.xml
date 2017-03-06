@@ -7,6 +7,10 @@
         android:title="Setting"
         app:showAsAction="never" />
 
+    <item android:id="@+id/action_college"
+        android:title="College Selection"
+        app:showAsAction="never" />
+
     <item android:id="@+id/action_profile"
         android:title="Profile"
         app:showAsAction="never" />
