@@ -23,14 +23,16 @@
         android:layout_height="wrap_content"
         android:hint="Enter College name if not present"
         android:layout_below="@+id/toolbar"
-        />
+        android:padding="20dp" />
 
        <Button
         android:id="@+id/buttonAddCollege"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextName"
-        android:text="Add" />
+        android:text="Add"
+           android:theme="@style/AppTheme.Button" />
+
 
     <TextView
         android:id="@+id/textView"
