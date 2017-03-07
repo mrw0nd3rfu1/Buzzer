@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         mDatabaseUsers.keepSynced(true);
 
         logo = (ImageView)findViewById(R.id.logo);
-        logo.setImageResource(R.drawable.ic_buzzer3);
+        logo.setImageResource(R.drawable.iclaunch);
 
 
         mGoogleButton = (SignInButton) findViewById(R.id.googleButton);

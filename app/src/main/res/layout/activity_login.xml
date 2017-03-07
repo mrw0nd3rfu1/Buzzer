@@ -5,38 +5,37 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.abhinav.buzzer.LoginActivity"
-    android:background="@drawable/animation_list">
+    android:background="@drawable/animation_list"
+    tools:context="com.example.abhinav.buzzer.LoginActivity">
+
+
 
 
 
     <Button
+        android:id="@+id/loginButton"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:text="Sign In"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/loginButton"
         android:layout_alignBottom="@+id/googleButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="55dp" />
+        android:layout_marginBottom="55dp"
+        android:text="Sign In" />
 
     <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/googleButton"
-        android:layout_marginBottom="69dp"
         android:layout_above="@+id/registerButton"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="69dp">
 
     </com.google.android.gms.common.SignInButton>
 
     <EditText
+        android:id="@+id/loginPasswordfield"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/loginPasswordfield"
-        android:hint="Enter Your Password"
         android:layout_above="@+id/googleButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -44,34 +43,48 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/input_outline"
+        android:ems="10"
+        android:hint="Enter Your Password"
+        android:inputType="textPassword"
         android:padding="15dp" />
 
     <EditText
+        android:id="@+id/loginEmailfield"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/loginEmailfield"
-        android:hint="Enter Your Email"
         android:layout_above="@+id/loginPasswordfield"
-        android:background="@drawable/input_outline"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:padding="15dp"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginTop="20dp"
+        android:background="@drawable/input_outline"
+        android:ems="10"
+        android:hint="Enter Your Email"
+        android:inputType="textEmailAddress"
+        android:padding="15dp" />
 
     <TextView
-        android:text="Need a new account..Click Here"
+        android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:id="@+id/registerButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp" />
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="20dp"
+        android:text="Need a new account..Click Here" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/loginEmailfield"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="14dp"
+        android:src="@drawable/iclaunch" />
+
 
     <ImageView
         android:layout_width="200dp"
