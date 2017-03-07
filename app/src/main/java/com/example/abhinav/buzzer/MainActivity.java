@@ -5,16 +5,24 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.Pair;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.abhinav.buzzer.tabs.SlidingTabLayout;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -33,6 +42,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -127,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         orderData.keepSynced(true);
 
         mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
+        mHomePage.setNestedScrollingEnabled(false);
         mHomePage.setHasFixedSize(true);
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
 
@@ -150,18 +161,18 @@ public class MainActivity extends AppCompatActivity {
      protected void onRestoreInstanceState(Bundle state) {
          super.onRestoreInstanceState(state);
 
-         Parcelable listState = state.getParcelable(LIST_STATE_KEY);
-     }
+        Parcelable listState = state.getParcelable(LIST_STATE_KEY);
+    }
 
-     @Override
-     protected void onResume() {
-         super.onResume();
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-         if (listState != null) {
-             mlayoutManager.onRestoreInstanceState(listState);
-         }
-     }
- */
+        if (listState != null) {
+            mlayoutManager.onRestoreInstanceState(listState);
+        }
+    }
+*/
     @Override
     public void onBackPressed() {
         if (!isUserClickedBackButton) {
@@ -180,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                isUserClickedBackButton = false;
+                isUserClickedBackButton=false;
             }
         }.start();
     }
@@ -253,7 +264,6 @@ public class MainActivity extends AppCompatActivity {
                             return new HomeViewHolder(type2);
                     }
                 }
-
                 return super.onCreateViewHolder(parent, viewType);
             }
 
@@ -286,6 +296,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+      /*          viewHolder.mCommentButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent commentIntent = new Intent(MainActivity.this, CollegeListActivity.class);
+                        commentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(commentIntent);
+                    }
+                });
+/*
+               viewHolder.mProfileImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+*/
                 viewHolder.mLikeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -384,7 +410,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-
+        if (item.getItemId()== R.id.action_college){
+            Intent collegeIntent = new Intent(MainActivity.this, CollegeListActivity.class);
+            collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(collegeIntent);
+        }
         if (item.getItemId() == R.id.action_logout) {
 
             logout();
@@ -407,6 +437,9 @@ public class MainActivity extends AppCompatActivity {
         View mView;
 
         ImageButton mLikeButton;
+        ImageButton mCommentButton;
+
+        CircleImageView mProfileImage;
 
         DatabaseReference mDatabaseLike;
         FirebaseAuth mAuth;
@@ -416,14 +449,14 @@ public class MainActivity extends AppCompatActivity {
             mView = itemView;
 
             mLikeButton = (ImageButton) mView.findViewById(R.id.likeButton);
+            mCommentButton = (ImageButton) mView.findViewById(R.id.commentButton);
+            mProfileImage = (CircleImageView) mView.findViewById(R.id.user_pic);
 
             mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
             mAuth = FirebaseAuth.getInstance();
 
             mDatabaseLike.keepSynced(true);
-
         }
-
 
         public void setLikeButton(final String post_key) {
             mDatabaseLike.addValueEventListener(new ValueEventListener() {

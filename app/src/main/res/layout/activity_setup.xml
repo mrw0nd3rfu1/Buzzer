@@ -59,4 +59,34 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/setupSubmitButton" />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar"
+        android:layout_below="@+id/setupLocationfield"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/dobButton" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView"
+        android:layout_toLeftOf="@+id/dobButton"
+        android:layout_toStartOf="@+id/dobButton"
+        android:id="@+id/dob" />
+
+    <TextView
+        android:text="Date of Birth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:layout_marginBottom="12dp"
+        android:textSize="18sp"
+        android:paddingLeft="5dp"
+        android:layout_alignBottom="@+id/dobButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

@@ -93,6 +93,17 @@
             app:srcCompat="@mipmap/ic_thumb_up_white_24dp"
             android:background="@android:drawable/screen_background_light_transparent" />
 
+        <ImageButton
+            android:id="@+id/commentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:paddingLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:srcCompat="@drawable/ic_cast_light"
+            android:background="@android:drawable/screen_background_light_transparent" />
 
         <LinearLayout
             android:layout_width="match_parent"

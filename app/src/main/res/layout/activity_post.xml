@@ -57,6 +57,5 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@color/colorPrimary"
-        android:text="Submit Post"
-        android:textColor="@android:color/white" />
+        android:text="Submit Post" />
 </RelativeLayout>

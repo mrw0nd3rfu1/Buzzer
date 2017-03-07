@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
+
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
     
     <style name="SplashScreenTheme" >
         <item name="android:windowBackground">@drawable/splash_layer</item>
