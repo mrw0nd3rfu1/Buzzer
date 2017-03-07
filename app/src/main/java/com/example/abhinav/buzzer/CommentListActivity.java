@@ -152,11 +152,12 @@ public class CommentListActivity extends AppCompatActivity {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.college_update, null);
+        final View dialogView = inflater.inflate(R.layout.comment_update, null);
         dialogBuilder.setView(dialogView);
 
-        final EditText editTextComment = (EditText) dialogView.findViewById(R.id.comment);
+        final EditText editTextComment = (EditText) dialogView.findViewById(R.id.editTextName);
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateArtist);
+        final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteArtist);
 
         dialogBuilder.setTitle(commentName);
         final AlertDialog b = dialogBuilder.create();
@@ -166,8 +167,8 @@ public class CommentListActivity extends AppCompatActivity {
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String comment = editTextComment.getText().toString().trim();
-                String name = databaseUser.child(mAuth.getCurrentUser().getUid()).child("name").toString();
+                String name = editTextComment.getText().toString().trim();
+                String comment = databaseUser.child(mAuth.getCurrentUser().getUid()).child("name").toString();
                 if (!TextUtils.isEmpty(name)) {
                     updateCollege(commentId, name, comment);
                     b.dismiss();
@@ -175,5 +176,27 @@ public class CommentListActivity extends AppCompatActivity {
             }
         });
 
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                deleteComment(commentId);
+                b.dismiss();
+            }
+        });
+
+    }
+
+    private boolean deleteComment(String id) {
+        //getting the specified artist reference
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference().child("Post").child(mPost_key).child("Comments").child(id);
+
+        //removing artist
+        dR.removeValue();
+
+
+         Toast.makeText(getApplicationContext(), "Comment Deleted", Toast.LENGTH_LONG).show();
+
+        return true;
     }
 }
