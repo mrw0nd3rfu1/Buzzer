@@ -296,10 +296,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-      /*          viewHolder.mCommentButton.setOnClickListener(new View.OnClickListener() {
+                viewHolder.mCommentButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent commentIntent = new Intent(MainActivity.this, CollegeListActivity.class);
+                        Intent commentIntent = new Intent(MainActivity.this, CommentListActivity.class);
+                        commentIntent.putExtra("home_id", post_key);
                         commentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(commentIntent);
                     }
