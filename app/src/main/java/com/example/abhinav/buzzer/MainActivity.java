@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Home");
-        //  mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
+        //mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
         mNameUser = (TextView) findViewById(R.id.user_name);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
@@ -465,9 +465,9 @@ public class MainActivity extends AppCompatActivity {
 
                     if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
 
-                        mLikeButton.setImageResource(R.mipmap.ic_thumb_up_black_24dp);
+                        mLikeButton.setImageResource(R.drawable.ic_like_hdpi);
                     } else {
-                        mLikeButton.setImageResource(R.mipmap.ic_thumb_up_white_24dp);
+                        mLikeButton.setImageResource(R.drawable.ic_like2_hdpi);
 
                     }
                 }
