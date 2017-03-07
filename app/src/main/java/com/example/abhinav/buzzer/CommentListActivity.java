@@ -37,6 +37,7 @@ public class CommentListActivity extends AppCompatActivity {
 
     DatabaseReference databaseComment;
     DatabaseReference databaseUser;
+    DatabaseReference database;
     FirebaseAuth mAuth;
     private String mPost_key = null;
 
@@ -47,6 +48,7 @@ public class CommentListActivity extends AppCompatActivity {
 
         mPost_key = getIntent().getExtras().getString("home_id");
 
+        database = FirebaseDatabase.getInstance().getReference().child("Post");
         databaseComment = FirebaseDatabase.getInstance().getReference().child("Post").child(mPost_key).child("Comments");
         databaseUser =FirebaseDatabase.getInstance().getReference().child("User");
         mAuth = FirebaseAuth.getInstance();
@@ -175,6 +177,7 @@ public class CommentListActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
