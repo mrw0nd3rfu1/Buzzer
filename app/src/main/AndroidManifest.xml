@@ -30,6 +30,7 @@
         <activity android:name=".LikedActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".CollegeListActivity" />
+        <activity android:name=".CommentListActivity" />
 
         <service android:name=".MyFirebaseInstance">
             <intent-filter>
