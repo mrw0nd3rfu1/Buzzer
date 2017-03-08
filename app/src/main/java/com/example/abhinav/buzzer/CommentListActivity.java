@@ -105,6 +105,7 @@ public class CommentListActivity extends AppCompatActivity {
                 CommentActivity collegeAdapter = new CommentActivity(CommentListActivity.this, cName);
                 //attaching adapter to the listview
                 listViewComment.setAdapter(collegeAdapter);
+                listViewComment.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
             }
 
             @Override
