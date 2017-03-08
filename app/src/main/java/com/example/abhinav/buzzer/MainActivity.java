@@ -305,14 +305,27 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(commentIntent);
                     }
                 });
-/*
+
                viewHolder.mProfileImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
+                        profileIntent.putExtra("home_id", post_key);
+                        profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(profileIntent);
                     }
                 });
-*/
+
+                viewHolder.mUserName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
+                        profileIntent.putExtra("home_id", post_key);
+                        profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(profileIntent);
+                    }
+                });
+
                 viewHolder.mLikeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -441,6 +454,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton mCommentButton;
 
         CircleImageView mProfileImage;
+        TextView mUserName;
 
         DatabaseReference mDatabaseLike;
         FirebaseAuth mAuth;
@@ -452,6 +466,7 @@ public class MainActivity extends AppCompatActivity {
             mLikeButton = (ImageButton) mView.findViewById(R.id.likeButton);
             mCommentButton = (ImageButton) mView.findViewById(R.id.commentButton);
             mProfileImage = (CircleImageView) mView.findViewById(R.id.user_pic);
+            mUserName = (TextView) mView.findViewById(R.id.postUsername);
 
             mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
             mAuth = FirebaseAuth.getInstance();
