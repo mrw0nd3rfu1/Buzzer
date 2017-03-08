@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Home");
-        //mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
+        mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
         mNameUser = (TextView) findViewById(R.id.user_name);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
@@ -378,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 String post_image = (String) dataSnapshot.child("profile_pic").getValue();
-                                //  Picasso.with(MainActivity.this).load(post_image).into(mProfileImage);
+                                Picasso.with(MainActivity.this).load(post_image).into(mProfileImage);
                                 String post_name = (String) dataSnapshot.child("name").getValue();
                                 mNameUser.setText(post_name);
                             }

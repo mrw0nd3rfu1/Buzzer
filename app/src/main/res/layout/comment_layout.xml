@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
 
-    <TextView
+    >
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="User name"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:id="@+id/textViewUser"/>
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:elevation="16dp"
+        >
 
-    <TextView
-        android:hint="Comment"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:id="@+id/textViewName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:id="@+id/textViewUser"
+            android:hint="Username"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:id="@+id/textViewName"
+            android:hint="Password"/>
+
+    </LinearLayout>
 
 
 
-</LinearLayout>
+</android.support.v7.widget.CardView>
