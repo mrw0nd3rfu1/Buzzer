@@ -32,6 +32,7 @@ public class CommentListActivity extends AppCompatActivity {
     ListView listViewComment;
     Toolbar mToolbar;
 
+
     //a list to store all the artist from firebase database
     List<CommentPosts> cName;
 

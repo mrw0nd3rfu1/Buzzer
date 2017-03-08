@@ -72,10 +72,11 @@ public class CollegeListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //getting the selected artist
                 CollegeName artist = cName.get(i);
+                Intent activity=getIntent();
+                DatabaseReference dref=FirebaseDatabase.getInstance().getReference("Users");
 
-                //creating an intent
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
+                intent.putExtra("College",artist.getCollegeName());
                 //starting the activity with intent
                 startActivity(intent);
             }

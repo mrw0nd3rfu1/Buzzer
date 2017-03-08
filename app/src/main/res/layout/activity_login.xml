@@ -74,18 +74,6 @@
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="20dp"
         android:text="Need a new account..Click Here" />
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/loginEmailfield"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="14dp"
-        android:src="@drawable/iclaunch" />
-
-
     <ImageView
         android:layout_width="200dp"
         android:layout_height="wrap_content"

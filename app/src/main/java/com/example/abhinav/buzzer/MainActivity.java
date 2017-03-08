@@ -63,7 +63,12 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mHomePage;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
+    private int previousTotal=0;
+    private boolean loading =true;
+    private int visibleThreshold=5;
+    int firstVisibleItem, visibleItemCount, totalItemCount;
 
+    private int current_page = 1;
     private DatabaseReference mDatabaseLike;
     private FirebaseAuth mAuth;
 
@@ -149,68 +154,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(postIntent);
             }
         });
-        checkUserExist();
-    }
-
-    /* protected void onSaveInstanceState(Bundle state) {
-         super.onSaveInstanceState(state);
-
-         state.putParcelable(LIST_STATE_KEY, layoutManager.onSaveInstanceState());
-     }
-
-     protected void onRestoreInstanceState(Bundle state) {
-         super.onRestoreInstanceState(state);
-
-        Parcelable listState = state.getParcelable(LIST_STATE_KEY);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (listState != null) {
-            mlayoutManager.onRestoreInstanceState(listState);
-        }
-    }
-*/
-    @Override
-    public void onBackPressed() {
-        if (!isUserClickedBackButton) {
-            Toast.makeText(this, "Press Back button again to Exit", Toast.LENGTH_SHORT).show();
-            isUserClickedBackButton = true;
-        } else {
-            super.onBackPressed();
-        }
-
-        new CountDownTimer(3000, 1000) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                isUserClickedBackButton=false;
-            }
-        }.start();
-    }
-
-    public void displayInterstitial() {
-// If Ads are loaded, show Interstitial else show nothing.
-        // if (interstitial.isLoaded()) {
-        //   interstitial.show();
-        // }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-
         mAuth.addAuthStateListener(mAuthListener);
 
-        final FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
+         FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
 
                 Home.class,
                 R.layout.home_row,
@@ -219,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         ) {
+
             @Override
             public int getItemCount() {
                 return (super.getItemCount() + 1);
@@ -354,8 +301,87 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(MainActivity.this);
         mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
+        mHomePage.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                visibleItemCount=recyclerView.getChildCount();
+                totalItemCount=mLayoutManager.getItemCount();
+                firstVisibleItem=mLayoutManager.findFirstVisibleItemPosition();
+                if (loading) {
+                    if (totalItemCount > previousTotal) {
+                        loading = false;
+                        previousTotal = totalItemCount;
+                    }
+                }
+                if (!loading && (totalItemCount - visibleItemCount)
+                        <= (firstVisibleItem + visibleThreshold)) {
 
 
+
+                    current_page++;
+
+                    onLoadMore(current_page);
+
+                    loading = true;
+                }
+            }
+            void onLoadMore(int current_page){
+
+            }
+        });
+        checkUserExist();
+    }
+
+    /* protected void onSaveInstanceState(Bundle state) {
+         super.onSaveInstanceState(state);
+
+         state.putParcelable(LIST_STATE_KEY, layoutManager.onSaveInstanceState());
+     }
+
+     protected void onRestoreInstanceState(Bundle state) {
+         super.onRestoreInstanceState(state);
+
+        Parcelable listState = state.getParcelable(LIST_STATE_KEY);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (listState != null) {
+            mlayoutManager.onRestoreInstanceState(listState);
+        }
+    }
+*/
+    @Override
+    public void onBackPressed() {
+        if (!isUserClickedBackButton) {
+            Toast.makeText(this, "Press Back button again to Exit", Toast.LENGTH_SHORT).show();
+            isUserClickedBackButton = true;
+        } else {
+            super.onBackPressed();
+        }
+
+        new CountDownTimer(3000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                isUserClickedBackButton=false;
+            }
+        }.start();
+    }
+
+    public void displayInterstitial() {
+// If Ads are loaded, show Interstitial else show nothing.
+        // if (interstitial.isLoaded()) {
+        //   interstitial.show();
+        // }
     }
 
     private void checkUserExist() {

@@ -35,6 +35,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 public class SetupActivity extends AppCompatActivity{
 
     private static final int GALLERY_REQUEST = 1;
+    private static final String Tag="Buzer";
     private ImageButton mSetupImageButton;
     private EditText mNameField;
     private EditText mCollegeField;
@@ -60,6 +61,8 @@ public class SetupActivity extends AppCompatActivity{
         mSetupImageButton = (ImageButton) findViewById(R.id.profileImageButton);
         mNameField = (EditText) findViewById(R.id.setupNamefield);
         mCollegeField = (EditText) findViewById(R.id.setupCollegefield);
+        mCollegeField.setEnabled(false);
+        Button mCollegechange = (Button) findViewById(R.id.changeCollege);
         mLocationField = (EditText) findViewById(R.id.setupLocationfield);
         mSubmitButton = (Button) findViewById(R.id.setupSubmitButton);
 
@@ -69,7 +72,15 @@ public class SetupActivity extends AppCompatActivity{
                 startSetupAccount();
             }
         });
-
+        mCollegechange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent collegeIntent=new Intent(SetupActivity.this,CollegeListActivity.class);
+                collegeIntent.putExtra("User",mAuth.getCurrentUser().getUid());
+                collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(collegeIntent);
+            }
+        });
         mSetupImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,13 +97,15 @@ public class SetupActivity extends AppCompatActivity{
 
     private void startSetupAccount() {
 
+
         final String name = mNameField.getText().toString().trim();
         final String college_name = mCollegeField.getText().toString().trim();
         final String location = mLocationField.getText().toString().trim();
 
         final String user_ID = mAuth.getCurrentUser().getUid();
 
-        if (!TextUtils.isEmpty(name) && mImageUri != null) {
+
+        if (!TextUtils.isEmpty(name) && mImageUri != null ) {
 
             mProgress.setMessage("Saving the Profile");
             mProgress.show();
