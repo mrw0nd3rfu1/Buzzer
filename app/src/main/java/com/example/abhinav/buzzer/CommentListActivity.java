@@ -116,8 +116,7 @@ public class CommentListActivity extends AppCompatActivity {
 
     private void addComment() {
         String name = editTextComment.getText().toString().trim();
-        String comment = databaseUser.child(mAuth.getCurrentUser().getUid()).child("name").toString();
-
+        String comment ="";
         if (!TextUtils.isEmpty(name)) {
 
             //getting a unique id using push().getKey() method
@@ -170,7 +169,7 @@ public class CommentListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String name = editTextComment.getText().toString().trim();
-                String comment = databaseUser.child(mAuth.getCurrentUser().getUid()).child("name").toString();
+                String comment = "";
                 if (!TextUtils.isEmpty(name)) {
                     updateCollege(commentId, name, comment);
                     b.dismiss();
