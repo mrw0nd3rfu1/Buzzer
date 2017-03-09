@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Home");
-        //mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
+        mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
         mNameUser = (TextView) findViewById(R.id.user_name);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
@@ -252,11 +253,24 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(commentIntent);
                     }
                 });
-/*
+
                viewHolder.mProfileImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
+                        profileIntent.putExtra("home_id", post_key);
+                        profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(profileIntent);
+                    }
+                });
 
+                viewHolder.mUserName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
+                        profileIntent.putExtra("home_id", post_key);
+                        profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(profileIntent);
                     }
                 });
 */
@@ -404,7 +418,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 String post_image = (String) dataSnapshot.child("profile_pic").getValue();
-                                //  Picasso.with(MainActivity.this).load(post_image).into(mProfileImage);
+                                Picasso.with(MainActivity.this).load(post_image).into(mProfileImage);
                                 String post_name = (String) dataSnapshot.child("name").getValue();
                                 mNameUser.setText(post_name);
                             }
@@ -467,6 +481,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton mCommentButton;
 
         CircleImageView mProfileImage;
+        TextView mUserName;
 
         DatabaseReference mDatabaseLike;
         FirebaseAuth mAuth;
@@ -478,6 +493,7 @@ public class MainActivity extends AppCompatActivity {
             mLikeButton = (ImageButton) mView.findViewById(R.id.likeButton);
             mCommentButton = (ImageButton) mView.findViewById(R.id.commentButton);
             mProfileImage = (CircleImageView) mView.findViewById(R.id.user_pic);
+            mUserName = (TextView) mView.findViewById(R.id.postUsername);
 
             mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
             mAuth = FirebaseAuth.getInstance();
@@ -538,13 +554,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-    }
-
-    public static class headerView extends HomeViewHolder {
-        public headerView(View itemView) {
-            super(itemView);
-
-        }
     }
 
 
