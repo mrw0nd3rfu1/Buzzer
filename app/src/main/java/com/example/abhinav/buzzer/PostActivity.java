@@ -170,6 +170,7 @@ public class PostActivity extends AppCompatActivity
     private void getPostId()
     {
         final DatabaseReference postNo=FirebaseDatabase.getInstance().getReference().child("post_count");
+        final DatabaseReference College=FirebaseDatabase.getInstance().getReference("College").child(getIntent().getStringExtra("CollegeId"));
         postNo.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -182,6 +183,15 @@ public class PostActivity extends AppCompatActivity
                     postId=Integer.toString(sequence.intValue());
                     sequence--;
                     mutableData.setValue(sequence);
+                    if(College.child("LastPost")==null)
+                    {
+                    College.child("LastPost").setValue(sequence);
+                        College.child("FirstPost").setValue((sequence));
+                    }
+                    else
+                    {
+                        College.child("FirstPost").setValue(sequence);
+                    }
                     return  Transaction.success(mutableData);
                 }}
 

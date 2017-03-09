@@ -1,8 +1,11 @@
 package com.example.abhinav.buzzer;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 /**
  * Created by Abhinav on 23-Jan-17.
  */
+@IgnoreExtraProperties
 
 public class Home {
 

@@ -17,6 +17,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -95,7 +97,39 @@ public class HomeSingleActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 mDatabase.child(mPost_key).removeValue();
-               // if(hasImage==1){
+//                final DatabaseReference College=FirebaseDatabase.getInstance().getReference("College").child(getIntent().getStringExtra("CollegeId"));
+//                College.runTransaction(new Transaction.Handler() {
+//                    @Override
+//                    public Transaction.Result doTransaction(MutableData mutableData) {
+//                        CollegeName artist=mutableData.getValue(CollegeName.class);
+//                        if(artist==null)
+//                        {
+//                            return Transaction.success(mutableData);
+//                        }
+//                        else
+//                        {
+//                        int startTd=artist.getFirstPost();
+//                        int endId=artist.getLastPost();
+//                        if(startTd==endId)
+//                        {
+//                            mutableData.child("FirstPost").setValue(null);
+//                            mutableData.child("LastPost").setValue(null);
+//
+//                        }
+//                        else
+//                        {
+//                            endId--;
+//                            mutableData.child("LastPost").setValue(endId);
+//                        }
+//                    }
+//                    return Transaction.success(mutableData);
+//                    }
+//
+//                    @Override
+//                    public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//
+//                    }
+//                });
                 mStorage= FirebaseStorage.getInstance().getReference().child("Posts/"+postId);
                 mStorage.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

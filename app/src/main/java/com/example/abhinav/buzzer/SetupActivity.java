@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +41,7 @@ public class SetupActivity extends AppCompatActivity{
     private EditText mNameField;
     private EditText mCollegeField;
     private EditText mLocationField;
+    static String college_name="";
     private Button mSubmitButton;
     private DatabaseReference mDatabaseUsers;
     private FirebaseAuth mAuth;
@@ -62,7 +64,7 @@ public class SetupActivity extends AppCompatActivity{
         mNameField = (EditText) findViewById(R.id.setupNamefield);
         mCollegeField = (EditText) findViewById(R.id.setupCollegefield);
         mCollegeField.setEnabled(false);
-        Button mCollegechange = (Button) findViewById(R.id.changeCollege);
+        Button mCollegeChange = (Button) findViewById(R.id.changeCollege);
         mLocationField = (EditText) findViewById(R.id.setupLocationfield);
         mSubmitButton = (Button) findViewById(R.id.setupSubmitButton);
 
@@ -72,11 +74,22 @@ public class SetupActivity extends AppCompatActivity{
                 startSetupAccount();
             }
         });
-        mCollegechange.setOnClickListener(new View.OnClickListener() {
+        if(getIntent().hasExtra("College"))
+        {
+            mCollegeField.setText(getIntent().getStringExtra("College"));
+
+        }
+        else{
+            mCollegeField.setText("None");
+        }
+
+
+        mCollegeChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent collegeIntent=new Intent(SetupActivity.this,CollegeListActivity.class);
                 collegeIntent.putExtra("User",mAuth.getCurrentUser().getUid());
+                collegeIntent.putExtra("Caller","Setup");
                 collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(collegeIntent);
             }
@@ -99,13 +112,18 @@ public class SetupActivity extends AppCompatActivity{
 
 
         final String name = mNameField.getText().toString().trim();
-        final String college_name = mCollegeField.getText().toString().trim();
+        if(getIntent().hasExtra("College"))
+        {
+            college_name=getIntent().getStringExtra("CollegeName");
+        }
+        mCollegeField.setText(getIntent().getStringExtra("CollegeName"));
+
         final String location = mLocationField.getText().toString().trim();
 
         final String user_ID = mAuth.getCurrentUser().getUid();
 
 
-        if (!TextUtils.isEmpty(name) && mImageUri != null ) {
+        if (!TextUtils.isEmpty(name) && mImageUri != null && !TextUtils.isEmpty(college_name) ) {
 
             mProgress.setMessage("Saving the Profile");
             mProgress.show();
@@ -122,12 +140,18 @@ public class SetupActivity extends AppCompatActivity{
                     mDatabaseUsers.child(user_ID).child("college_name").setValue(college_name);
                     mDatabaseUsers.child(user_ID).child("location").setValue(location);
                     mDatabaseUsers.child(user_ID).child("profile_pic").setValue(downloadUrl);
+                    mDatabaseUsers.child(user_ID).child("CollegeId").setValue(getIntent().getStringExtra("CollegeId"));
 
                     Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
+                    mainIntent.putExtra("College",getIntent().getStringExtra("College"));
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainIntent);
                 }
             });
+        }
+        else
+        {
+            Toast.makeText(SetupActivity.this , "Check name photo and college" , Toast.LENGTH_SHORT).show();
         }
 
     }

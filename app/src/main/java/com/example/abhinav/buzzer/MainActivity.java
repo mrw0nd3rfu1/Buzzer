@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private Query orderData;
+    FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private boolean mProcessLike = false;
     private LinearLayoutManager mLayoutManager;
@@ -151,13 +152,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
+                postIntent.putExtra("CollegeId",getIntent().getStringExtra("CollegeId"));
                 postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(postIntent);
             }
         });
         mAuth.addAuthStateListener(mAuthListener);
 
-         FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
+       firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
 
                 Home.class,
                 R.layout.home_row,
@@ -254,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-               viewHolder.mProfileImage.setOnClickListener(new View.OnClickListener() {
+                viewHolder.mProfileImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
@@ -273,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(profileIntent);
                     }
                 });
-*/
+
                 viewHolder.mLikeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -311,7 +313,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-
         mLayoutManager = new LinearLayoutManager(MainActivity.this);
         mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
@@ -368,6 +369,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 */
+
+
+
     @Override
     public void onBackPressed() {
         if (!isUserClickedBackButton) {
@@ -554,6 +558,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public static class headerView extends HomeViewHolder {
+        public headerView(View itemView) {
+            super(itemView);
+
+        }
     }
 
 
