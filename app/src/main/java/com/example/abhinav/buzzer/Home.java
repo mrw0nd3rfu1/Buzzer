@@ -9,7 +9,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 public class Home {
 
-    public int With_image=1;
+    public int With_image;
 
     private String event, post, image,profile_pic, username,post_id,uid;
     public Home() {

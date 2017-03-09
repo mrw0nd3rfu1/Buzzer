@@ -138,7 +138,6 @@ public class EventActivity extends AppCompatActivity {
                         //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
                         Intent singleHomeIntent = new Intent(EventActivity.this, HomeSingleActivity.class);
-                        singleHomeIntent.putExtra("CollegeId",getIntent().getStringExtra("CollegeId"));
                         singleHomeIntent.putExtra("home_id", post_key);
                         startActivity(singleHomeIntent);
                     }

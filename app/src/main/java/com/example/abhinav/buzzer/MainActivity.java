@@ -25,6 +25,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -237,12 +238,8 @@ public class MainActivity extends AppCompatActivity {
                         //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
                         Intent singleHomeIntent = new Intent(MainActivity.this, HomeSingleActivity.class);
-                        Pair<View, String> pair1 = Pair.create(findViewById(R.id.post_image), "myImage");
-                        Pair<View, String> pair2 = Pair.create(findViewById(R.id.post_image), "myEvent");
-                        Pair<View, String> pair3 = Pair.create(findViewById(R.id.post_image), "myPost");
-                        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, pair1, pair2, pair3);
                         singleHomeIntent.putExtra("home_id", post_key);
-                        startActivity(singleHomeIntent, optionsCompat.toBundle());
+                        startActivity(singleHomeIntent);
                     }
                 });
 
@@ -316,35 +313,6 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(MainActivity.this);
         mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
-        mHomePage.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                visibleItemCount=recyclerView.getChildCount();
-                totalItemCount=mLayoutManager.getItemCount();
-                firstVisibleItem=mLayoutManager.findFirstVisibleItemPosition();
-                if (loading) {
-                    if (totalItemCount > previousTotal) {
-                        loading = false;
-                        previousTotal = totalItemCount;
-                    }
-                }
-                if (!loading && (totalItemCount - visibleItemCount)
-                        <= (firstVisibleItem + visibleThreshold)) {
-
-
-
-                    current_page++;
-
-                    onLoadMore(current_page);
-
-                    loading = true;
-                }
-            }
-            void onLoadMore(int current_page){
-
-            }
-        });
         checkUserExist();
     }
 
@@ -371,16 +339,16 @@ public class MainActivity extends AppCompatActivity {
 */
 
 
-
     @Override
     public void onBackPressed() {
         if (!isUserClickedBackButton) {
             Toast.makeText(this, "Press Back button again to Exit", Toast.LENGTH_SHORT).show();
             isUserClickedBackButton = true;
-        } else {
+        }
+        else
+        {
             super.onBackPressed();
         }
-
         new CountDownTimer(3000, 1000) {
 
             @Override

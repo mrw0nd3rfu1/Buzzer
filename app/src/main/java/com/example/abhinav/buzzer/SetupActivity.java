@@ -41,7 +41,6 @@ public class SetupActivity extends AppCompatActivity{
     private EditText mNameField;
     private EditText mCollegeField;
     private EditText mLocationField;
-    static String college_name="";
     private Button mSubmitButton;
     private DatabaseReference mDatabaseUsers;
     private FirebaseAuth mAuth;
@@ -74,9 +73,9 @@ public class SetupActivity extends AppCompatActivity{
                 startSetupAccount();
             }
         });
-        if(getIntent().hasExtra("College"))
+        if(getIntent().hasExtra("CollegeName"))
         {
-            mCollegeField.setText(getIntent().getStringExtra("College"));
+            mCollegeField.setText(getIntent().getStringExtra("CollegeName"));
 
         }
         else{
@@ -112,18 +111,14 @@ public class SetupActivity extends AppCompatActivity{
 
 
         final String name = mNameField.getText().toString().trim();
-        if(getIntent().hasExtra("College"))
-        {
-            college_name=getIntent().getStringExtra("CollegeName");
-        }
-        mCollegeField.setText(getIntent().getStringExtra("CollegeName"));
+        final String college_name=mCollegeField.getText().toString().trim();
 
         final String location = mLocationField.getText().toString().trim();
 
         final String user_ID = mAuth.getCurrentUser().getUid();
 
 
-        if (!TextUtils.isEmpty(name) && mImageUri != null && !TextUtils.isEmpty(college_name) ) {
+        if (!TextUtils.isEmpty(name) && mImageUri != null && !college_name.equals("None")){
 
             mProgress.setMessage("Saving the Profile");
             mProgress.show();

@@ -4,13 +4,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,6 +44,7 @@ public class PostActivity extends AppCompatActivity
     private CircleImageView image;
     private Button submit;
     private Long sequence;
+    private boolean isUserClickedBackButton = false;
     private Uri imageUri = null;
     private StorageReference mStorage;
     private DatabaseReference mDatabase;
@@ -99,6 +103,26 @@ public class PostActivity extends AppCompatActivity
     private void startPosting()
     {
 
+        String collegeId=GlobalClass.getInstance().getCollegeId();
+        final DatabaseReference College=FirebaseDatabase.getInstance().getReference("College").child(collegeId);
+        College.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.child("FirstPost").exists())
+                    {
+                        College.child("LastPost").setValue(postId);
+                    }
+                    else
+                        College.child("FirstPost").setValue(postId);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
         final String title_event = event.getText().toString().trim();
         final String title_post = post.getText().toString().trim();
 
@@ -128,7 +152,8 @@ public class PostActivity extends AppCompatActivity
                                     newpost.child("With_image").setValue(1);
                                 }});
                                 }
-                            newpost.child("With_image").setValue(0);
+                                else{
+                            newpost.child("With_image").setValue(0);}
                             newpost.child("uid").setValue(mCurrentUser.getUid());
                             newpost.child("post_id").setValue(postId);
                             newpost.child("profile_pic").setValue(dataSnapshot.child("profile_pic").getValue());
@@ -155,8 +180,16 @@ public class PostActivity extends AppCompatActivity
                 }
 
         }
-
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 1)
+        {
+            this.moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -170,7 +203,6 @@ public class PostActivity extends AppCompatActivity
     private void getPostId()
     {
         final DatabaseReference postNo=FirebaseDatabase.getInstance().getReference().child("post_count");
-        final DatabaseReference College=FirebaseDatabase.getInstance().getReference("College").child(getIntent().getStringExtra("CollegeId"));
         postNo.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -179,26 +211,13 @@ public class PostActivity extends AppCompatActivity
                 if(sequence==null)
                     return  Transaction.success(mutableData);
                 else{
-
                     postId=Integer.toString(sequence.intValue());
                     sequence--;
                     mutableData.setValue(sequence);
-                    if(College.child("LastPost")==null)
-                    {
-                    College.child("LastPost").setValue(sequence);
-                        College.child("FirstPost").setValue((sequence));
-                    }
-                    else
-                    {
-                        College.child("FirstPost").setValue(sequence);
-                    }
                     return  Transaction.success(mutableData);
                 }}
-
-
             @Override
             public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-
                 startPosting();
 
             }
