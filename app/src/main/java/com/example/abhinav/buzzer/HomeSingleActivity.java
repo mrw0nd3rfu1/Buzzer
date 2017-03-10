@@ -17,6 +17,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -93,24 +95,36 @@ public class HomeSingleActivity extends AppCompatActivity {
         mHomeSingleRemoveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mDatabase.child(mPost_key).removeValue();
-               // if(hasImage==1){
-                mStorage= FirebaseStorage.getInstance().getReference().child("Posts/"+postId);
-                mStorage.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(HomeSingleActivity.this,"Removed Succesfully",Toast.LENGTH_SHORT).show();                    }
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                      Long val=(Long)dataSnapshot.child(mPost_key).child("With_image").getValue();
+                        if(val==1)
+                        {
+                            mStorage= FirebaseStorage.getInstance().getReference().child("Posts/"+postId);
+                            mStorage.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(HomeSingleActivity.this,"Removed Succesfully",Toast.LENGTH_SHORT).show();                    }
 
-                }).addOnFailureListener(new OnFailureListener() {
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    Toast.makeText(HomeSingleActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else
+                            Toast.makeText(HomeSingleActivity.this,"Removed Successfully",Toast.LENGTH_SHORT).show();
+                    }
+
                     @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(HomeSingleActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                    public void onCancelled(DatabaseError databaseError) {
+
                     }
                 });
-                //}
-               // else
-              //      Toast.makeText(HomeSingleActivity.this,"Removed Succesfully",Toast.LENGTH_SHORT).show();
+
+                mDatabase.child(mPost_key).removeValue();
 
                 Intent mainIntent = new Intent(HomeSingleActivity.this, MainActivity.class);
                 startActivity(mainIntent);

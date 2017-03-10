@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,9 +36,10 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 public class SetupActivity extends AppCompatActivity{
 
     private static final int GALLERY_REQUEST = 1;
+    private static final String Tag="Buzer";
     private ImageButton mSetupImageButton;
     private EditText mNameField;
-    private Button mCollegeSelect;
+    private EditText mCollegeField;
     private EditText mLocationField;
     private Button mSubmitButton;
     private DatabaseReference mDatabaseUsers;
@@ -59,18 +61,11 @@ public class SetupActivity extends AppCompatActivity{
 
         mSetupImageButton = (ImageButton) findViewById(R.id.profileImageButton);
         mNameField = (EditText) findViewById(R.id.setupNamefield);
+        mCollegeField = (EditText) findViewById(R.id.setupCollegefield);
+        mCollegeField.setEnabled(false);
+        Button mCollegeChange = (Button) findViewById(R.id.changeCollege);
         mLocationField = (EditText) findViewById(R.id.setupLocationfield);
         mSubmitButton = (Button) findViewById(R.id.setupSubmitButton);
-        mCollegeSelect = (Button) findViewById(R.id.collegeChoose);
-
-        mCollegeSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mainIntent = new Intent(SetupActivity.this, CollegeListActivity2.class);
-                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(mainIntent);
-            }
-        });
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +73,26 @@ public class SetupActivity extends AppCompatActivity{
                 startSetupAccount();
             }
         });
+        if(getIntent().hasExtra("CollegeName"))
+        {
+            mCollegeField.setText(getIntent().getStringExtra("CollegeName"));
 
+        }
+        else{
+            mCollegeField.setText("None");
+        }
+
+
+        mCollegeChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent collegeIntent=new Intent(SetupActivity.this,CollegeListActivity.class);
+                collegeIntent.putExtra("User",mAuth.getCurrentUser().getUid());
+                collegeIntent.putExtra("Caller","Setup");
+                collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(collegeIntent);
+            }
+        });
         mSetupImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,12 +109,16 @@ public class SetupActivity extends AppCompatActivity{
 
     private void startSetupAccount() {
 
+
         final String name = mNameField.getText().toString().trim();
+        final String college_name=mCollegeField.getText().toString().trim();
+
         final String location = mLocationField.getText().toString().trim();
 
         final String user_ID = mAuth.getCurrentUser().getUid();
 
-        if (!TextUtils.isEmpty(name) && mImageUri != null) {
+
+        if (!TextUtils.isEmpty(name) && mImageUri != null && !college_name.equals("None")){
 
             mProgress.setMessage("Saving the Profile");
             mProgress.show();
@@ -114,14 +132,21 @@ public class SetupActivity extends AppCompatActivity{
                     String downloadUrl = taskSnapshot.getDownloadUrl().toString();
 
                     mDatabaseUsers.child(user_ID).child("name").setValue(name);
+                    mDatabaseUsers.child(user_ID).child("college_name").setValue(college_name);
                     mDatabaseUsers.child(user_ID).child("location").setValue(location);
                     mDatabaseUsers.child(user_ID).child("profile_pic").setValue(downloadUrl);
+                    mDatabaseUsers.child(user_ID).child("CollegeId").setValue(getIntent().getStringExtra("CollegeId"));
 
                     Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
+                    mainIntent.putExtra("College",getIntent().getStringExtra("College"));
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainIntent);
                 }
             });
+        }
+        else
+        {
+            Toast.makeText(SetupActivity.this , "Check name photo and college" , Toast.LENGTH_SHORT).show();
         }
 
     }

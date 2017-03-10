@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         mDatabaseUsers.keepSynced(true);
 
         logo = (ImageView)findViewById(R.id.logo);
-        logo.setImageResource(R.drawable.ic_buzzer3);
+        logo.setImageResource(R.drawable.iclaunch);
 
 
         mGoogleButton = (SignInButton) findViewById(R.id.googleButton);
@@ -225,8 +225,10 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.hasChild(user_ID)) {
-
+                        String collegeId=(String)dataSnapshot.child((user_ID)).child("CollegeId").getValue();
                         Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        GlobalClass.getInstance().setCollegeId(collegeId);
+                        mainIntent.putExtra("CollegeId",collegeId);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(mainIntent);
 

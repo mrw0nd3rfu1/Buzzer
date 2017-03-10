@@ -32,101 +32,94 @@
         android:textSize="16dp"
         android:textStyle="normal|bold"/>
 
-       <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:orientation="vertical">
 
 
-           <TextView
+        <TextView
 
-               android:id="@+id/postUsername"
-               android:layout_width="271dp"
-               android:layout_height="wrap_content"
-               android:layout_gravity="center"
-               android:paddingBottom="15dp"
-               android:paddingLeft="1dp"
-               android:paddingRight="15dp"
-               android:paddingTop="15dp"
-               android:text="Username"
-               android:textSize="16dp"
+            android:id="@+id/postUsername"
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="15dp"
+            android:paddingLeft="1dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:text="Username"
+            android:textSize="16dp"
 
-               android:textStyle="normal|bold" />
-
-
-           <ImageView
-               android:id="@+id/post_image"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:adjustViewBounds="true"
-               android:paddingTop="5dp"
-               android:scaleType="centerCrop"
-               android:src="@mipmap/add_btn"
-               android:transitionName="myImage"/>
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-           <ImageButton
-               android:id="@+id/likeButton"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="10dp"
-               android:layout_weight="1"
-               android:paddingLeft="10dp"
-               android:layout_marginRight="10dp"
-               app:srcCompat="@mipmap/ic_thumb_up_white_24dp"
-               android:background="@android:drawable/screen_background_light_transparent"
-               android:layout_alignParentTop="true"
-               android:layout_alignParentStart="true"
-               android:layout_marginStart="17dp" />
+            android:textStyle="normal|bold" />
 
 
-    <ImageButton
-        android:id="@+id/commentButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_weight="1"
-        android:background="@android:drawable/screen_background_light_transparent"
-        android:paddingLeft="10dp"
-        app:srcCompat="@drawable/ic_question_answer_black_24dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/likeButton" />
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/post_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:paddingTop="5dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/add_btn"
+            android:transitionName="myImage" />
 
-           <TextView
-            android:id="@+id/post_event"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/likeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@android:drawable/screen_background_light_transparent"
+                android:paddingLeft="10dp"
+                app:srcCompat="@mipmap/ic_thumb_up_white_24dp" />
+
+
+            <ImageButton
+                android:id="@+id/commentButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_star2"
+                android:text="Button"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/likeButton"
+                android:layout_alignBottom="@+id/likeButton" />
+        </RelativeLayout>
+
+        <TextView
+         android:id="@+id/post_event"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center"
+         android:paddingLeft="15dp"
+         android:paddingRight="15dp"
+         android:text="Post Event Here"
+         android:textSize="16dp"
+         android:textStyle="normal|bold"
+            android:transitionName="myEvent" />
+
+
+        <TextView
+            android:id="@+id/post_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:paddingBottom="15dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:text="Post Event Here"
+            android:paddingTop="15dp"
+            android:text="Write Post Here"
             android:textSize="16dp"
-            android:textStyle="normal|bold"
-               android:transitionName="myEvent"
-           />
+            android:transitionName="myPost" />
 
 
-           <TextView
-               android:id="@+id/post_text"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_gravity="center"
-               android:paddingBottom="15dp"
-               android:paddingLeft="15dp"
-               android:paddingRight="15dp"
-               android:paddingTop="15dp"
-               android:text="Write Post Here"
-               android:textSize="16dp"
-               android:transitionName="myPost"/>
-
-
-
-       </LinearLayout>
-
+    </LinearLayout>
 
 
 </android.support.v7.widget.CardView>

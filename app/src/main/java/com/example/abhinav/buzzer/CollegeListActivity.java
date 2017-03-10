@@ -72,12 +72,22 @@ public class CollegeListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //getting the selected artist
                 CollegeName artist = cName.get(i);
-                
-                //creating an intent
+                Intent activity=getIntent();
+               if(activity.getStringExtra("Caller").equals("Setup"))
+               {
+                   Intent setup=new Intent(CollegeListActivity.this,SetupActivity.class);
+                   setup.putExtra("CollegeName",artist.getCollegeName());
+                   setup.putExtra("CollegeId",artist.getCollegeID());
+                   setup.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                   startActivity(setup);
+               }
+               else
+               {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
+                   intent.putExtra("CollegeId",artist.getCollegeID());
+                   startActivity(intent);
+               }
                 //starting the activity with intent
-                startActivity(intent);
             }
         });
 
@@ -128,7 +138,7 @@ public class CollegeListActivity extends AppCompatActivity {
             //it will create a unique id and we will use it as the Primary Key for our Artist
             String id = databaseCollege.push().getKey();
 
-            CollegeName clg_name = new CollegeName(id ,name);
+            CollegeName clg_name = new CollegeName(id ,name,"","");
 
             databaseCollege.child(id).setValue(clg_name);
 
@@ -148,7 +158,7 @@ public class CollegeListActivity extends AppCompatActivity {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("College").child(id);
 
         //updating artist
-        CollegeName clg_name = new CollegeName(id, name);
+        CollegeName clg_name = new CollegeName(id, name,"","");
         dR.setValue(clg_name);
         Toast.makeText(getApplicationContext(), "College Updated", Toast.LENGTH_LONG).show();
         return true;

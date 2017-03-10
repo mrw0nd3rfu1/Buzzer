@@ -1,12 +1,15 @@
 package com.example.abhinav.buzzer;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 /**
  * Created by Abhinav on 23-Jan-17.
  */
+@IgnoreExtraProperties
 
 public class Home {
 
-    public int With_image=1;
+    public int With_image;
 
     private String event, post, image,profile_pic, username,post_id,uid;
     public Home() {
