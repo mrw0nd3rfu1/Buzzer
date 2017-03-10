@@ -2,6 +2,8 @@ package com.example.abhinav.buzzer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -31,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +53,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -512,7 +516,9 @@ public class MainActivity extends AppCompatActivity {
 
         public void setImage(Context ctx, String image) {
             ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
+
             Picasso.with(ctx).load(image).into(post_image);
+
         }
 
         public void setUsername(String username) {

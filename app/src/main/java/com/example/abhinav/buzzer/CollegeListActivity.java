@@ -72,7 +72,7 @@ public class CollegeListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //getting the selected artist
                 CollegeName artist = cName.get(i);
-
+                
                 //creating an intent
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
