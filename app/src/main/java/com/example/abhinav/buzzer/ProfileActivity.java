@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     private String mPost_key = null;
-    private String postId=null;
+     private String postId=null;
     private int hasImage=1;
     private DatabaseReference mDatabase;
     private StorageReference mStorage;
@@ -59,7 +60,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Profile");
-
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");

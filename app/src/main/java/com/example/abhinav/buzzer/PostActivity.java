@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,8 +39,10 @@ public class PostActivity extends AppCompatActivity
 
     private static final int GALLERY_REQUEST = 1;
     private String postId="";
+    private String Event_Id ="";
+    private String Event_name="";
     private ImageButton imageSelect;
-    private EditText event;
+    private TextView event;
     private EditText post;
     private CircleImageView image;
     private Button submit;
@@ -65,12 +68,16 @@ public class PostActivity extends AppCompatActivity
 
         mCurrentUser = mAuth.getCurrentUser();
 
+        Event_Id = getIntent().getExtras().getString("EventId");
+        Event_name = getIntent().getExtras().getString("EventName");
+
         mStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
         imageSelect = (ImageButton) findViewById(R.id.imageSelect);
-        event = (EditText) findViewById(R.id.singleHomeEvent);
+        event = (TextView) findViewById(R.id.singleHomeEvent);
+        event.setText(Event_name);
         post = (EditText) findViewById(R.id.postWrite);
         submit = (Button) findViewById(R.id.submitPost);
         image = (CircleImageView) findViewById(R.id.user_pic);
@@ -103,7 +110,7 @@ public class PostActivity extends AppCompatActivity
     private void startPosting()
     {
 
-        String collegeId=GlobalClass.getInstance().getCollegeId();
+     /*   String collegeId=GlobalClass.getInstance().getCollegeId();
         final DatabaseReference College=FirebaseDatabase.getInstance().getReference("College").child(collegeId);
         College.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -120,13 +127,12 @@ public class PostActivity extends AppCompatActivity
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
-            });
+            });    */
 
 
-        final String title_event = event.getText().toString().trim();
         final String title_post = post.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(title_event) && !TextUtils.isEmpty(title_post) ) {
+        if (!TextUtils.isEmpty(title_post) ) {
 
 
             final DatabaseReference newpost = mDatabase.push();
@@ -140,7 +146,8 @@ public class PostActivity extends AppCompatActivity
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            newpost.child("event").setValue(title_event);
+                            newpost.child("event").setValue(Event_name);
+                            newpost.child("eventId").setValue(Event_Id);
                             newpost.child("post").setValue(title_post);
 
                             if(imageUri!=null){

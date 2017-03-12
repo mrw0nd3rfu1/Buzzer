@@ -39,6 +39,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.abhinav.buzzer.tabs.SlidingTabLayout;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdListener;
@@ -156,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         mfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
+                Intent postIntent = new Intent(MainActivity.this, EventListActivity.class);
                 postIntent.putExtra("CollegeId",getIntent().getStringExtra("CollegeId"));
                 postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(postIntent);
@@ -436,6 +437,9 @@ public class MainActivity extends AppCompatActivity {
 
             logout();
         }
+
+
+
 
         if (item.getItemId() == R.id.action_profile) {
             Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
