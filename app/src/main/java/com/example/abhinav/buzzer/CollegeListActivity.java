@@ -1,12 +1,17 @@
 package com.example.abhinav.buzzer;
 
 import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -191,4 +196,40 @@ public class CollegeListActivity extends AppCompatActivity {
         });
 
     }
+
+  /*   @Override
+   public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.search_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.item_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                List<CollegeName> tempList = new ArrayList<>();
+
+
+                for (String temp : cName)
+                {
+                    if(temp.toLowerCase().contains(query.toLowerCase())){
+                        tempList.add(temp);
+                    }
+                }
+                CollegeActivity collegeAdapter = new CollegeActivity(CollegeListActivity.this, tempList);
+                //attaching adapter to the listview
+                listViewCollege.setAdapter(collegeAdapter);
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }*/
 }

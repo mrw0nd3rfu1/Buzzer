@@ -31,4 +31,5 @@ public class CollegeName {
     public Integer getFirstPost(){return Integer.parseInt(FirstPost);}
 
 
+
 }
