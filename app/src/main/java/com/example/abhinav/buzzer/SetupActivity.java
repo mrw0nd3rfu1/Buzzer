@@ -86,7 +86,7 @@ public class SetupActivity extends AppCompatActivity{
         mCollegeChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent collegeIntent=new Intent(SetupActivity.this,CollegeListActivity.class);
+                Intent collegeIntent=new Intent(SetupActivity.this,CollegeListActivity2.class);
                 collegeIntent.putExtra("User",mAuth.getCurrentUser().getUid());
                 collegeIntent.putExtra("Caller","Setup");
                 collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -138,7 +138,7 @@ public class SetupActivity extends AppCompatActivity{
                     mDatabaseUsers.child(user_ID).child("CollegeId").setValue(getIntent().getStringExtra("CollegeId"));
 
                     Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
-                    mainIntent.putExtra("College",getIntent().getStringExtra("College"));
+                    mainIntent.putExtra("colgId",getIntent().getStringExtra("CollegeId"));
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainIntent);
                 }

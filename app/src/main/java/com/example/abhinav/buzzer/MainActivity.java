@@ -167,6 +167,16 @@ public class MainActivity extends AppCompatActivity {
         });
         mAuth.addAuthStateListener(mAuthListener);
 
+        mProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                profileIntent.putExtra("colgId",clgID);
+                profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(profileIntent);
+            }
+        });
+
        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
 
                 Home.class,

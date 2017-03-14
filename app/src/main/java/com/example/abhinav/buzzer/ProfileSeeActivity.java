@@ -2,10 +2,12 @@ package com.example.abhinav.buzzer;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +33,7 @@ public class ProfileSeeActivity extends AppCompatActivity {
     private TextView mNameUser;
     private TextView mCollegeName;
     private TextView mLocation;
+    private FloatingActionButton mFab;
 
 
     private String post_image;
@@ -56,7 +59,6 @@ public class ProfileSeeActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post").child(mPost_key);
         mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users");
-
 
         mNameUser = (TextView) findViewById(R.id.nameUser);
         mCollegeName = (TextView) findViewById(R.id.nameCollege);
@@ -101,9 +103,7 @@ public class ProfileSeeActivity extends AppCompatActivity {
             }
         });
 
-
-
-    }
+     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

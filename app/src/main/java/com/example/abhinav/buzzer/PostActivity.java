@@ -168,7 +168,7 @@ public class PostActivity extends AppCompatActivity
                             newpost.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                             String clgID = (String) dataSnapshot.child("CollegeId").getValue();
+                                    final String clgID = getIntent().getExtras().getString("colgId");
                                     if (task.isSuccessful()) {
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         intent.putExtra("colgId", clgID);
