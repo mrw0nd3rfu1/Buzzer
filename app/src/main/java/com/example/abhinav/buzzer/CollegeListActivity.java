@@ -89,7 +89,7 @@ public class CollegeListActivity extends AppCompatActivity {
                else
                {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                   intent.putExtra("CollegeId",artist.getCollegeID());
+                   intent.putExtra("colgId",artist.getCollegeID());
                    startActivity(intent);
                }
                 //starting the activity with intent

@@ -41,7 +41,9 @@ public class EventListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        databaseEvent = FirebaseDatabase.getInstance().getReference().child("Event");
+        final String clgID = getIntent().getExtras().getString("colgId");
+
+        databaseEvent = FirebaseDatabase.getInstance().getReference().child(clgID).child("Event");
 
         //getting views
         editTextName = (EditText) findViewById(R.id.editTextName);
@@ -53,6 +55,7 @@ public class EventListActivity extends AppCompatActivity {
 
         //list to store artists
         cName = new ArrayList<>();
+
 
 
         buttonAddEvent.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +76,7 @@ public class EventListActivity extends AppCompatActivity {
                 Intent setup=new Intent(EventListActivity.this,PostActivity.class);
                    setup.putExtra("EventName",artist.getEventName());
                    setup.putExtra("EventId",artist.getEventID());
+                   setup.putExtra("colgId", clgID);
                    setup.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                    startActivity(setup);
 
@@ -144,7 +148,8 @@ public class EventListActivity extends AppCompatActivity {
 
     private boolean updateCollege(String id, String name) {
         //getting the specified artist reference
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference().child("Event").child(id);
+        final String clgID = getIntent().getExtras().getString("colgId");
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference().child(clgID).child("Event").child(id);
 
         //updating artist
         CollegeName clg_name = new CollegeName(id, name,"","");

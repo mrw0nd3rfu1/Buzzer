@@ -141,7 +141,9 @@ public class MainActivity extends AppCompatActivity {
         mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
         mNameUser = (TextView) findViewById(R.id.user_name);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
+        final String clgID = getIntent().getExtras().getString("colgId");
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
         orderData = mDatabase.orderByChild("post_id");
@@ -158,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent postIntent = new Intent(MainActivity.this, EventListActivity.class);
-                postIntent.putExtra("CollegeId",getIntent().getStringExtra("CollegeId"));
+                postIntent.putExtra("colgId",clgID);
                 postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(postIntent);
             }
@@ -244,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
 
                         Intent singleHomeIntent = new Intent(MainActivity.this, HomeSingleActivity.class);
                         singleHomeIntent.putExtra("home_id", post_key);
+                        singleHomeIntent.putExtra("colgId", clgID);
                         startActivity(singleHomeIntent);
                     }
                 });
@@ -253,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent commentIntent = new Intent(MainActivity.this, CommentListActivity.class);
                         commentIntent.putExtra("home_id", post_key);
+                        commentIntent.putExtra("colgId", clgID);
                         commentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(commentIntent);
                     }
@@ -263,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
                         profileIntent.putExtra("home_id", post_key);
+                        profileIntent.putExtra("colgId", clgID);
                         profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(profileIntent);
                     }
@@ -273,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
                         profileIntent.putExtra("home_id", post_key);
+                        profileIntent.putExtra("colgId", clgID);
                         profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(profileIntent);
                     }
@@ -398,6 +404,7 @@ public class MainActivity extends AppCompatActivity {
                                 Picasso.with(MainActivity.this).load(post_image).into(mProfileImage);
                                 String post_name = (String) dataSnapshot.child("name").getValue();
                                 mNameUser.setText(post_name);
+                              //  String clg = (String) dataSnapshot.child("CollegeId").getValue();
                             }
 
                             @Override

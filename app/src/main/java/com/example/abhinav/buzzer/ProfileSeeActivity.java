@@ -41,6 +41,8 @@ public class ProfileSeeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_see);
 
+        final String clgID = getIntent().getExtras().getString("colgId");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         ActionBar actionBar =getSupportActionBar();
@@ -52,7 +54,7 @@ public class ProfileSeeActivity extends AppCompatActivity {
 
         mPost_key = getIntent().getExtras().getString("home_id");
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Post").child(mPost_key);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post").child(mPost_key);
         mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users");
 
 

@@ -47,8 +47,9 @@ public class HomeSingleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_single);
+        final String clgID = getIntent().getExtras().getString("colgId");
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -128,6 +129,7 @@ public class HomeSingleActivity extends AppCompatActivity {
                 mDatabase.child(mPost_key).removeValue();
 
                 Intent mainIntent = new Intent(HomeSingleActivity.this, MainActivity.class);
+                mainIntent.putExtra("colgId", clgID);
                 startActivity(mainIntent);
 
             }
