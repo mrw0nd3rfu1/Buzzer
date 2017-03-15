@@ -227,8 +227,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (dataSnapshot.hasChild(user_ID)) {
                         String collegeId=(String)dataSnapshot.child((user_ID)).child("CollegeId").getValue();
                         Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        GlobalClass.getInstance().setCollegeId(collegeId);
-                        mainIntent.putExtra("CollegeId",collegeId);
+                        mainIntent.putExtra("colgId",collegeId);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(mainIntent);
 

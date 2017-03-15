@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final String clgID = getIntent().getExtras().getString("colgId");
+
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-7607893686244125~3347511713");
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -122,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
                     Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    loginIntent.putExtra("colgId", clgID);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                 }
@@ -141,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
         mNameUser = (TextView) findViewById(R.id.user_name);
 
-        final String clgID = getIntent().getExtras().getString("colgId");
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
