@@ -1,26 +1,15 @@
 package com.example.abhinav.buzzer;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.icu.text.DateFormat;
-import android.icu.util.Calendar;
-import android.icu.util.GregorianCalendar;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -86,7 +75,7 @@ public class SetupActivity extends AppCompatActivity{
         mCollegeChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent collegeIntent=new Intent(SetupActivity.this,CollegeListActivity.class);
+                Intent collegeIntent=new Intent(SetupActivity.this,CollegeListActivity2.class);
                 collegeIntent.putExtra("User",mAuth.getCurrentUser().getUid());
                 collegeIntent.putExtra("Caller","Setup");
                 collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -138,7 +127,7 @@ public class SetupActivity extends AppCompatActivity{
                     mDatabaseUsers.child(user_ID).child("CollegeId").setValue(getIntent().getStringExtra("CollegeId"));
 
                     Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
-                    mainIntent.putExtra("College",getIntent().getStringExtra("College"));
+                    mainIntent.putExtra("colgId",getIntent().getStringExtra("CollegeId"));
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainIntent);
                 }

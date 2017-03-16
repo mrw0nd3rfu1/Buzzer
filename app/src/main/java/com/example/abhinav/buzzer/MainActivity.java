@@ -2,44 +2,30 @@ package com.example.abhinav.buzzer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BlurMaskFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.util.Pair;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.abhinav.buzzer.tabs.SlidingTabLayout;
+import com.example.abhinav.buzzer.tabs.PostFragment;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -47,7 +33,6 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +40,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -95,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final String clgID = getIntent().getExtras().getString("colgId");
+
+
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-7607893686244125~3347511713");
         mAdView = (AdView) findViewById(R.id.adView);
@@ -121,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
                     Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    loginIntent.putExtra("colgId", clgID);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                 }
@@ -140,7 +128,9 @@ public class MainActivity extends AppCompatActivity {
         mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
         mNameUser = (TextView) findViewById(R.id.user_name);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Post");
+
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
         orderData = mDatabase.orderByChild("post_id");
@@ -156,13 +146,23 @@ public class MainActivity extends AppCompatActivity {
         mfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
-                postIntent.putExtra("CollegeId",getIntent().getStringExtra("CollegeId"));
+                Intent postIntent = new Intent(MainActivity.this, EventListActivity.class);
+                postIntent.putExtra("colgId",clgID);
                 postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(postIntent);
             }
         });
         mAuth.addAuthStateListener(mAuthListener);
+
+        mProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                profileIntent.putExtra("colgId",clgID);
+                profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(profileIntent);
+            }
+        });
 
        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
 
@@ -196,17 +196,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onBindViewHolder(HomeViewHolder viewHolder, int position) {
                 if (getItemViewType(position) == HEADER_VIEW) {
+                    ((headerView) viewHolder).button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            android.app.Fragment check=getFragmentManager().findFragmentByTag("PostFragment");
+                            if(check!=null && check.isVisible())
+                            {
+                                getFragmentManager().beginTransaction().remove(check).commit();
+
+                            }
+                            else {
+                                PostFragment frag = new PostFragment();
+                                android.app.FragmentManager manager = getFragmentManager();
+                                android.app.FragmentTransaction transaction = manager.beginTransaction();
+                                transaction.add(R.id.post_frag_holder, frag, "PostFragment");
+                                transaction.commit();
+                            }}});
+
                     //put the code to do things in card here
                 } else {
                     Home model = getItem(position - 1);
                     populateViewHolder(viewHolder, model, position - 1);
                 }
             }
+           @Override
 
-            @Override
             public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 if (viewType == HEADER_VIEW) {
-
                     View header = LayoutInflater.from(parent.getContext()).inflate(R.layout.header, parent, false);
                     return new headerView(header);
                 } else {
@@ -221,7 +237,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return super.onCreateViewHolder(parent, viewType);
             }
-
             @Override
             protected void populateViewHolder(HomeViewHolder viewHolder, Home model, int position) {
 
@@ -243,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
 
                         Intent singleHomeIntent = new Intent(MainActivity.this, HomeSingleActivity.class);
                         singleHomeIntent.putExtra("home_id", post_key);
+                        singleHomeIntent.putExtra("colgId", clgID);
                         startActivity(singleHomeIntent);
                     }
                 });
@@ -252,6 +268,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent commentIntent = new Intent(MainActivity.this, CommentListActivity.class);
                         commentIntent.putExtra("home_id", post_key);
+                        commentIntent.putExtra("colgId", clgID);
                         commentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(commentIntent);
                     }
@@ -262,6 +279,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
                         profileIntent.putExtra("home_id", post_key);
+                        profileIntent.putExtra("colgId", clgID);
                         profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(profileIntent);
                     }
@@ -272,10 +290,12 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
                         profileIntent.putExtra("home_id", post_key);
+                        profileIntent.putExtra("colgId", clgID);
                         profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(profileIntent);
                     }
                 });
+
 
                 viewHolder.mLikeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -397,6 +417,7 @@ public class MainActivity extends AppCompatActivity {
                                 Picasso.with(MainActivity.this).load(post_image).into(mProfileImage);
                                 String post_name = (String) dataSnapshot.child("name").getValue();
                                 mNameUser.setText(post_name);
+                              //  String clg = (String) dataSnapshot.child("CollegeId").getValue();
                             }
 
                             @Override
@@ -437,6 +458,9 @@ public class MainActivity extends AppCompatActivity {
             logout();
         }
 
+
+
+
         if (item.getItemId() == R.id.action_profile) {
             Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
             profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -449,7 +473,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signOut();
     }
 
-    public static class HomeViewHolder extends RecyclerView.ViewHolder {
+    public  static class HomeViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
 
@@ -535,11 +559,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static class headerView extends HomeViewHolder {
-        public headerView(View itemView) {
-            super(itemView);
-
+       Button button;
+        View mView;
+       headerView(View itemView) {
+           super(itemView);
+           mView=itemView;
+            button= (Button) mView.findViewById(R.id.write_post);
+        }
         }
     }
 
 
-}
+

@@ -1,6 +1,5 @@
 package com.example.abhinav.buzzer;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -47,10 +46,11 @@ public class CommentListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
 
+        final String clgID = getIntent().getExtras().getString("colgId");
         mPost_key = getIntent().getExtras().getString("home_id");
 
-        database = FirebaseDatabase.getInstance().getReference().child("Post");
-        databaseComment = FirebaseDatabase.getInstance().getReference().child("Post").child(mPost_key).child("Comments");
+        database = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
+        databaseComment = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post").child(mPost_key).child("Comments");
         databaseUser =FirebaseDatabase.getInstance().getReference().child("User");
         mAuth = FirebaseAuth.getInstance();
 
@@ -142,7 +142,8 @@ public class CommentListActivity extends AppCompatActivity {
 
     private boolean updateCollege(String id, String name, String comment) {
         //getting the specified artist reference
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference().child("Post").child(mPost_key).child("Comments").child(id);
+        final String clgID = getIntent().getExtras().getString("colgId");
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post").child(mPost_key).child("Comments").child(id);
 
         //updating artist
         CommentPosts clg_name = new CommentPosts(id, name, comment);
@@ -193,7 +194,8 @@ public class CommentListActivity extends AppCompatActivity {
 
     private boolean deleteComment(String id) {
         //getting the specified artist reference
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference().child("Post").child(mPost_key).child("Comments").child(id);
+        final String clgID = getIntent().getExtras().getString("colgId");
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post").child(mPost_key).child("Comments").child(id);
 
         //removing artist
         dR.removeValue();

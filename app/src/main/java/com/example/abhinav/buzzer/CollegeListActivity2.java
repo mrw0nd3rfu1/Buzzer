@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollegeListActivity extends AppCompatActivity {
+public class CollegeListActivity2 extends AppCompatActivity {
 
     //view objects
     EditText editTextName;
@@ -70,21 +70,21 @@ public class CollegeListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //getting the selected artist
                 CollegeName artist = cName.get(i);
-            /*    Intent activity=getIntent();
+                Intent activity=getIntent();
                if(activity.getStringExtra("Caller").equals("Setup"))
                {
-                   Intent setup=new Intent(CollegeListActivity.this,SetupActivity.class);
+                   Intent setup=new Intent(CollegeListActivity2.this,SetupActivity.class);
                    setup.putExtra("CollegeName",artist.getCollegeName());
                    setup.putExtra("CollegeId",artist.getCollegeID());
                    setup.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                    startActivity(setup);
                }
                else
-               { */
+               {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                    intent.putExtra("colgId",artist.getCollegeID());
                    startActivity(intent);
-               //}
+              }
                 //starting the activity with intent
             }
         });
@@ -115,7 +115,7 @@ public class CollegeListActivity extends AppCompatActivity {
                 }
 
                 //creating adapter
-                CollegeActivity collegeAdapter = new CollegeActivity(CollegeListActivity.this, cName);
+                CollegeActivity collegeAdapter = new CollegeActivity(CollegeListActivity2.this, cName);
                 //attaching adapter to the listview
                 listViewCollege.setAdapter(collegeAdapter);
             }

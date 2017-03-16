@@ -30,6 +30,7 @@ public class ProfileSeeActivity extends AppCompatActivity {
     private TextView mNameUser;
     private TextView mCollegeName;
     private TextView mLocation;
+    private FloatingActionButton mFab;
 
 
     private String post_image;
@@ -39,6 +40,8 @@ public class ProfileSeeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_see);
+
+        final String clgID = getIntent().getExtras().getString("colgId");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -51,9 +54,8 @@ public class ProfileSeeActivity extends AppCompatActivity {
 
         mPost_key = getIntent().getExtras().getString("home_id");
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Post").child(mPost_key);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post").child(mPost_key);
         mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users");
-
 
         mNameUser = (TextView) findViewById(R.id.nameUser);
         mCollegeName = (TextView) findViewById(R.id.nameCollege);
@@ -98,9 +100,7 @@ public class ProfileSeeActivity extends AppCompatActivity {
             }
         });
 
-
-
-    }
+     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
