@@ -17,6 +17,7 @@
         <activity android:name=".PostActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".EventListActivity" />
+        <activity android:name=".EventSearchActivity" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,7 +44,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".EventTimeline"></activity>
     </application>
 
 </manifest>

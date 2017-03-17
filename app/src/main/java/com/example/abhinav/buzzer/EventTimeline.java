@@ -2,56 +2,30 @@ package com.example.abhinav.buzzer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BlurMaskFilter;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.util.Pair;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.abhinav.buzzer.tabs.PostFragment;
-import com.example.abhinav.buzzer.tabs.SlidingTabLayout;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,11 +33,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class EventTimeline extends AppCompatActivity {
 
     Toolbar mtoolbar;
     FloatingActionButton mfab;
@@ -94,22 +67,20 @@ public class MainActivity extends AppCompatActivity {
     private CircleImageView mProfileImage;
     private TextView mNameUser;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        final String clgID = getIntent().getExtras().getString("colgId");
+        setContentView(R.layout.activity_event_timeline);
 
 
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-7607893686244125~3347511713");
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-     //   mAdView.loadAd(adRequest);
+        //   mAdView.loadAd(adRequest);
 
         // Prepare the Interstitial Ad
-        interstitial = new InterstitialAd(MainActivity.this);
+     /*   interstitial = new InterstitialAd(MainActivity.this);
         // Insert the Ad Unit ID
         interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
 
@@ -122,12 +93,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        */
+        final String clgID = getIntent().getExtras().getString("colgId");
+        final String evntID = getIntent().getExtras().getString("EventId");
+        final String evntName = getIntent().getExtras().getString("EventName");
+
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    Intent loginIntent = new Intent(EventTimeline.this, LoginActivity.class);
                     loginIntent.putExtra("colgId", clgID);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
@@ -142,12 +118,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         mtoolbar.setNavigationIcon(null);
-
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle("Home");
-        mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
-        mNameUser = (TextView) findViewById(R.id.user_name);
-
+        mtoolbar.setTitle(evntName);
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
@@ -166,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         mfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent postIntent = new Intent(MainActivity.this, EventListActivity.class);
+                Intent postIntent = new Intent(EventTimeline.this, EventListActivity.class);
                 postIntent.putExtra("colgId",clgID);
                 postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(postIntent);
@@ -177,18 +148,18 @@ public class MainActivity extends AppCompatActivity {
         mProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                Intent profileIntent = new Intent(EventTimeline.this, ProfileActivity.class);
                 profileIntent.putExtra("colgId",clgID);
                 profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(profileIntent);
             }
         });
 
-       firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, EventTimeline.HomeViewHolder>(
 
                 Home.class,
                 R.layout.home_row,
-                HomeViewHolder.class,
+                EventTimeline.HomeViewHolder.class,
                 orderData
 
 
@@ -213,54 +184,55 @@ public class MainActivity extends AppCompatActivity {
                 return super.getItemViewType(position);
             }
 
-            @Override
-            public void onBindViewHolder(HomeViewHolder viewHolder, int position) {
-                if (getItemViewType(position) == HEADER_VIEW) {
-                    ((headerView) viewHolder).button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            android.app.Fragment check=getFragmentManager().findFragmentByTag("PostFragment");
-                            if(check!=null && check.isVisible())
-                            {
-                                getFragmentManager().beginTransaction().remove(check).commit();
+            /*   @Override
+               public void onBindViewHolder(MainActivity.HomeViewHolder viewHolder, int position) {
+                   if (getItemViewType(position) == HEADER_VIEW) {
+                       ((MainActivity.headerView) viewHolder).button.setOnClickListener(new View.OnClickListener() {
+                           @Override
+                           public void onClick(View view) {
+                               android.app.Fragment check=getFragmentManager().findFragmentByTag("PostFragment");
+                               if(check!=null && check.isVisible())
+                               {
+                                   getFragmentManager().beginTransaction().remove(check).commit();
 
-                            }
-                            else {
-                                PostFragment frag = new PostFragment();
-                                android.app.FragmentManager manager = getFragmentManager();
-                                android.app.FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.add(R.id.post_frag_holder, frag, "PostFragment");
-                                transaction.commit();
-                            }}});
+                               }
+                               else {
+                                   PostFragment frag = new PostFragment();
+                                   android.app.FragmentManager manager = getFragmentManager();
+                                   android.app.FragmentTransaction transaction = manager.beginTransaction();
+                                   transaction.add(R.id.post_frag_holder, frag, "PostFragment");
+                                   transaction.commit();
+                               }}});
 
-                    //put the code to do things in card here
-                } else {
-                    Home model = getItem(position - 1);
-                    populateViewHolder(viewHolder, model, position - 1);
-                }
-            }
-           @Override
+                       //put the code to do things in card here
+                   } else {
+                       Home model = getItem(position - 1);
+                       populateViewHolder(viewHolder, model, position - 1);
+                   }
+               }
+               @Override
+       */
+            public EventTimeline.HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-            public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                if (viewType == HEADER_VIEW) {
-                    View header = LayoutInflater.from(parent.getContext()).inflate(R.layout.header, parent, false);
-                    return new headerView(header);
-                } else {
                     switch (viewType) {
                         case 0:
                             View type1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_wihtout_image, parent, false);
-                            return new HomeViewHolder(type1);
+                            return new EventTimeline.HomeViewHolder(type1);
                         case 1:
                             View type2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_row, parent, false);
-                            return new HomeViewHolder(type2);
+                            return new EventTimeline.HomeViewHolder(type2);
                     }
-                }
+
                 return super.onCreateViewHolder(parent, viewType);
             }
+
+
+
             @Override
-            protected void populateViewHolder(HomeViewHolder viewHolder, Home model, int position) {
+            protected void populateViewHolder(EventTimeline.HomeViewHolder viewHolder, Home model, int position) {
 
                 final String post_key = getRef(position).getKey();
+
 
                 viewHolder.setEvent(model.getEvent());
                 viewHolder.setPost(model.getPost());
@@ -276,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
-                        Intent singleHomeIntent = new Intent(MainActivity.this, HomeSingleActivity.class);
+                        Intent singleHomeIntent = new Intent(EventTimeline.this, HomeSingleActivity.class);
                         singleHomeIntent.putExtra("home_id", post_key);
                         singleHomeIntent.putExtra("colgId", clgID);
                         startActivity(singleHomeIntent);
@@ -286,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.mCommentButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent commentIntent = new Intent(MainActivity.this, CommentListActivity.class);
+                        Intent commentIntent = new Intent(EventTimeline.this, CommentListActivity.class);
                         commentIntent.putExtra("home_id", post_key);
                         commentIntent.putExtra("colgId", clgID);
                         commentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -297,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.mProfileImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
+                        Intent profileIntent = new Intent(EventTimeline.this, ProfileSeeActivity.class);
                         profileIntent.putExtra("home_id", post_key);
                         profileIntent.putExtra("colgId", clgID);
                         profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -308,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.mUserName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
+                        Intent profileIntent = new Intent(EventTimeline.this, ProfileSeeActivity.class);
                         profileIntent.putExtra("home_id", post_key);
                         profileIntent.putExtra("colgId", clgID);
                         profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -354,153 +326,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-        mLayoutManager = new LinearLayoutManager(MainActivity.this);
+        mLayoutManager = new LinearLayoutManager(EventTimeline.this);
         mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
-        checkUserExist();
-    }
 
-    /* protected void onSaveInstanceState(Bundle state) {
-         super.onSaveInstanceState(state);
-
-         state.putParcelable(LIST_STATE_KEY, layoutManager.onSaveInstanceState());
-     }
-
-     protected void onRestoreInstanceState(Bundle state) {
-         super.onRestoreInstanceState(state);
-
-        Parcelable listState = state.getParcelable(LIST_STATE_KEY);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (listState != null) {
-            mlayoutManager.onRestoreInstanceState(listState);
-        }
-    }
-*/
-
-
-    @Override
-    public void onBackPressed() {
-        if (!isUserClickedBackButton) {
-            Toast.makeText(this, "Press Back button again to Exit", Toast.LENGTH_SHORT).show();
-            isUserClickedBackButton = true;
-        }
-        else
-        {
-            super.onBackPressed();
-        }
-        new CountDownTimer(3000, 1000) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                isUserClickedBackButton=false;
-            }
-        }.start();
-    }
-
-    public void displayInterstitial() {
-// If Ads are loaded, show Interstitial else show nothing.
-        // if (interstitial.isLoaded()) {
-        //   interstitial.show();
-        // }
-    }
-
-    private void checkUserExist() {
-
-        if (mAuth.getCurrentUser() != null) {
-
-            final String user_ID = mAuth.getCurrentUser().getUid();
-
-            mDatabaseUsers.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (!dataSnapshot.hasChild(user_ID)) {
-
-                        Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
-                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(setupIntent);
-
-                    } else {
-                        mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                String post_image = (String) dataSnapshot.child("profile_pic").getValue();
-                                Picasso.with(MainActivity.this).load(post_image).into(mProfileImage);
-                                String post_name = (String) dataSnapshot.child("name").getValue();
-                                mNameUser.setText(post_name);
-                              //  String clg = (String) dataSnapshot.child("CollegeId").getValue();
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.item_search){
-            final String clgID = getIntent().getExtras().getString("colgId");
-            Intent collegeIntent = new Intent(MainActivity.this, EventSearchActivity.class);
-            collegeIntent.putExtra("colgId", clgID);
-            collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(collegeIntent);
-        }
-
-        if (item.getItemId()== R.id.action_college){
-            Intent collegeIntent = new Intent(MainActivity.this, CollegeListActivity.class);
-            collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(collegeIntent);
-        }
-        if (item.getItemId() == R.id.action_logout) {
-
-            logout();
-        }
-
-
-
-
-        if (item.getItemId() == R.id.action_profile) {
-            Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
-            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(profileIntent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void logout() {
-        mAuth.signOut();
     }
 
     public  static class HomeViewHolder extends RecyclerView.ViewHolder {
@@ -587,17 +416,4 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-    public static class headerView extends HomeViewHolder {
-       Button button;
-        View mView;
-       headerView(View itemView) {
-           super(itemView);
-           mView=itemView;
-            button= (Button) mView.findViewById(R.id.write_post);
-        }
-        }
-    }
-
-
-
+}
