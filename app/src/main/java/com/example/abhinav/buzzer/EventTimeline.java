@@ -46,6 +46,8 @@ public class EventTimeline extends AppCompatActivity {
     private RecyclerView mHomePage;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
+    private DatabaseReference mDatabaseEvent;
+    private Query mQuery;
     private int previousTotal=0;
     private boolean loading =true;
     private int visibleThreshold=5;
@@ -63,9 +65,7 @@ public class EventTimeline extends AppCompatActivity {
     private AdView mAdView;
     private InterstitialAd interstitial;
     private boolean isUserClickedBackButton = false;
-    private CollapsingToolbarLayout collapsingToolbarLayout = null;
-    private CircleImageView mProfileImage;
-    private TextView mNameUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +120,8 @@ public class EventTimeline extends AppCompatActivity {
         mtoolbar.setNavigationIcon(null);
         mtoolbar.setTitle(evntName);
 
-
+        mDatabaseEvent = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
+        mQuery = mDatabaseEvent.orderByChild("eventId").equalTo(evntID);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
@@ -142,7 +143,7 @@ public class EventTimeline extends AppCompatActivity {
                 Home.class,
                 R.layout.home_row,
                 EventTimeline.HomeViewHolder.class,
-                orderData
+                mQuery
 
 
         ) {
