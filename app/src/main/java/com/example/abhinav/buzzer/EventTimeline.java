@@ -134,28 +134,10 @@ public class EventTimeline extends AppCompatActivity {
         mHomePage.setHasFixedSize(true);
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
 
-        mfab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent postIntent = new Intent(EventTimeline.this, EventListActivity.class);
-                postIntent.putExtra("colgId",clgID);
-                postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(postIntent);
-            }
-        });
+
         mAuth.addAuthStateListener(mAuthListener);
 
-        mProfileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent profileIntent = new Intent(EventTimeline.this, ProfileActivity.class);
-                profileIntent.putExtra("colgId",clgID);
-                profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(profileIntent);
-            }
-        });
-
-        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, EventTimeline.HomeViewHolder>(
+       firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, EventTimeline.HomeViewHolder>(
 
                 Home.class,
                 R.layout.home_row,
