@@ -1,4 +1,5 @@
 package com.example.abhinav.buzzer;
+
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -1,7 +1,5 @@
 package com.example.abhinav.buzzer;
 
-import android.app.Application;
-
 /**
  * Created by Abhishek on 10-03-2017.
  */
