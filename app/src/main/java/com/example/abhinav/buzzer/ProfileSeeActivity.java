@@ -30,6 +30,7 @@ public class ProfileSeeActivity extends AppCompatActivity {
     private TextView mNameUser;
     private TextView mCollegeName;
     private TextView mLocation;
+    private FloatingActionButton mFab;
 
     private String post_image;
 
