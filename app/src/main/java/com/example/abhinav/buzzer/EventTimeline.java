@@ -147,54 +147,19 @@ public class EventTimeline extends AppCompatActivity {
 
 
         ) {
-
-            @Override
-            public int getItemCount() {
-                return (super.getItemCount() + 1);
-            }
-
             @Override
             public int getItemViewType(int position) {
-                if (position != 0) {
-                    Home obj = getItem(position - 1);
+                    Home obj = getItem(position);
                     switch (obj.getHas_image()) {
                         case 0:
                             return 0;
                         case 1:
                             return 1;
                     }
-                } else return HEADER_VIEW;
+
                 return super.getItemViewType(position);
             }
 
-            /*   @Override
-               public void onBindViewHolder(MainActivity.HomeViewHolder viewHolder, int position) {
-                   if (getItemViewType(position) == HEADER_VIEW) {
-                       ((MainActivity.headerView) viewHolder).button.setOnClickListener(new View.OnClickListener() {
-                           @Override
-                           public void onClick(View view) {
-                               android.app.Fragment check=getFragmentManager().findFragmentByTag("PostFragment");
-                               if(check!=null && check.isVisible())
-                               {
-                                   getFragmentManager().beginTransaction().remove(check).commit();
-
-                               }
-                               else {
-                                   PostFragment frag = new PostFragment();
-                                   android.app.FragmentManager manager = getFragmentManager();
-                                   android.app.FragmentTransaction transaction = manager.beginTransaction();
-                                   transaction.add(R.id.post_frag_holder, frag, "PostFragment");
-                                   transaction.commit();
-                               }}});
-
-                       //put the code to do things in card here
-                   } else {
-                       Home model = getItem(position - 1);
-                       populateViewHolder(viewHolder, model, position - 1);
-                   }
-               }
-               @Override
-       */
             public EventTimeline.HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
                     switch (viewType) {

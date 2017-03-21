@@ -168,6 +168,7 @@ public class PostActivity extends AppCompatActivity
                                 public void onComplete(@NonNull Task<Void> task) {
                                     final String clgID = getIntent().getExtras().getString("colgId");
                                     if (task.isSuccessful()) {
+                                        progressDialog.dismiss();
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         intent.putExtra("colgId", clgID);
                                         startActivity(intent);
@@ -183,7 +184,7 @@ public class PostActivity extends AppCompatActivity
                         }
                     });
 
-                    progressDialog.dismiss();
+
 
 
                 }

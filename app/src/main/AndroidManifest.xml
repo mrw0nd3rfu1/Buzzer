@@ -31,7 +31,8 @@
         <activity android:name=".CollegeListActivity" />
         <activity android:name=".CommentListActivity" />
         <activity android:name=".ProfileSeeActivity" />
-
+        <activity android:name=".EventSearchActivity" />
+        <activity android:name=".EventTimeline" />
         <service android:name=".MyFirebaseInstance">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />

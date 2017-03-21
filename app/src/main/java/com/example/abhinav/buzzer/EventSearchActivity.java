@@ -85,16 +85,12 @@ public class EventSearchActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //getting the selected artist
                 EventName artist = cName.get(i);
-
                 Intent setup=new Intent(EventSearchActivity.this,EventTimeline.class);
                    setup.putExtra("EventName",artist.getEventName());
                    setup.putExtra("EventId",artist.getEventID());
                    setup.putExtra("colgId", clgID);
                    setup.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                    startActivity(setup);
-
-
-
                 //starting the activity with intent
             }
         });
@@ -110,21 +106,17 @@ public class EventSearchActivity extends AppCompatActivity {
         databaseEvent.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                  cName.clear();
-
                 //iterating through all the nodes
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     EventName artist = postSnapshot.getValue(EventName.class);
                     cName.add(artist);
                 }
-
                 //creating adapter
                 EventActivity collegeAdapter = new EventActivity(EventSearchActivity.this, cName);
                 //attaching adapter to the listview
                 listViewEvent.setAdapter(collegeAdapter);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
