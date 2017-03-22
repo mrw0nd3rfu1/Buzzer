@@ -78,13 +78,18 @@ public class CommentListActivity extends AppCompatActivity {
         });
 
         listViewComment.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                CommentPosts comment = cName.get(i);
-                showUpdateDeleteDialog(comment.getCommentID(), comment.getComment());
-                return true;
-            }
+                @Override
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    CommentPosts comment = cName.get(i);
+                    if (mAuth.getCurrentUser().getUid().equals(comment.getComment())) {
+                        showUpdateDeleteDialog(comment.getCommentID(), comment.getComment());
+                    }
+                        return true;
+
+                }
         });
+
+
     }
 
     @Override
@@ -165,7 +170,6 @@ public class CommentListActivity extends AppCompatActivity {
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateArtist);
         final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteArtist);
 
-        dialogBuilder.setTitle(commentName);
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
@@ -181,6 +185,8 @@ public class CommentListActivity extends AppCompatActivity {
                 }
             }
         });
+
+
 
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
