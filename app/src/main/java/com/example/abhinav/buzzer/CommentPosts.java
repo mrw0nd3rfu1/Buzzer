@@ -8,6 +8,7 @@ public class CommentPosts {
     private String userName;
     private String comment;
 
+
     public CommentPosts(){
        }
 
@@ -15,6 +16,7 @@ public class CommentPosts {
         this.commentID = commentID;
         this.userName = userName;
         this.comment = comment;
+
        }
 
     public String getCommentID() {
@@ -26,6 +28,7 @@ public class CommentPosts {
     }
 
     public String getComment(){ return comment; }
+
 
 
 }

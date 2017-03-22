@@ -118,14 +118,16 @@ public class CommentListActivity extends AppCompatActivity {
 
     private void addComment() {
         String name = editTextComment.getText().toString().trim();
-        String comment ="";
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        String comment = mAuth.getCurrentUser().getUid();
         if (!TextUtils.isEmpty(name)) {
 
             //getting a unique id using push().getKey() method
             //it will create a unique id and we will use it as the Primary Key for our Artist
             String id = databaseComment.push().getKey();
 
-            CommentPosts comment_name = new CommentPosts(id ,name,comment);
+            CommentPosts comment_name = new CommentPosts(id ,name,comment );
 
             databaseComment.child(id).setValue(comment_name);
 

@@ -38,7 +38,7 @@ public class CommentActivity extends ArrayAdapter<CommentPosts> {
         LayoutInflater inflater = context.getLayoutInflater();
         View listViewItem = inflater.inflate(R.layout.comment_layout, null, true);
         mAuth = FirebaseAuth.getInstance();
-        mData = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+        mData = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
         TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
@@ -49,7 +49,7 @@ public class CommentActivity extends ArrayAdapter<CommentPosts> {
 
         CommentPosts name = cname.get(position);
         textViewName.setText(name.getuserName());
-        mData.addValueEventListener(new ValueEventListener() {
+        mData.child(name.getComment()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String c = (String) dataSnapshot.child("name").getValue();
