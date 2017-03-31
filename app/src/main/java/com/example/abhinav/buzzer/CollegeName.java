@@ -18,7 +18,7 @@ public class CollegeName {
         this.LastPost=LastPost;
         this.FirstPost=FirstPost;
        }
-    public Integer getLastPost(){return Integer.parseInt(LastPost);}
+//    public Integer getLastPost(){return Integer.parseInt(LastPost);}
 
     public String getCollegeID() {
         return collegeID;
@@ -28,7 +28,7 @@ public class CollegeName {
         return collegeName;
     }
 
-    public Integer getFirstPost(){return Integer.parseInt(FirstPost);}
+//    public Integer getFirstPost(){return Integer.parseInt(FirstPost);}
 
 
 

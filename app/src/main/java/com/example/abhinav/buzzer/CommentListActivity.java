@@ -178,8 +178,7 @@ public class CommentListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String name = editTextComment.getText().toString().trim();
-                String comment = "";
-                if (!TextUtils.isEmpty(name)) {
+               if (!TextUtils.isEmpty(name)) {
                     updateCollege(commentId, name, commentName);
                     b.dismiss();
                 }

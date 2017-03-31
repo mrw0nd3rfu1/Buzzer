@@ -89,7 +89,7 @@ public class CollegeListActivity extends AppCompatActivity {
             }
         });
 
-        listViewCollege.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+     /*   listViewCollege.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 CollegeName clg_name = cName.get(i);
@@ -97,6 +97,7 @@ public class CollegeListActivity extends AppCompatActivity {
                 return true;
             }
         });
+        */
     }
 
     @Override
@@ -147,7 +148,7 @@ public class CollegeListActivity extends AppCompatActivity {
             Toast.makeText(this, "College added", Toast.LENGTH_LONG).show();
         } else {
             //if the value is not given displaying a toast
-            Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please enter the college name", Toast.LENGTH_LONG).show();
         }
     }
 
