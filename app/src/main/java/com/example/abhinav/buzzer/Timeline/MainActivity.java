@@ -37,7 +37,7 @@ import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
 import com.example.abhinav.buzzer.Profile.SetupActivity;
 import com.example.abhinav.buzzer.R;
 import com.example.abhinav.buzzer.Utility.Home;
-import com.example.abhinav.buzzer.tabs.PostFragment;
+import com.example.abhinav.buzzer.Utility.PostFragment;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;

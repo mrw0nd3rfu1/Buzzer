@@ -138,10 +138,6 @@ public class PostActivity extends AppCompatActivity
             final DatabaseReference newpost = mDatabase.push();
 
          final   StorageReference filePath = mStorage.child("Posts/"+postId);
-
-
-
-
                     mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
