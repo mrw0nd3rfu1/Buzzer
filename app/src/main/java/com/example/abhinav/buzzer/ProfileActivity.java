@@ -1,6 +1,7 @@
 package com.example.abhinav.buzzer;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -8,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.formats.NativeAd;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,15 +32,15 @@ public class ProfileActivity extends AppCompatActivity {
      private String postId=null;
     private int hasImage=1;
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseCollege;
     private StorageReference mStorage;
     private CircleImageView mProfileImage;
     private TextView mNameUser;
     private TextView mCollegeName;
     private TextView mLocation;
+    private ImageView mCollegeImage;
 
     private FirebaseAuth mAuth;
-
-    private FloatingActionButton mHomeSingleRemoveBtn;
 
     private String post_image;
 
@@ -58,6 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabaseCollege = FirebaseDatabase.getInstance().getReference().child("College");
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -66,6 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
         mCollegeName = (TextView) findViewById(R.id.nameCollege);
         mLocation = (TextView) findViewById(R.id.nameLocation);
         mProfileImage = (CircleImageView) findViewById(R.id.userPic);
+        mCollegeImage = (ImageView) findViewById(R.id.college_pic);
 
 
         // Toast.makeText(HomeSingleActivity.this , mPost_key , Toast.LENGTH_SHORT).show();
@@ -86,9 +91,21 @@ public class ProfileActivity extends AppCompatActivity {
 
                 Picasso.with(ProfileActivity.this).load(post_image).into(mProfileImage);
 
-                if (mAuth.getCurrentUser().getUid().equals(post_uid)) {
-                    mHomeSingleRemoveBtn.setVisibility(View.VISIBLE);
-                }
+                String photo = (String) dataSnapshot.child("CollegeId").getValue();
+
+                mDatabaseCollege.child(photo).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String photo_college = (String) dataSnapshot.child("Image").getValue();
+                        Picasso.with(ProfileActivity.this).load(photo_college).into(mCollegeImage);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
             }
 

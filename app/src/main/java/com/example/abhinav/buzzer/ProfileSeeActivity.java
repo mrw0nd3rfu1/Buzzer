@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +33,10 @@ public class ProfileSeeActivity extends AppCompatActivity {
     private TextView mCollegeName;
     private TextView mLocation;
     private FloatingActionButton mFab;
+    private ImageView mCollegeImage;
+    private DatabaseReference mDatabaseCollege;
+
+
 
     private String post_image;
 
@@ -56,11 +61,15 @@ public class ProfileSeeActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post").child(mPost_key);
         mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabaseCollege = FirebaseDatabase.getInstance().getReference().child("College");
+
 
         mNameUser = (TextView) findViewById(R.id.nameUser);
         mCollegeName = (TextView) findViewById(R.id.nameCollege);
         mLocation = (TextView) findViewById(R.id.nameLocation);
         mProfileImage = (CircleImageView) findViewById(R.id.userPic);
+        mCollegeImage = (ImageView) findViewById(R.id.college_pic);
+
 
 
         // Toast.makeText(HomeSingleActivity.this , mPost_key , Toast.LENGTH_SHORT).show();
@@ -85,7 +94,23 @@ public class ProfileSeeActivity extends AppCompatActivity {
 
                         Picasso.with(ProfileSeeActivity.this).load(post_image).into(mProfileImage);
 
-                       }
+                        String photo = (String) dataSnapshot.child("CollegeId").getValue();
+                        mDatabaseCollege.child(photo).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String photo_college = (String) dataSnapshot.child("Image").getValue();
+                                Picasso.with(ProfileSeeActivity.this).load(photo_college).into(mCollegeImage);
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {

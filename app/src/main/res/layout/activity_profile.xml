@@ -21,7 +21,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
             
             <ImageView
-                android:id="@+id/profile_pic"
+                android:id="@+id/college_pic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/ic_neith"

@@ -88,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mCollegePic;
     private Uri imageUri;
     private TextView mNameUser;
+    private StorageReference mStorage;
+    private ImageButton imageView;
+    private TextView userClgPic;
 
 
     @Override
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final String clgID = getIntent().getExtras().getString("colgId");
-
+        final String uCN = getIntent().getExtras().getString("user_clg_Name");
 
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-7607893686244125~3347511713");
@@ -142,9 +145,12 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbarLayout.setTitle("Home");
         mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
         mCollegePic = (ImageView)findViewById(R.id.college_pic);
+        imageView = (ImageButton) findViewById(R.id.imageSelect);
         mNameUser = (TextView) findViewById(R.id.user_name);
+        userClgPic = (TextView) findViewById(R.id.user_clg_name);
+        userClgPic.setText("Last Uploaded By " + uCN);
 
-
+        mStorage = FirebaseStorage.getInstance().getReference();
         mCollege = FirebaseDatabase.getInstance().getReference().child("College").child(clgID);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -433,6 +439,18 @@ public class MainActivity extends AppCompatActivity {
                                 Picasso.with(MainActivity.this).load(profile_image).into(mProfileImage);
                                 String post_name = (String) dataSnapshot.child("name").getValue();
                                 mNameUser.setText(post_name);
+                                mCollege.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String college_image = (String) dataSnapshot.child("Image").getValue();
+                                        Picasso.with(MainActivity.this).load(college_image).into(mCollegePic);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
                               //  String clg = (String) dataSnapshot.child("CollegeId").getValue();
                             }
 
@@ -442,18 +460,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
-                        mCollege.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                String college_image = (String) dataSnapshot.child("image").getValue();
-                                Picasso.with(MainActivity.this).load(college_image).into(mCollegePic);
-                            }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
 
                     }
                 }
@@ -492,51 +499,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.item_photo){
             final String clgID = getIntent().getExtras().getString("colgId");
-            final DatabaseReference mCollege = FirebaseDatabase.getInstance().getReference().child("College").child(clgID);
-            StorageReference mStorage = FirebaseStorage.getInstance().getReference();
-            final StorageReference filePath = mStorage.child("College_Photos/"+clgID);
-
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-            LayoutInflater inflater = getLayoutInflater();
-            final View dialogView = inflater.inflate(R.layout.college_photo, null);
-            dialogBuilder.setView(dialogView);
-
-            final ProgressDialog mProgress = new ProgressDialog(this);
-            mProgress.setTitle("Uploading");
-
-            final Button choosePhoto  = (Button) dialogView.findViewById(R.id.choosePhoto);
-            final Button submitPhoto = (Button) dialogView.findViewById(R.id.submitPhoto);
-
-            final AlertDialog b = dialogBuilder.create();
-            b.show();
-
-            choosePhoto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                    galleryIntent.setType("image/*");
-                    startActivityForResult(galleryIntent, GALLERY_REQUEST);
-                }
-            });
-
-            submitPhoto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mProgress.show();
-                    if (imageUri!= null){
-                        filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                final Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                                mCollege.child("image").setValue(downloadUrl.toString());
-                                mProgress.dismiss();
-                                }});
-                    }
-                }
-            });
-
-
-        }
+            Intent collegeIntent = new Intent(MainActivity.this, CollegePhotoSelector.class);
+            collegeIntent.putExtra("colgId", clgID);
+            collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(collegeIntent); }
 
         if (item.getItemId()== R.id.action_college){
             Intent collegeIntent = new Intent(MainActivity.this, CollegeListActivity.class);
@@ -555,7 +521,8 @@ public class MainActivity extends AppCompatActivity {
             Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
             profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(profileIntent);
-        }
+
+            }
         return super.onOptionsItemSelected(item);
     }
 
@@ -563,7 +530,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
-            mCollegePic.setImageURI(imageUri);
+            imageView.setImageURI(imageUri);
         }
 
     }
