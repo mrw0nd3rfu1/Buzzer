@@ -159,7 +159,7 @@ public class CommentListActivity extends AppCompatActivity {
         return true;
     }
 
-    private void showUpdateDeleteDialog(final String commentId, String commentName) {
+    private void showUpdateDeleteDialog(final String commentId, final String commentName) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -180,7 +180,7 @@ public class CommentListActivity extends AppCompatActivity {
                 String name = editTextComment.getText().toString().trim();
                 String comment = "";
                 if (!TextUtils.isEmpty(name)) {
-                    updateCollege(commentId, name, comment);
+                    updateCollege(commentId, name, commentName);
                     b.dismiss();
                 }
             }
