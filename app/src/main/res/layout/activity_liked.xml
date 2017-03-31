@@ -4,7 +4,7 @@
     android:id="@+id/activity_liked"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.abhinav.buzzer.LikedActivity">
+    tools:context="com.example.abhinav.buzzer.Timeline.LikedActivity">
 
     <TextView
         android:layout_width="match_parent"

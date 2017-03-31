@@ -7,7 +7,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.abhinav.buzzer.MainActivity"
+    tools:context="com.example.abhinav.buzzer.Timeline.MainActivity"
 
     >
 
@@ -75,7 +75,7 @@
                     android:textColor="@android:color/white"
                     android:hint="Name"
                     android:layout_gravity="top|left"
-                    android:paddingTop="30dp"
+                    android:paddingTop="25dp"
                     android:textSize="15dp" />
 
 
