@@ -100,9 +100,9 @@ public class CollegePhotoSelector extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             String userClgName = (String)dataSnapshot.child("name").getValue();
+                            mDatabase.child("ImagePost").setValue(userClgName);
                             Intent mainIntent = new Intent(CollegePhotoSelector.this, MainActivity.class);
                             mainIntent.putExtra("colgId",clgID);
-                            mainIntent.putExtra("user_clg_Name", userClgName );
                             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(mainIntent);
                         }

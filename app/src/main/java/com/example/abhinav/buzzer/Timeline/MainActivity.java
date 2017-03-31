@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageButton) findViewById(R.id.imageSelect);
         mNameUser = (TextView) findViewById(R.id.user_name);
         userClgPic = (TextView) findViewById(R.id.user_clg_name);
-        userClgPic.setText("Last Uploaded By " + uCN);
+
 
         mStorage = FirebaseStorage.getInstance().getReference();
         mCollege = FirebaseDatabase.getInstance().getReference().child("College").child(clgID);
@@ -447,6 +447,8 @@ public class MainActivity extends AppCompatActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         String college_image = (String) dataSnapshot.child("Image").getValue();
                                         Picasso.with(MainActivity.this).load(college_image).into(mCollegePic);
+                                        String college_user_name = (String) dataSnapshot.child("ImagePost").getValue();
+                                        userClgPic.setText("Last Uploaded By "+college_user_name);
                                     }
 
                                     @Override
