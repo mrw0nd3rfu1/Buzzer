@@ -168,6 +168,19 @@ public class MainActivity extends AppCompatActivity {
         mHomePage.setHasFixedSize(true);
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
 
+        //checking user exists in college
+        mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("CollegeId").getValue().equals(clgID))
+                    mfab.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         mfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(postIntent);
             }
         });
+
         mAuth.addAuthStateListener(mAuthListener);
 
         mProfileImage.setOnClickListener(new View.OnClickListener() {
@@ -492,7 +506,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
 
         if (item.getItemId() == R.id.item_search){
             final String clgID = getIntent().getExtras().getString("colgId");
@@ -502,12 +516,33 @@ public class MainActivity extends AppCompatActivity {
             startActivity(collegeIntent);
         }
 
-        if (item.getItemId() == R.id.item_photo){
+        mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final String clgID = getIntent().getExtras().getString("colgId");
+                if (dataSnapshot.child("CollegeId").getValue().equals(clgID))
+                { if (item.getItemId() == R.id.item_photo){
+                    Intent collegeIntent = new Intent(MainActivity.this, CollegePhotoSelector.class);
+                    collegeIntent.putExtra("colgId", clgID);
+                    collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(collegeIntent); }
+                }
+                else {
+                    Toast.makeText(MainActivity.this , "You are not present in this college" ,Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+     /*   if (item.getItemId() == R.id.item_photo){
             final String clgID = getIntent().getExtras().getString("colgId");
             Intent collegeIntent = new Intent(MainActivity.this, CollegePhotoSelector.class);
             collegeIntent.putExtra("colgId", clgID);
             collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(collegeIntent); }
+            startActivity(collegeIntent); }   */
 
         if (item.getItemId()== R.id.action_college){
             Intent collegeIntent = new Intent(MainActivity.this, CollegeListActivity.class);

@@ -42,7 +42,7 @@ public class CollegeListActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_college);
+        setContentView(R.layout.activity_college2);
 
         databaseCollege = FirebaseDatabase.getInstance().getReference().child("College");
 

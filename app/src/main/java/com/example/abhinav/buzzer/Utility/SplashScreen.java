@@ -22,7 +22,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        final FirebaseAuth mAuth=FirebaseAuth.getInstance();
+
 
 
 
@@ -32,28 +32,35 @@ public class SplashScreen extends AppCompatActivity {
 
                 try {
                     sleep(1000);
+
+
+                        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+                        final DatabaseReference mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+                        mDatabaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String clgID = (String) dataSnapshot.child("CollegeId").getValue();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("colgId", clgID);
+                                startActivity(intent);
+                                finish();
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
                 }
                 catch (InterruptedException e)
                 {
-                    e.printStackTrace();
+                    Intent intent=new Intent(SplashScreen.this,LoginActivity.class);
+                    startActivity(intent);
                 }
-                try{
-                    final DatabaseReference mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
-                    mDatabaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            String clgID = (String) dataSnapshot.child("CollegeId").getValue();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra("colgId", clgID);
-                            startActivity(intent);
-                            finish();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });}
                     catch(NullPointerException e)
                     {
                         Intent intent=new Intent(SplashScreen.this,LoginActivity.class);
