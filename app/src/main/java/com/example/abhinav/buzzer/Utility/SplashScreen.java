@@ -18,6 +18,7 @@ public class SplashScreen extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,20 +31,23 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
 
-                try {
-                    sleep(1000);
-
-
+                    try {
                         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        sleep(1000);
+
 
                         final DatabaseReference mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
                         mDatabaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 String clgID = (String) dataSnapshot.child("CollegeId").getValue();
+                                if(clgID==null){
+                                    Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                                startActivity(intent);}
+                                else{
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra("colgId", clgID);
-                                startActivity(intent);
+                                startActivity(intent);}
                                 finish();
                             }
 
@@ -54,20 +58,13 @@ public class SplashScreen extends AppCompatActivity {
                         });
 
 
-
-                }
-                catch (InterruptedException e)
-                {
-                    Intent intent=new Intent(SplashScreen.this,LoginActivity.class);
-                    startActivity(intent);
-                }
-                    catch(NullPointerException e)
-                    {
-                        Intent intent=new Intent(SplashScreen.this,LoginActivity.class);
+                    } catch (Exception e) {
+                        Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
                         startActivity(intent);
+                        e.printStackTrace();
                     }
+                }
 
-            }
         };
         myThread.start();
     }

@@ -29,6 +29,8 @@
         <activity android:name=".Timeline.LikedActivity" />
         <activity android:name=".Profile.ProfileActivity" />
         <activity android:name=".College.CollegeListActivity" />
+        <activity android:name=".College.CollegeListActivity2" />
+
         <activity android:name=".Comment.CommentListActivity" />
         <activity android:name=".Profile.ProfileSeeActivity" />
         <activity android:name=".Event.EventSearchActivity" />

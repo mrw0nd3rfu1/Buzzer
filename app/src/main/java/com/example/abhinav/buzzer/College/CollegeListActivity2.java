@@ -1,5 +1,6 @@
 package com.example.abhinav.buzzer.College;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -73,22 +74,12 @@ public class CollegeListActivity2 extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //getting the selected artist
                 CollegeName artist = cName.get(i);
-                Intent activity=getIntent();
-               if(activity.getStringExtra("Caller").equals("Setup"))
-               {
-                   Intent setup=new Intent(CollegeListActivity2.this,SetupActivity.class);
+                   Intent setup=new Intent();
                    setup.putExtra("CollegeName",artist.getCollegeName());
                    setup.putExtra("CollegeId",artist.getCollegeID());
-                   setup.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                   startActivity(setup);
-               }
-               else
-               {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                   intent.putExtra("colgId",artist.getCollegeID());
-                   startActivity(intent);
-              }
-                //starting the activity with intent
+
+                setResult(2,setup);
+                   finish();
             }
         });
 

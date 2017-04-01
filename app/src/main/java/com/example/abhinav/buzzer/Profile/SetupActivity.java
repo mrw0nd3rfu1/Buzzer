@@ -1,5 +1,6 @@
 package com.example.abhinav.buzzer.Profile;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import com.example.abhinav.buzzer.Timeline.MainActivity;
 import com.example.abhinav.buzzer.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -28,7 +30,9 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 public class SetupActivity extends AppCompatActivity{
 
     private static final int GALLERY_REQUEST = 1;
+    private static final int COLLEGE_REQUEST=111;
     private static final String Tag="Buzer";
+    private static  String clgId="";
     private ImageButton mSetupImageButton;
     private EditText mNameField;
     private EditText mCollegeField;
@@ -65,24 +69,14 @@ public class SetupActivity extends AppCompatActivity{
                 startSetupAccount();
             }
         });
-        if(getIntent().hasExtra("CollegeName"))
-        {
-            mCollegeField.setText(getIntent().getStringExtra("CollegeName"));
-
-        }
-        else{
-            mCollegeField.setText("None");
-        }
-
-
         mCollegeChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent collegeIntent=new Intent(SetupActivity.this,CollegeListActivity2.class);
-                collegeIntent.putExtra("User",mAuth.getCurrentUser().getUid());
-                collegeIntent.putExtra("Caller","Setup");
                 collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(collegeIntent);
+                startActivityForResult(collegeIntent,COLLEGE_REQUEST);
+
             }
         });
         mSetupImageButton.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +98,7 @@ public class SetupActivity extends AppCompatActivity{
 
         final String name = mNameField.getText().toString().trim();
         final String college_name=mCollegeField.getText().toString().trim();
+
 
         final String location = mLocationField.getText().toString().trim();
 
@@ -127,7 +122,7 @@ public class SetupActivity extends AppCompatActivity{
                     mDatabaseUsers.child(user_ID).child("college_name").setValue(college_name);
                     mDatabaseUsers.child(user_ID).child("location").setValue(location);
                     mDatabaseUsers.child(user_ID).child("profile_pic").setValue(downloadUrl);
-                    mDatabaseUsers.child(user_ID).child("CollegeId").setValue(getIntent().getStringExtra("CollegeId"));
+                    mDatabaseUsers.child(user_ID).child("CollegeId").setValue(clgId);
 
                     Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
                     mainIntent.putExtra("colgId",getIntent().getStringExtra("CollegeId"));
@@ -157,8 +152,13 @@ public class SetupActivity extends AppCompatActivity{
                     .start(this);
 
         }
+        else  if (requestCode ==COLLEGE_REQUEST)
+        {
+            mCollegeField.setText(data.getStringExtra("CollegeName"));
+            clgId=data.getStringExtra("CollegeId");
+        }
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+      else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
 
@@ -169,6 +169,7 @@ public class SetupActivity extends AppCompatActivity{
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
+
         }
 
     }

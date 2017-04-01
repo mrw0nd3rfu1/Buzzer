@@ -376,6 +376,35 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(MainActivity.this);
         mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
+       /* mHomePage.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                visibleItemCount=recyclerView.getChildCount();
+                totalItemCount=mLayoutManager.getItemCount();
+                firstVisibleItem=mLayoutManager.findFirstVisibleItemPosition();
+                if (loading) {
+                    if (totalItemCount > previousTotal) {
+                        loading = false;
+                        previousTotal = totalItemCount;
+                    }
+                }
+                if (!loading && (totalItemCount - visibleItemCount)
+                        <= (firstVisibleItem + visibleThreshold)) {
+
+
+
+                    current_page++;
+
+                    onLoadMore(current_page);
+
+                    loading = true;
+                }
+            }
+            void onLoadMore(int current_page){
+
+            }
+        });*/
         checkUserExist();
     }
 
