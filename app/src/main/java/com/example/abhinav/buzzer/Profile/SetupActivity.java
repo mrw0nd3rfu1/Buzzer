@@ -125,7 +125,7 @@ public class SetupActivity extends AppCompatActivity{
                     mDatabaseUsers.child(user_ID).child("CollegeId").setValue(clgId);
 
                     Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
-                    mainIntent.putExtra("colgId",getIntent().getStringExtra("CollegeId"));
+                    mainIntent.putExtra("colgId",clgId);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainIntent);
                 }
