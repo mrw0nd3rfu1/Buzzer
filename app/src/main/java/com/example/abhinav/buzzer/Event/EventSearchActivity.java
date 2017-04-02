@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.abhinav.buzzer.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +34,7 @@ public class EventSearchActivity extends AppCompatActivity {
     List<EventName> cName;
 
     DatabaseReference databaseEvent;
-
+    AdView mAdView;
 
 
     @Override
@@ -41,6 +43,10 @@ public class EventSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_search);
 
         final String clgID = getIntent().getExtras().getString("colgId");
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        mAdView.loadAd(adRequest);
 
         databaseEvent = FirebaseDatabase.getInstance().getReference().child(clgID).child("Event");
 

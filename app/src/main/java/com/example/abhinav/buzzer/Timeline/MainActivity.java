@@ -100,28 +100,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final String clgID = getIntent().getExtras().getString("colgId");
-        final String uCN = getIntent().getExtras().getString("user_clg_Name");
 
-
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7607893686244125~3347511713");
         mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-     //   mAdView.loadAd(adRequest);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        mAdView.loadAd(adRequest);
 
-        // Prepare the Interstitial Ad
-        interstitial = new InterstitialAd(MainActivity.this);
-        // Insert the Ad Unit ID
-        interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
 
-        interstitial.loadAd(adRequest);
-        // Prepare an Interstitial Ad Listener
-        interstitial.setAdListener(new AdListener() {
-            public void onAdLoaded() {
-                // Call displayInterstitial() function
-                displayInterstitial();
-            }
-        });
+        final String clgID = getIntent().getExtras().getString("colgId");
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -376,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(MainActivity.this);
         mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
-       /* mHomePage.addOnScrollListener(new RecyclerView.OnScrollListener() {
+     /*    mHomePage.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -387,6 +372,7 @@ public class MainActivity extends AppCompatActivity {
                     if (totalItemCount > previousTotal) {
                         loading = false;
                         previousTotal = totalItemCount;
+
                     }
                 }
                 if (!loading && (totalItemCount - visibleItemCount)
@@ -404,31 +390,33 @@ public class MainActivity extends AppCompatActivity {
             void onLoadMore(int current_page){
 
             }
-        });*/
+        }); */
         checkUserExist();
     }
 
-    /* protected void onSaveInstanceState(Bundle state) {
-         super.onSaveInstanceState(state);
-
-         state.putParcelable(LIST_STATE_KEY, layoutManager.onSaveInstanceState());
-     }
-
-     protected void onRestoreInstanceState(Bundle state) {
-         super.onRestoreInstanceState(state);
-
-        Parcelable listState = state.getParcelable(LIST_STATE_KEY);
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-
-        if (listState != null) {
-            mlayoutManager.onRestoreInstanceState(listState);
+        if (mAdView != null) {
+            mAdView.resume();
         }
     }
-*/
+
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
+    }
 
 
     @Override
@@ -566,12 +554,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-     /*   if (item.getItemId() == R.id.item_photo){
-            final String clgID = getIntent().getExtras().getString("colgId");
-            Intent collegeIntent = new Intent(MainActivity.this, CollegePhotoSelector.class);
-            collegeIntent.putExtra("colgId", clgID);
-            collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(collegeIntent); }   */
 
         if (item.getItemId()== R.id.action_college){
             Intent collegeIntent = new Intent(MainActivity.this, CollegeListActivity.class);

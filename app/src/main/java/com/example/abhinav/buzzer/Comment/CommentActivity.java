@@ -1,12 +1,12 @@
 package com.example.abhinav.buzzer.Comment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import com.example.abhinav.buzzer.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -64,7 +64,6 @@ public class CommentActivity extends ArrayAdapter<CommentPosts> {
 
             }
         });
-
 
 
         return listViewItem;

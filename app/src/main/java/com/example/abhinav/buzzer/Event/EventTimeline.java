@@ -79,10 +79,9 @@ public class EventTimeline extends AppCompatActivity {
 
 
 
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7607893686244125~3347511713");
         mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        //   mAdView.loadAd(adRequest);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        mAdView.loadAd(adRequest);
 
         // Prepare the Interstitial Ad
      /*   interstitial = new InterstitialAd(MainActivity.this);

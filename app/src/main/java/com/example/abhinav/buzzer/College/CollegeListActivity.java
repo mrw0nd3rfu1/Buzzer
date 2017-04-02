@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.example.abhinav.buzzer.Timeline.MainActivity;
 import com.example.abhinav.buzzer.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +34,7 @@ public class CollegeListActivity extends AppCompatActivity {
     Button buttonAddCollege;
     ListView listViewCollege;
     Toolbar mToolbar;
+    AdView mAdView;
 
     //a list to store all the artist from firebase database
     List<CollegeName> cName;
@@ -42,6 +45,10 @@ public class CollegeListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_college);
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        mAdView.loadAd(adRequest);
 
         databaseCollege = FirebaseDatabase.getInstance().getReference().child("College");
 
