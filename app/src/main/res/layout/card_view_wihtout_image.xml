@@ -68,14 +68,14 @@
                 android:layout_marginStart="18dp"
                 android:layout_weight="1"
                 android:background="@android:drawable/screen_background_light_transparent"
-                android:paddingLeft="10dp"
+                android:paddingLeft="5dp"
                 app:srcCompat="@mipmap/ic_thumb_up_white_24dp" />
 
             <ImageButton
                 android:id="@+id/commentButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_star2"
+                android:background="@mipmap/ic_launcher_comment"
                 android:text="Button"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/likeButton"

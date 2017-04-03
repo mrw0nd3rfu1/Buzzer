@@ -625,9 +625,9 @@ public class MainActivity extends AppCompatActivity {
 
                     if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
 
-                        mLikeButton.setImageResource(R.drawable.ic_like_hdpi);
+                        mLikeButton.setImageResource(R.mipmap.ic_launcher);
                     } else {
-                        mLikeButton.setImageResource(R.drawable.ic_like2_hdpi);
+                        mLikeButton.setImageResource(R.mipmap.ic_launcher_unlike);
 
                     }
                 }
