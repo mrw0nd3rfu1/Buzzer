@@ -1,6 +1,5 @@
 package com.example.abhinav.buzzer.College;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -15,9 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.abhinav.buzzer.Timeline.MainActivity;
 import com.example.abhinav.buzzer.R;
-import com.example.abhinav.buzzer.Profile.SetupActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -160,7 +157,7 @@ public class CollegeListActivity2 extends AppCompatActivity {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.college_update, null);
+        final View dialogView = inflater.inflate(R.layout.name_update, null);
         dialogBuilder.setView(dialogView);
 
         final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);

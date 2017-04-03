@@ -1,11 +1,18 @@
 package com.example.abhinav.buzzer.Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +47,8 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private String post_image;
+    private Button edit_Name;
+    private  Button edit_Location;
 
 
     @Override
@@ -68,6 +77,8 @@ public class ProfileActivity extends AppCompatActivity {
         mLocation = (TextView) findViewById(R.id.nameLocation);
         mProfileImage = (CircleImageView) findViewById(R.id.userPic);
         mCollegeImage = (ImageView) findViewById(R.id.college_pic);
+        edit_Name = (Button) findViewById(R.id.edit_Name);
+        edit_Location = (Button) findViewById(R.id.edit_Location);
 
 
         // Toast.makeText(HomeSingleActivity.this , mPost_key , Toast.LENGTH_SHORT).show();
@@ -112,13 +123,94 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+    edit_Name.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+           updateName();
+        }
+    });
+        edit_Location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                     updateLocation();
 
+
+            }
+        });
+
+        mProfileImage.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, ProfilePhotoSelector.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            }
+        });
+
+
+
+
+    }
+    public boolean updateName(){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ProfileActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.name_update, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
+        final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateArtist);
+
+        final AlertDialog b = dialogBuilder.create();
+        b.show();
+
+
+        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = editTextName.getText().toString().trim();
+                if (!TextUtils.isEmpty(name)) {
+                    b.dismiss();
+                    mDatabase.child(mAuth.getCurrentUser().getUid()).child("name").setValue(name);
+                }
+            }
+        });
+        return true;
+    }
+
+    public boolean updateLocation (){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ProfileActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.location_update, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
+        final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateArtist);
+
+        final AlertDialog b = dialogBuilder.create();
+        b.show();
+
+
+        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = editTextName.getText().toString().trim();
+                if (!TextUtils.isEmpty(name)) {
+                    DatabaseReference dr= mDatabase.child(mAuth.getCurrentUser().getUid()).child("location");
+                    dr.setValue(name);
+                    b.dismiss();
+                }
+            }
+        });
+
+        return true;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
+
+         return true;
     }
 }
