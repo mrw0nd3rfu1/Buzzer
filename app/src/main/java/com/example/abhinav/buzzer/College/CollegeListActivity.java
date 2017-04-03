@@ -176,7 +176,7 @@ public class CollegeListActivity extends AppCompatActivity {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.college_update, null);
+        final View dialogView = inflater.inflate(R.layout.name_update, null);
         dialogBuilder.setView(dialogView);
 
         final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
