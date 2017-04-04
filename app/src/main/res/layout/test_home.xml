@@ -33,9 +33,9 @@
         android:textStyle="normal|bold"/>
 
     <LinearLayout
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
 
         <TextView
@@ -64,11 +64,6 @@
             android:src="@mipmap/add_btn"
             android:transitionName="myImage" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
 
             <ImageButton
                 android:id="@+id/likeButton"
@@ -80,32 +75,31 @@
                 android:layout_weight="1"
                 android:background="@android:drawable/screen_background_light_transparent"
                 android:paddingLeft="10dp"
-              />
+                />
 
 
-            <ImageButton
-                android:id="@+id/commentButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/ic_launcher_comment"
-                android:text="Button"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/likeButton"
-                android:layout_alignBottom="@+id/likeButton" />
+        <ImageButton
+            android:id="@+id/commentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/likeButton"
+            android:layout_toEndOf="@+id/likeButton"
+            android:layout_weight="1"
+            android:background="@mipmap/ic_launcher_comment"
+            android:text="Button" />
 
-
-        </RelativeLayout>
 
         <TextView
-         android:id="@+id/post_event"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_gravity="center"
-         android:paddingLeft="15dp"
-         android:paddingRight="15dp"
-         android:text="Post Event Here"
-         android:textSize="16dp"
-         android:textStyle="normal|bold"
+            android:id="@+id/post_event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Post Event Here"
+            android:textSize="16dp"
+            android:textStyle="normal|bold"
             android:transitionName="myEvent" />
 
 

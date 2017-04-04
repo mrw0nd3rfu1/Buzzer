@@ -36,6 +36,7 @@ import com.example.abhinav.buzzer.Profile.ProfileActivity;
 import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
 import com.example.abhinav.buzzer.Profile.SetupActivity;
 import com.example.abhinav.buzzer.R;
+import com.example.abhinav.buzzer.Test.TimelineListActivity;
 import com.example.abhinav.buzzer.Utility.Home;
 import com.example.abhinav.buzzer.Utility.PostFragment;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -574,6 +575,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(profileIntent);
 
             }
+
+
+        if (item.getItemId() == R.id.action_test) {
+            final String clgID = getIntent().getExtras().getString("colgId");
+
+            Intent profileIntent = new Intent(MainActivity.this, TimelineListActivity.class);
+            profileIntent.putExtra("colgId", clgID);
+            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(profileIntent);
+
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -685,7 +697,10 @@ public class MainActivity extends AppCompatActivity {
             button= (Button) mView.findViewById(R.id.write_post);
         }
         }
+
+
     }
+
 
 
 

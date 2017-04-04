@@ -53,6 +53,8 @@
 
         <activity android:name=".Timeline.MainActivity" />
         <activity android:name=".College.CollegePhotoSelector"></activity>
+        <activity android:name=".Test.TimelineListActivity" />
+
     </application>
 
 </manifest>
