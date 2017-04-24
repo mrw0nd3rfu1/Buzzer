@@ -36,7 +36,8 @@ import com.example.abhinav.buzzer.Profile.ProfileActivity;
 import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
 import com.example.abhinav.buzzer.Profile.SetupActivity;
 import com.example.abhinav.buzzer.R;
-import com.example.abhinav.buzzer.Test.TimelineListActivity;
+import com.example.abhinav.buzzer.Test2.Rec;
+import com.example.abhinav.buzzer.Utility.AboutActivity;
 import com.example.abhinav.buzzer.Utility.Home;
 import com.example.abhinav.buzzer.Utility.PostFragment;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -147,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         orderData = mDatabase.orderByChild("post_id");
         mDatabaseUsers.keepSynced(true);
         mDatabaseLike.keepSynced(true);
+        mDatabase.keepSynced(true);
         orderData.keepSynced(true);
 
         mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
@@ -580,7 +582,17 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_test) {
             final String clgID = getIntent().getExtras().getString("colgId");
 
-            Intent profileIntent = new Intent(MainActivity.this, TimelineListActivity.class);
+            Intent profileIntent = new Intent(MainActivity.this, Rec.class);
+            profileIntent.putExtra("colgId", clgID);
+            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(profileIntent);
+
+        }
+
+        if (item.getItemId() == R.id.action_about) {
+            final String clgID = getIntent().getExtras().getString("colgId");
+
+            Intent profileIntent = new Intent(MainActivity.this, AboutActivity.class);
             profileIntent.putExtra("colgId", clgID);
             profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(profileIntent);

@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_logo"
@@ -32,13 +31,11 @@
         <activity android:name=".Profile.ProfileActivity" />
         <activity android:name=".College.CollegeListActivity" />
         <activity android:name=".College.CollegeListActivity2" />
-
         <activity android:name=".Comment.CommentListActivity" />
         <activity android:name=".Profile.ProfileSeeActivity" />
         <activity android:name=".Event.EventSearchActivity" />
         <activity android:name=".Event.EventTimeline" />
         <activity android:name=".Profile.ProfilePhotoSelector" />
-
 
         <service android:name=".FirebaseMessaging.MyFirebaseInstance">
             <intent-filter>
@@ -52,9 +49,9 @@
         </service>
 
         <activity android:name=".Timeline.MainActivity" />
-        <activity android:name=".College.CollegePhotoSelector"></activity>
-        <activity android:name=".Test.TimelineListActivity" />
-
+        <activity android:name=".College.CollegePhotoSelector" />
+         <activity android:name=".Test2.Rec" />
+        <activity android:name=".Utility.AboutActivity"></activity>
     </application>
 
 </manifest>

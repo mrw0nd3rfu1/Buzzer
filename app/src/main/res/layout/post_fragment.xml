@@ -25,5 +25,7 @@
         android:id="@+id/post_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:srcCompat="@color/cardview_shadow_start_color" />
+        app:srcCompat="@color/cardview_shadow_start_color"
+        android:layout_alignBottom="@+id/post_content"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

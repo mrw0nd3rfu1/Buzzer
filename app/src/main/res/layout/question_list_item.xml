@@ -64,6 +64,11 @@
             android:src="@mipmap/add_btn"
             android:transitionName="myImage" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
 
             <ImageButton
                 android:id="@+id/likeButton"
@@ -78,17 +83,18 @@
                 />
 
 
-        <ImageButton
-            android:id="@+id/commentButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignRight="@+id/likeButton"
-            android:layout_toEndOf="@+id/likeButton"
-            android:layout_weight="1"
-            android:background="@mipmap/ic_launcher_comment"
-            android:text="Button" />
+            <ImageButton
+                android:id="@+id/commentButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_launcher_comment"
+                android:text="Button"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/likeButton"
+                android:layout_alignBottom="@+id/likeButton" />
 
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/post_event"

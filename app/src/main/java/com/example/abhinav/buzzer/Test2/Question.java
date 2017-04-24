@@ -1,4 +1,4 @@
-package com.example.abhinav.buzzer.Test;
+package com.example.abhinav.buzzer.Test2;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -7,16 +7,16 @@ import com.google.firebase.database.IgnoreExtraProperties;
  */
 @IgnoreExtraProperties
 
-public class TimelinePosts {
+public class Question {
 
     public int With_image;
 
     private String event, post, image,profile_pic, username,post_id,uid;
-    public TimelinePosts() {
+    public Question() {
 
     }
 
-    public TimelinePosts(String event, String post, String image,String profile_pic, String username,int with_image) {
+    public Question(String event, String post, String image,String profile_pic, String username,int with_image) {
         this.event = event;
         this.post = post;
         this.image = image;
