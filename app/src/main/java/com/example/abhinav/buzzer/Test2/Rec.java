@@ -29,16 +29,16 @@ public class Rec extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private RecyclerView recyclerView;
     private String lastKey = null;
+    static String clgID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rec);
 
-        final String clgID = getIntent().getExtras().getString("colgId");
+        clgID = getIntent().getExtras().getString("colgId");
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
-
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
 
@@ -70,8 +70,8 @@ public class Rec extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(!dataSnapshot.hasChildren()){
-                            Toast.makeText(Rec.this, "No more questions", Toast.LENGTH_SHORT).show();
-                            lastKey=null;
+                            Toast.makeText(Rec.this, "No more events", Toast.LENGTH_SHORT).show();
+                            lastKey="last";
                         }
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             Question question = data.getValue(Question.class);
@@ -79,6 +79,7 @@ public class Rec extends AppCompatActivity {
                             lastKey = String.valueOf(question.getPost_id());
                             mAdapter.notifyDataSetChanged();
                         }
+
                         mProgressBar.setVisibility(RecyclerView.GONE);
                     }
 
