@@ -4,8 +4,8 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    android:fitsSystemWindows="true">
+    android:paddingTop="@dimen/app_bar_top"
+    android:background="#000000">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/singleHomeImage"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             android:src="@mipmap/add_btn"
@@ -34,6 +34,7 @@
             android:paddingRight="15dp"
             android:paddingTop="15dp"
             android:text="Username"
+            android:textColor="#ffff"
             android:textStyle="normal|bold"
           />
 
@@ -47,6 +48,7 @@
             android:text="Event Comes Here"
             android:textSize="16dp"
             android:textStyle="normal|bold"
+            android:textColor="#ffff"
             android:transitionName="myEvent"/>
 
         <TextView
@@ -58,6 +60,7 @@
             android:paddingRight="15dp"
             android:paddingTop="15dp"
             android:text="Post Comes Here"
+            android:textColor="#ffff"
             android:textSize="16dp"
             android:transitionName="myPost"/>
 

@@ -72,6 +72,7 @@ public class Rec extends AppCompatActivity {
                         if(!dataSnapshot.hasChildren()){
                             Toast.makeText(Rec.this, "No more events", Toast.LENGTH_SHORT).show();
                             lastKey="last";
+                            currentPage--;
                         }
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             Question question = data.getValue(Question.class);

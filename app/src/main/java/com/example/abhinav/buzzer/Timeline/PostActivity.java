@@ -110,26 +110,6 @@ public class PostActivity extends AppCompatActivity
     private void startPosting()
     {
 
-     /*   String collegeId=GlobalClass.getInstance().getCollegeId();
-        final DatabaseReference College=FirebaseDatabase.getInstance().getReference("College").child(collegeId);
-        College.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.child("FirstPost").exists())
-                    {
-                        College.child("LastPost").setValue(postId);
-                    }
-                    else
-                        College.child("FirstPost").setValue(postId);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });    */
-
-
         final String title_post = post.getText().toString().trim();
 
         if (!TextUtils.isEmpty(title_post) ) {
