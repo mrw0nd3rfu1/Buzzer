@@ -1,6 +1,7 @@
 package com.example.abhinav.buzzer.Test2;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -34,7 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
     private List<Question> mQuestionList;
-    private Activity context;
+    Context context;
     private boolean mProcessLike=false;
 
 
@@ -65,7 +66,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    RecyclerViewAdapter(List<Question> mQuestionList) {
+    RecyclerViewAdapter(Context context, List<Question> mQuestionList) {
         this.mQuestionList = mQuestionList;
         this.context = context;
     }
@@ -83,6 +84,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final Question question = mQuestionList.get(position);
         DatabaseReference mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mDatabaseLike.keepSynced(true);
 
         holder.textViewEvent.setText(question.getEvent());
         holder.postPost.setText(question.getPost());
@@ -95,7 +97,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.child(question.getPost_id()).hasChild(mAuth.getCurrentUser().getUid())) {
+                if (dataSnapshot.child(question.getPost_key()).hasChild(mAuth.getCurrentUser().getUid())) {
 
                     holder.mLikeButton.setImageResource(R.mipmap.ic_launcher);
                 } else {
@@ -122,13 +124,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (mProcessLike) {
 
-                            if (dataSnapshot.child(question.getPost_id()).hasChild(mAuth.getCurrentUser().getUid())) {
+                            if (dataSnapshot.child(question.getPost_key()).hasChild(mAuth.getCurrentUser().getUid())) {
 
-                                mDatabaseLike.child(question.getPost_id()).child(mAuth.getCurrentUser().getUid()).removeValue();
+                                mDatabaseLike.child(question.getPost_key()).child(mAuth.getCurrentUser().getUid()).removeValue();
                                 mProcessLike = false;
 
                             } else {
-                                mDatabaseLike.child(question.getPost_id()).child(mAuth.getCurrentUser().getUid()).setValue("Random Value");
+                                mDatabaseLike.child(question.getPost_key()).child(mAuth.getCurrentUser().getUid()).setValue("Random Value");
                                 mProcessLike = false;
                             }
 
@@ -150,8 +152,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
 
-                Intent singleHomeIntent = new Intent(context, HomeSingleActivity.class);
-                singleHomeIntent.putExtra("home_id", question.getPost_id());
+                Intent singleHomeIntent = new Intent(context, HomeSingleActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                singleHomeIntent.putExtra("home_id", question.getPost_key());
                 singleHomeIntent.putExtra("colgId", Rec.clgID);
                 context.startActivity(singleHomeIntent);
             }
@@ -160,10 +163,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent commentIntent = new Intent(context, CommentListActivity.class);
-                commentIntent.putExtra("home_id", question.getPost_id());
+                Intent commentIntent = new Intent(context, CommentListActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                commentIntent.putExtra("home_id", question.getPost_key());
                 commentIntent.putExtra("colgId", Rec.clgID);
-                commentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(commentIntent);
             }
         });
@@ -171,10 +174,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.user_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent profileIntent = new Intent(context, ProfileSeeActivity.class);
-                profileIntent.putExtra("home_id", question.getPost_id());
+                Intent profileIntent = new Intent(context, ProfileSeeActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                profileIntent.putExtra("home_id", question.getPost_key());
                 profileIntent.putExtra("colgId", Rec.clgID);
-                profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(profileIntent);
             }
         });
@@ -182,10 +185,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.textViewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent profileIntent = new Intent(context, ProfileSeeActivity.class);
-                profileIntent.putExtra("home_id", question.getPost_id());
+                Intent profileIntent = new Intent(context, ProfileSeeActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                profileIntent.putExtra("home_id", question.getPost_key());
                 profileIntent.putExtra("colgId", Rec.clgID);
-                profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(profileIntent);
             }
         });

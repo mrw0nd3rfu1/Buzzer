@@ -11,16 +11,17 @@ public class Question {
 
     public int With_image;
 
-    private String event, post, image,profile_pic, username,post_id,uid;
+    private String event, post, image,profile_pic, username,post_id,uid,post_key;
     public Question() {
 
     }
 
-    public Question(String event, String post, String image,String profile_pic, String username,int with_image) {
+    public Question(String event, String post, String image,String profile_pic,String post_key, String username,int with_image) {
         this.event = event;
         this.post = post;
         this.image = image;
         this.profile_pic=profile_pic;
+        this.post_key=post_key;
         this.username = username;
         this.With_image=with_image;
 
@@ -29,6 +30,7 @@ public class Question {
     public String getEvent() {
         return event;
     }
+    String getPost_key(){return post_key;}
 
 
     public String getPost() {

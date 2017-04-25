@@ -145,7 +145,7 @@ public class PostActivity extends AppCompatActivity
                             newpost.child("event").setValue(Event_name);
                             newpost.child("eventId").setValue(Event_Id);
                             newpost.child("post").setValue(title_post);
-
+                            newpost.child("post_key").setValue(newpost.getKey());
                             if(imageUri!=null){
                             filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override

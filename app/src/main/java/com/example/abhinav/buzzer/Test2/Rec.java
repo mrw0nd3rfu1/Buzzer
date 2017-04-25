@@ -42,7 +42,7 @@ public class Rec extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
 
-        mAdapter = new RecyclerViewAdapter(questionList);
+        mAdapter = new RecyclerViewAdapter(this ,questionList);
         LinearLayoutManager mLayoutManager =
                 new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
