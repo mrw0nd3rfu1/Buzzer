@@ -81,6 +81,8 @@ public class PostActivity extends AppCompatActivity
         post = (EditText) findViewById(R.id.postWrite);
         submit = (Button) findViewById(R.id.submitPost);
         image = (CircleImageView) findViewById(R.id.user_pic);
+        final TextView messageTime = (TextView) findViewById(R.id.timestamp);
+
 
         progressDialog = new ProgressDialog(this);
 

@@ -42,20 +42,18 @@ public class MessageListActivity extends AppCompatActivity {
     DatabaseReference database;
     FirebaseAuth mAuth;
     private String mPost_key = null;
-    private String mMessage_key = null;
+    private String mMessage_key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        final String clgID = getIntent().getExtras().getString("colgId");
         mMessage_key = getIntent().getExtras().getString("profileName");
 
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
-        databaseMessage = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid()).child("Messages").child(mMessage_key);
-        databaseMessageReceiver = FirebaseDatabase.getInstance().getReference().child(mMessage_key).child("Messages").child(mAuth.getCurrentUser().getUid());
+        databaseMessage = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid()).child("Messages").child(mMessage_key);
+        databaseMessageReceiver = FirebaseDatabase.getInstance().getReference().child("Users").child(mMessage_key).child("Messages").child(mAuth.getCurrentUser().getUid());
         databaseUser =FirebaseDatabase.getInstance().getReference().child("User");
 
         //getting views
@@ -156,8 +154,8 @@ public class MessageListActivity extends AppCompatActivity {
     private boolean updateCollege(String id, String name, String comment) {
         //getting the specified artist reference
         final String clgID = getIntent().getExtras().getString("colgId");
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid()).child("Messages").child(mMessage_key).child(id);
-        DatabaseReference dR2 = FirebaseDatabase.getInstance().getReference().child(mMessage_key).child("Messages").child(mAuth.getCurrentUser().getUid()).child(id);
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid()).child("Messages").child(mMessage_key).child(id);
+        DatabaseReference dR2 = FirebaseDatabase.getInstance().getReference().child("Users").child(mMessage_key).child("Messages").child(mAuth.getCurrentUser().getUid()).child(id);
 
 
         //updating artist
@@ -211,8 +209,8 @@ public class MessageListActivity extends AppCompatActivity {
     private boolean deleteComment(String id) {
         //getting the specified artist reference
         final String clgID = getIntent().getExtras().getString("colgId");
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid()).child("Messages").child(mMessage_key).child(id);
-        DatabaseReference dR2 = FirebaseDatabase.getInstance().getReference().child(mMessage_key).child("Messages").child(mAuth.getCurrentUser().getUid()).child(id);
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid()).child("Messages").child(mMessage_key).child(id);
+        DatabaseReference dR2 = FirebaseDatabase.getInstance().getReference().child("Users").child(mMessage_key).child("Messages").child(mAuth.getCurrentUser().getUid()).child(id);
 
         //removing artist
         dR.removeValue();
