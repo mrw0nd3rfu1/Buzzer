@@ -61,34 +61,43 @@ public class Rec extends AppCompatActivity {
 
 
     private void loadData() {
-        String post_key;
-
+        final int[] count = {0};
+        final String[] post_key = {null};
         mDatabase.limitToFirst(TOTAL_ITEM_EACH_LOAD)
-                .startAt(lastKey)
-                .orderByChild("post_id")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(!dataSnapshot.hasChildren()){
-                            Toast.makeText(Rec.this, "No more events", Toast.LENGTH_SHORT).show();
-                            lastKey="last";
-                            currentPage--;
+                    .startAt(lastKey)
+                    .orderByChild("post_id")
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (!dataSnapshot.hasChildren()) {
+                                lastKey = "last";
+                                currentPage--;
+                            }
+                            post_key[0] = lastKey;
+
+                            for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                Question question = data.getValue(Question.class);
+
+                                questionList.add(question);
+                                lastKey = String.valueOf(question.getPost_id());
+                                mAdapter.notifyDataSetChanged();
+
+                            }
+
+                           if (lastKey.equalsIgnoreCase(post_key[0])){
+                                count[0]++;
+                            }
+
+                            mProgressBar.setVisibility(RecyclerView.GONE);
+                         }
+
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            mProgressBar.setVisibility(RecyclerView.GONE);
                         }
-                        for (DataSnapshot data : dataSnapshot.getChildren()) {
-                            Question question = data.getValue(Question.class);
-                            questionList.add(question);
-                            lastKey = String.valueOf(question.getPost_id());
-                            mAdapter.notifyDataSetChanged();
-                        }
+                    });
 
-                        mProgressBar.setVisibility(RecyclerView.GONE);
-                    }
-
-
-                    @Override public void onCancelled(DatabaseError databaseError) {
-                        mProgressBar.setVisibility(RecyclerView.GONE);
-                    }
-                });
     }
 
     private void loadMoreData(){

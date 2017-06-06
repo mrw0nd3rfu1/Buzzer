@@ -1,5 +1,6 @@
 package com.example.abhinav.buzzer.Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -7,9 +8,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.abhinav.buzzer.Message.MessageListActivity;
+import com.example.abhinav.buzzer.Message.MessageShow;
 import com.example.abhinav.buzzer.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -70,6 +74,8 @@ public class ProfileSeeActivity extends AppCompatActivity {
         mLocation = (TextView) findViewById(R.id.nameLocation);
         mProfileImage = (CircleImageView) findViewById(R.id.userPic);
         mCollegeImage = (ImageView) findViewById(R.id.college_pic);
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
+
 
 
 
@@ -77,7 +83,8 @@ public class ProfileSeeActivity extends AppCompatActivity {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String c = (String) dataSnapshot.child("uid").getValue();
+                final String c = (String) dataSnapshot.child("uid").getValue();
+
 
                 mDatabaseUser.child(c).addValueEventListener(new ValueEventListener() {
                     @Override
@@ -126,7 +133,35 @@ public class ProfileSeeActivity extends AppCompatActivity {
             }
         });
 
-     }
+
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final String c = (String) dataSnapshot.child("uid").getValue();
+
+
+                mFab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent mainIntent = new Intent(ProfileSeeActivity.this , MessageListActivity.class);
+                        mainIntent.putExtra("profileName", c);
+                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(mainIntent);
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

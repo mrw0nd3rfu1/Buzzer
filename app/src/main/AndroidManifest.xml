@@ -50,8 +50,10 @@
 
         <activity android:name=".Timeline.MainActivity" />
         <activity android:name=".College.CollegePhotoSelector" />
-         <activity android:name=".Test2.Rec" />
-        <activity android:name=".Utility.AboutActivity"></activity>
+        <activity android:name=".Test2.Rec" />
+        <activity android:name=".Utility.AboutActivity" />
+        <activity android:name=".Message.MessageListActivity"/>
+        <activity android:name=".Message.MessageShow"></activity>
     </application>
 
 </manifest>
