@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -81,7 +82,6 @@ public class PostActivity extends AppCompatActivity
         post = (EditText) findViewById(R.id.postWrite);
         submit = (Button) findViewById(R.id.submitPost);
         image = (CircleImageView) findViewById(R.id.user_pic);
-        final TextView messageTime = (TextView) findViewById(R.id.timestamp);
 
 
         progressDialog = new ProgressDialog(this);
@@ -123,6 +123,7 @@ public class PostActivity extends AppCompatActivity
                     mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
+
 
                             newpost.child("event").setValue(Event_name);
                             newpost.child("eventId").setValue(Event_Id);

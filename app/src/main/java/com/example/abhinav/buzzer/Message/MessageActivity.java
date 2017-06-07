@@ -44,7 +44,7 @@ public class MessageActivity extends ArrayAdapter<MessagePosts> {
 
         TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
         final TextView textViewUser = (TextView) listViewItem.findViewById(R.id.textViewUser);
-        final CircleImageView user_pic = (CircleImageView) listViewItem.findViewById(R.id.userPic);
+        final CircleImageView user_pic = (CircleImageView) listViewItem.findViewById(R.id.user_pic);
         final TextView messageTime = (TextView)listViewItem.findViewById(R.id.message_time);
 
 

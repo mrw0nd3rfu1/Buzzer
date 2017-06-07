@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +32,7 @@ import com.example.abhinav.buzzer.College.CollegePhotoSelector;
 import com.example.abhinav.buzzer.Comment.CommentListActivity;
 import com.example.abhinav.buzzer.Event.EventListActivity;
 import com.example.abhinav.buzzer.Event.EventSearchActivity;
+import com.example.abhinav.buzzer.Message.MessageShow;
 import com.example.abhinav.buzzer.Profile.LoginActivity;
 import com.example.abhinav.buzzer.Profile.ProfileActivity;
 import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
@@ -578,6 +580,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+        if (item.getItemId() == R.id.action_message) {
+            Intent profileIntent = new Intent(MainActivity.this, MessageShow.class);
+            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(profileIntent);
+
+        }
+
 
         if (item.getItemId() == R.id.action_test) {
             final String clgID = getIntent().getExtras().getString("colgId");
@@ -663,7 +672,6 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
-
 
         public void setEvent(String event) {
             TextView post_event = (TextView) mView.findViewById(R.id.post_event);

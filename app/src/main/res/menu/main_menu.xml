@@ -26,4 +26,8 @@
     <item android:id="@+id/action_about"
         android:title="About us"
         app:showAsAction="never" />
+
+    <item android:id="@+id/action_message"
+        android:title="Messages"
+        app:showAsAction="never" />
 </menu>

@@ -2,6 +2,8 @@ package com.example.abhinav.buzzer.Utility;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.Date;
+
 /**
  * Created by Abhinav on 23-Jan-17.
  */
@@ -12,6 +14,8 @@ public class Home {
     public int With_image;
 
     private String event, post, image,profile_pic, username,post_id,uid,post_key;
+    private long messageTime;
+
     public Home() {
 
     }
@@ -24,6 +28,8 @@ public class Home {
         this.username = username;
         this.post_key=post_key;
         this.With_image=with_image;
+
+        messageTime = new Date().getTime();
 
     }
 
@@ -57,6 +63,11 @@ public int getHas_image(){return this.With_image;}
 
     public String getProfile_pic() {
         return profile_pic;
+    }
+
+
+    public long getMessageTime() {
+        return messageTime;
     }
 
     public void setProfile_pic(String profile_pic) {
