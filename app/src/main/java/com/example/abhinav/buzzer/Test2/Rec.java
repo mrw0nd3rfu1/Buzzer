@@ -26,6 +26,7 @@ public class Rec extends AppCompatActivity {
     private RecyclerViewAdapter mAdapter;
     private int currentPage = 0;
     private static final int TOTAL_ITEM_EACH_LOAD = 10;
+    final int[] count = {0};
     private ProgressBar mProgressBar;
     private RecyclerView recyclerView;
     private String lastKey = null;
@@ -61,7 +62,7 @@ public class Rec extends AppCompatActivity {
 
 
     private void loadData() {
-        final int[] count = {0};
+
         final String[] post_key = {null};
         mDatabase.limitToFirst(TOTAL_ITEM_EACH_LOAD)
                     .startAt(lastKey)
@@ -72,6 +73,7 @@ public class Rec extends AppCompatActivity {
                             if (!dataSnapshot.hasChildren()) {
                                 lastKey = "last";
                                 currentPage--;
+
                             }
                             post_key[0] = lastKey;
 
@@ -81,6 +83,7 @@ public class Rec extends AppCompatActivity {
                                 questionList.add(question);
                                 lastKey = String.valueOf(question.getPost_id());
                                 mAdapter.notifyDataSetChanged();
+
 
                             }
 
@@ -102,7 +105,8 @@ public class Rec extends AppCompatActivity {
 
     private void loadMoreData(){
         currentPage++;
+        if (count[0] <= 0){
         loadData();
-        mProgressBar.setVisibility(RecyclerView.VISIBLE);
+        mProgressBar.setVisibility(RecyclerView.VISIBLE);}
     }
 }

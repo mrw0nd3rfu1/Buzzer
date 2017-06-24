@@ -14,23 +14,41 @@ public class Home {
     public int With_image;
 
     private String event, post, image,profile_pic, username,post_id,uid,post_key;
-    private long messageTime;
+    private long numShares;
+    private String deeplinks;
 
     public Home() {
 
     }
 
-    public Home(String event, String post, String image,String profile_pic, String username,String post_key,int with_image) {
+
+    public Home(String event, String post, String image, String profile_pic, String username, String post_id, String uid, String post_key, long numShares, String deeplinks) {
         this.event = event;
         this.post = post;
         this.image = image;
-        this.profile_pic=profile_pic;
+        this.profile_pic = profile_pic;
         this.username = username;
-        this.post_key=post_key;
-        this.With_image=with_image;
+        this.post_id = post_id;
+        this.uid = uid;
+        this.post_key = post_key;
+        this.numShares = numShares;
+        this.deeplinks = deeplinks;
+    }
 
-        messageTime = new Date().getTime();
+    public long getNumShares() {
+        return numShares;
+    }
 
+    public void setNumShares(long numShares) {
+        this.numShares = numShares;
+    }
+
+    public String getDeeplinks() {
+        return deeplinks;
+    }
+
+    public void setDeeplinks(String deeplinks) {
+        this.deeplinks = deeplinks;
     }
 
     public String getEvent() {
@@ -66,9 +84,6 @@ public int getHas_image(){return this.With_image;}
     }
 
 
-    public long getMessageTime() {
-        return messageTime;
-    }
 
     public void setProfile_pic(String profile_pic) {
         this.profile_pic = profile_pic;

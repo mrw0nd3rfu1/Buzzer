@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -622,6 +623,13 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         mAuth.signOut();
     }
+
+    public static String generateDeepLink(String uid){
+        return "https://upr46.app.goo.gl/?link=https://buzzer.com/" + uid +
+                "/&apn=com.example.abhinav.buzzer";
+    }
+
+
 
     public  static class HomeViewHolder extends RecyclerView.ViewHolder {
 

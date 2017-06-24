@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.abhinav.buzzer.R;
+import com.example.abhinav.buzzer.Test2.Rec;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -149,7 +150,7 @@ public class PostActivity extends AppCompatActivity
                                     final String clgID = getIntent().getExtras().getString("colgId");
                                     if (task.isSuccessful()) {
                                         progressDialog.dismiss();
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        Intent intent = new Intent(getApplicationContext(), Rec.class);
                                         intent.putExtra("colgId", clgID);
                                         startActivity(intent);
                                     }

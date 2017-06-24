@@ -26,7 +26,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".Profile.SetupActivity" />
-        <activity android:name=".Timeline.HomeSingleActivity" />
+        <activity android:name=".Timeline.HomeSingleActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="buzzer.com"
+                    android:scheme="http" />
+                <data android:pathPattern="."/>
+            </intent-filter>
+        </activity>
         <activity android:name=".Timeline.LikedActivity" />
         <activity android:name=".Profile.ProfileActivity" />
         <activity android:name=".College.CollegeListActivity" />
