@@ -39,7 +39,6 @@ import com.example.abhinav.buzzer.Profile.ProfileActivity;
 import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
 import com.example.abhinav.buzzer.Profile.SetupActivity;
 import com.example.abhinav.buzzer.R;
-import com.example.abhinav.buzzer.Test2.Rec;
 import com.example.abhinav.buzzer.Utility.AboutActivity;
 import com.example.abhinav.buzzer.Utility.Home;
 import com.example.abhinav.buzzer.Utility.PostFragment;
@@ -148,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
-        orderData = mDatabase.orderByChild("post_id");
+        orderData = mDatabase.orderByChild("post_id").limitToFirst(30);
         mDatabaseUsers.keepSynced(true);
         mDatabaseLike.keepSynced(true);
         mDatabase.keepSynced(true);
@@ -367,36 +366,7 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(MainActivity.this);
         mHomePage.setLayoutManager(mLayoutManager);
         mHomePage.setAdapter(firebaseRecyclerAdapter);
-     /*    mHomePage.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                visibleItemCount=recyclerView.getChildCount();
-                totalItemCount=mLayoutManager.getItemCount();
-                firstVisibleItem=mLayoutManager.findFirstVisibleItemPosition();
-                if (loading) {
-                    if (totalItemCount > previousTotal) {
-                        loading = false;
-                        previousTotal = totalItemCount;
 
-                    }
-                }
-                if (!loading && (totalItemCount - visibleItemCount)
-                        <= (firstVisibleItem + visibleThreshold)) {
-
-
-
-                    current_page++;
-
-                    onLoadMore(current_page);
-
-                    loading = true;
-                }
-            }
-            void onLoadMore(int current_page){
-
-            }
-        }); */
         checkUserExist();
     }
 
@@ -588,16 +558,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-
-        if (item.getItemId() == R.id.action_test) {
-            final String clgID = getIntent().getExtras().getString("colgId");
-
-            Intent profileIntent = new Intent(MainActivity.this, Rec.class);
-            profileIntent.putExtra("colgId", clgID);
-            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(profileIntent);
-
-        }
 
         if (item.getItemId() == R.id.action_about) {
             final String clgID = getIntent().getExtras().getString("colgId");

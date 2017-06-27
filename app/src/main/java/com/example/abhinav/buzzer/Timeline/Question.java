@@ -1,4 +1,4 @@
-package com.example.abhinav.buzzer.Test2;
+package com.example.abhinav.buzzer.Timeline;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -16,7 +16,7 @@ public class Question {
 
     }
 
-    public Question(String event, String post, String image,String profile_pic,String post_key, String username,int with_image) {
+    public Question(String event, String post, String image, String profile_pic, String post_key, String username, int with_image) {
         this.event = event;
         this.post = post;
         this.image = image;

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.abhinav.buzzer.R;
-import com.example.abhinav.buzzer.Test2.Rec;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -150,7 +148,7 @@ public class PostActivity extends AppCompatActivity
                                     final String clgID = getIntent().getExtras().getString("colgId");
                                     if (task.isSuccessful()) {
                                         progressDialog.dismiss();
-                                        Intent intent = new Intent(getApplicationContext(), Rec.class);
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         intent.putExtra("colgId", clgID);
                                         startActivity(intent);
                                     }

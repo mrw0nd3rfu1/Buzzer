@@ -19,11 +19,7 @@
         android:title="Log Out"
         app:showAsAction="never" />
 
-    <item android:id="@+id/action_test"
-        android:title="Testing"
-        app:showAsAction="never" />
-
-    <item android:id="@+id/action_about"
+   <item android:id="@+id/action_about"
         android:title="About us"
         app:showAsAction="never" />
 

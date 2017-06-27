@@ -17,6 +17,8 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".Timeline.PostActivity" />
         <activity android:name=".Profile.RegisterActivity" />
+
+        <activity android:name=".Timeline.MainActivity" />
         <activity android:name=".Event.EventListActivity" />
         <activity android:name=".Utility.SplashScreen">
             <intent-filter>
@@ -58,9 +60,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Timeline.MainActivity" />
         <activity android:name=".College.CollegePhotoSelector" />
-        <activity android:name=".Test2.Rec" />
         <activity android:name=".Utility.AboutActivity" />
         <activity android:name=".Message.MessageListActivity"/>
         <activity android:name=".Message.MessageShow"></activity>

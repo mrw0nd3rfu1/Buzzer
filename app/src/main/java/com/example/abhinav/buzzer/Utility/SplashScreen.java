@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.abhinav.buzzer.Profile.LoginActivity;
-import com.example.abhinav.buzzer.Timeline.MainActivity;
 import com.example.abhinav.buzzer.R;
+import com.example.abhinav.buzzer.Timeline.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,10 +44,12 @@ public class SplashScreen extends AppCompatActivity {
                                 if(clgID==null){
                                     Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
                                 startActivity(intent);}
-                                else{
+                                else
+                                    {
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra("colgId", clgID);
-                                startActivity(intent);}
+                                startActivity(intent);
+                                }
                                 finish();
                             }
 

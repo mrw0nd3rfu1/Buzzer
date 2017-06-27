@@ -1,6 +1,5 @@
 package com.example.abhinav.buzzer.Profile;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,11 +13,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.abhinav.buzzer.College.CollegeListActivity2;
-import com.example.abhinav.buzzer.Timeline.MainActivity;
 import com.example.abhinav.buzzer.R;
+import com.example.abhinav.buzzer.Timeline.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
