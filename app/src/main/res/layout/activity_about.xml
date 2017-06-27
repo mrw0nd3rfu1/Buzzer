@@ -13,9 +13,9 @@
        android:layout_height="wrap_content"
 
        android:id="@+id/cardView"
+       android:layout_marginTop="36dp"
        android:layout_alignParentTop="true"
-       android:layout_alignParentStart="true"
-       android:layout_marginTop="38dp">
+       android:layout_alignParentStart="true">
 
   <ImageView
         android:id="@+id/post_image"
@@ -45,15 +45,15 @@
            android:text="abhinav.pandey3@hotmail.com" />
 
        <TextView
+           android:id="@+id/textView3"
            android:layout_width="230dp"
            android:layout_height="28dp"
            android:layout_below="@+id/post_content2"
            android:layout_marginStart="145dp"
            android:layout_marginTop="55dp"
            android:ems="10"
-           android:textStyle="bold"
-           android:text="Lead Developer" />
-
+           android:text="Lead Developer"
+           android:textStyle="bold" />
 
 
    </android.support.v7.widget.CardView>
@@ -74,17 +74,6 @@
             android:layout_alignParentStart="true" />
 
         <TextView
-            android:id="@+id/post_content2"
-            android:layout_width="230dp"
-            android:layout_height="28dp"
-            android:text="Abhishek Jaiswal"
-            android:textStyle="bold"
-            android:layout_marginStart="145dp"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            />
-
-        <TextView
             android:id="@+id/post_content22"
             android:layout_width="230dp"
             android:layout_height="28dp"
@@ -95,14 +84,25 @@
             android:text="abhijais9451@gmail.com" />
 
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="230dp"
             android:layout_height="28dp"
             android:layout_below="@+id/post_content2"
             android:layout_marginStart="145dp"
             android:layout_marginTop="55dp"
             android:ems="10"
-            android:textStyle="bold"
-            android:text="Co Developer" />
+            android:text="Co Developer"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/post_content2"
+            android:layout_width="230dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="145dp"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:text="Abhishek Jaiswal"
+            android:textStyle="bold" />
 
 
     </android.support.v7.widget.CardView>

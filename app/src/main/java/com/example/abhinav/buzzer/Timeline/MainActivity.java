@@ -41,7 +41,6 @@ import com.example.abhinav.buzzer.Profile.SetupActivity;
 import com.example.abhinav.buzzer.R;
 import com.example.abhinav.buzzer.Utility.AboutActivity;
 import com.example.abhinav.buzzer.Utility.Home;
-import com.example.abhinav.buzzer.Utility.PostFragment;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -55,6 +54,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -105,12 +105,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        mAdView.loadAd(adRequest);
 
 
         final String clgID = getIntent().getExtras().getString("colgId");
+      //  FirebaseMessaging.getInstance().subscribeToTopic("college");
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -193,7 +191,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-       firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
+
+
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
 
                 Home.class,
                 R.layout.home_row,
@@ -203,58 +203,24 @@ public class MainActivity extends AppCompatActivity {
 
         ) {
 
-            @Override
-            public int getItemCount() {
-                return (super.getItemCount() + 1);
-            }
+
 
             @Override
             public int getItemViewType(int position) {
-                if (position != 0) {
-                    Home obj = getItem(position - 1);
+
+                    Home obj = getItem(position );
                     switch (obj.getHas_image()) {
                         case 0:
                             return 0;
                         case 1:
                             return 1;
                     }
-                } else return HEADER_VIEW;
                 return super.getItemViewType(position);
             }
 
-            @Override
-            public void onBindViewHolder(HomeViewHolder viewHolder, int position) {
-                if (getItemViewType(position) == HEADER_VIEW) {
-                    ((headerView) viewHolder).button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            android.app.Fragment check=getFragmentManager().findFragmentByTag("PostFragment");
-                            if(check!=null && check.isVisible())
-                            {
-                                getFragmentManager().beginTransaction().remove(check).commit();
-
-                            }
-                            else {
-                                PostFragment frag = new PostFragment();
-                                android.app.FragmentManager manager = getFragmentManager();
-                                android.app.FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.add(R.id.post_frag_holder, frag, "PostFragment");
-                                transaction.commit();
-                            }}});
-
-                    //put the code to do things in card here
-                } else {
-                    Home model = getItem(position - 1);
-                    populateViewHolder(viewHolder, model, position - 1);
-                }
-            }
            @Override
 
             public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                if (viewType == HEADER_VIEW) {
-                    View header = LayoutInflater.from(parent.getContext()).inflate(R.layout.header, parent, false);
-                    return new headerView(header);
-                } else {
                     switch (viewType) {
                         case 0:
                             View type1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_wihtout_image, parent, false);
@@ -263,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                             View type2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_row, parent, false);
                             return new HomeViewHolder(type2);
                     }
-                }
+
                 return super.onCreateViewHolder(parent, viewType);
             }
             @Override
@@ -368,6 +334,14 @@ public class MainActivity extends AppCompatActivity {
         mHomePage.setAdapter(firebaseRecyclerAdapter);
 
         checkUserExist();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAdView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override
@@ -673,20 +647,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-
     }
-
-    public static class headerView extends HomeViewHolder {
-       Button button;
-        View mView;
-       headerView(View itemView) {
-           super(itemView);
-           mView=itemView;
-            button= (Button) mView.findViewById(R.id.write_post);
-        }
-        }
-
-
     }
 
 
