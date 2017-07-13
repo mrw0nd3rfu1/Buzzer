@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/app_bar_top"
+    android:orientation="vertical"
+    tools:context="com.example.abhinav.buzzer.Profile.PhoneAuthActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:title="Verification"
+        android:id="@+id/toolbar"
+
+        >
+
+    </android.support.v7.widget.Toolbar>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etxtPhone"
+        android:hint="Enter Your Phone Number Here.."
+        android:inputType="phone"
+        android:paddingTop="20dp"/>
+
+    <Button
+        android:id="@+id/button2"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="requestCode"
+        android:paddingTop="10dp"
+        android:layout_gravity="center"
+        android:text="Send me an Sms" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="When you click the above button wait for the verification code and enter the code below"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etxtPhoneCode"
+        android:hint="Type the verification code Here.."
+        android:paddingTop="20dp"
+        android:inputType="number"/>
+
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="signIn"
+        android:layout_gravity="center"
+        android:text="Sign In"/>
+
+</LinearLayout>

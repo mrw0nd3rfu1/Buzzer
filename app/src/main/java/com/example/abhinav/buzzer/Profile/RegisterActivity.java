@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         mProgress.dismiss();
 
-                        Intent setupIntent = new Intent(RegisterActivity.this, SetupActivity.class);
+                        Intent setupIntent = new Intent(RegisterActivity.this, PhoneAuthActivity.class);
                         setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(setupIntent);
 

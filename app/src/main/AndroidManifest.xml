@@ -17,7 +17,6 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".Timeline.PostActivity" />
         <activity android:name=".Profile.RegisterActivity" />
-
         <activity android:name=".Timeline.MainActivity" />
         <activity android:name=".Event.EventListActivity" />
         <activity android:name=".Utility.SplashScreen">
@@ -28,15 +27,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".Profile.SetupActivity" />
-        <activity android:name=".Timeline.HomeSingleActivity" >
+        <activity android:name=".Timeline.HomeSingleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:host="buzzer.com"
+                <data
+                    android:host="buzzer.com"
                     android:scheme="http" />
-                <data android:pathPattern="."/>
+                <data android:pathPattern="." />
             </intent-filter>
         </activity>
         <activity android:name=".Timeline.LikedActivity" />
@@ -62,8 +63,7 @@
 
         <activity android:name=".College.CollegePhotoSelector" />
         <activity android:name=".Utility.AboutActivity" />
-        <activity android:name=".Message.MessageListActivity"/>
-        <activity android:name=".Message.MessageShow"></activity>
+        <activity android:name=".Profile.PhoneAuthActivity"></activity>
     </application>
 
 </manifest>

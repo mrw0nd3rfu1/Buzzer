@@ -19,6 +19,7 @@
         android:background="@android:drawable/screen_background_light_transparent"
         android:scaleType="centerCrop"
         android:layout_alignParentTop="true"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -52,21 +53,13 @@
         android:hint="From Where you belong?" />
 
     <Button
+        style="@style/Widget.AppCompat.Button.Colored"
         android:text="Save Information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/setupSubmitButton" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_my_calendar"
-        android:id="@+id/dobButton"
-        android:layout_below="@+id/setupLocationfield"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="12dp" />
 
 
     <TextView
@@ -77,17 +70,7 @@
         android:layout_toStartOf="@+id/dobButton"
         android:id="@+id/dob" />
 
-    <TextView
-        android:text="Date of Birth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:layout_marginBottom="12dp"
-        android:textSize="18sp"
-        android:paddingLeft="5dp"
-        android:layout_alignBottom="@+id/dobButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+
 
     <Button
         android:id="@+id/changeCollege"

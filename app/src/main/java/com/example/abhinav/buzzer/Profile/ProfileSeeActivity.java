@@ -12,8 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.abhinav.buzzer.Message.MessageListActivity;
-import com.example.abhinav.buzzer.Message.MessageShow;
 import com.example.abhinav.buzzer.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -135,7 +133,7 @@ public class ProfileSeeActivity extends AppCompatActivity {
 
 
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
+     /*   mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final String c = (String) dataSnapshot.child("uid").getValue();
@@ -159,7 +157,7 @@ public class ProfileSeeActivity extends AppCompatActivity {
 
             }
         });
-
+*/
 
     }
 

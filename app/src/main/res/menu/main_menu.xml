@@ -15,15 +15,12 @@
         android:title="Profile"
         app:showAsAction="never" />
 
-    <item android:id="@+id/action_logout"
-        android:title="Log Out"
-        app:showAsAction="never" />
-
    <item android:id="@+id/action_about"
         android:title="About us"
         app:showAsAction="never" />
 
-    <item android:id="@+id/action_message"
-        android:title="Messages"
+    <item android:id="@+id/action_logout"
+        android:title="Log Out"
         app:showAsAction="never" />
+
 </menu>

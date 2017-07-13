@@ -33,8 +33,8 @@ import com.example.abhinav.buzzer.College.CollegePhotoSelector;
 import com.example.abhinav.buzzer.Comment.CommentListActivity;
 import com.example.abhinav.buzzer.Event.EventListActivity;
 import com.example.abhinav.buzzer.Event.EventSearchActivity;
-import com.example.abhinav.buzzer.Message.MessageShow;
 import com.example.abhinav.buzzer.Profile.LoginActivity;
+import com.example.abhinav.buzzer.Profile.PhoneAuthActivity;
 import com.example.abhinav.buzzer.Profile.ProfileActivity;
 import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
 import com.example.abhinav.buzzer.Profile.SetupActivity;
@@ -47,6 +47,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.vision.barcode.Barcode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -525,15 +526,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-        if (item.getItemId() == R.id.action_message) {
-            Intent profileIntent = new Intent(MainActivity.this, MessageShow.class);
-            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(profileIntent);
 
-        }
-
-
-        if (item.getItemId() == R.id.action_about) {
+       if (item.getItemId() == R.id.action_about) {
             final String clgID = getIntent().getExtras().getString("colgId");
 
             Intent profileIntent = new Intent(MainActivity.this, AboutActivity.class);
