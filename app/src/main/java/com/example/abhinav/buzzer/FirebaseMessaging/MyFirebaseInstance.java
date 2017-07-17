@@ -9,7 +9,8 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
  * Created by Abhinav on 05-Feb-17.
  */
 
-public class MyFirebaseInstance extends FirebaseInstanceIdService {
+public class MyFirebaseInstance extends FirebaseInstanceIdService
+{
 
     private static final String REG_TOKEN ="REG_TOKEN";
 
