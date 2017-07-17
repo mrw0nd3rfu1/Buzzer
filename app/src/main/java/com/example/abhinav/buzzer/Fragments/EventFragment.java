@@ -1,10 +1,12 @@
 package com.example.abhinav.buzzer.Fragments;
 
 
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,7 +42,7 @@ public class EventFragment extends Fragment {
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
-
+    FirebaseRecyclerAdapter<EventName,EventViewHolder> friendsRecyclerViewAdapter;
     private String mCurrent_user_id;
 
     private View mMainView;
@@ -49,72 +51,35 @@ public class EventFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        mMainView = inflater.inflate(R.layout.fragment_event , container , false);
-
-        mEventList = (RecyclerView) mMainView.findViewById(R.id.event_list);
-        mAuth = FirebaseAuth.getInstance();
-
-        mCurrent_user_id = mAuth.getCurrentUser().getUid();
-
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(MainActivity.clgID).child("Event");
-        mDatabase.keepSynced(true);
-
-        mEventList.setHasFixedSize(true);
-        mEventList.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        return mMainView;
-
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        FirebaseRecyclerAdapter<EventName,EventViewHolder> friendsRecyclerViewAdapter = new FirebaseRecyclerAdapter<EventName, EventViewHolder>(
+        mAuth=FirebaseAuth.getInstance();
+        friendsRecyclerViewAdapter = new FirebaseRecyclerAdapter<EventName, EventViewHolder>(
                 EventName.class,
                 R.layout.event_list,
                 EventViewHolder.class,
                 mDatabase
         ) {
             @Override
-            protected void populateViewHolder(final EventViewHolder viewHolder, EventName model, final int position) {
+            protected void populateViewHolder(EventViewHolder viewHolder,final EventName model, int position) {
 
-                final String list_user_id = getRef(position).getKey();
+                viewHolder.setName(model.getEventName());
 
-
-                mDatabase.child(list_user_id).addValueEventListener(new ValueEventListener() {
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        final String eventName = dataSnapshot.child("eventName").getValue().toString();
-                        final String eventID = dataSnapshot.child("eventID").getValue().toString();
+                    public void onClick(View v) {
 
-                        viewHolder.setName(eventName);
-
-                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                Intent setup=new Intent(getContext(),PostActivity.class);
-                                setup.putExtra("EventName",eventName);
-                                setup.putExtra("EventId",eventID);
-                                setup.putExtra("colgId", MainActivity.clgID);
-                                setup.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(setup);
-
-                            }
-                        });
+                        Intent setup=new Intent(getContext(),PostActivity.class);
+                        setup.putExtra("EventName",model.getEventName());
+                        setup.putExtra("EventId",model.getEventID());
+                        setup.putExtra("colgId", MainActivity.clgID);
+                        setup.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(setup);
 
 
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
 
                     }
                 });
@@ -122,7 +87,36 @@ public class EventFragment extends Fragment {
             }
         };
 
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mMainView = inflater.inflate(R.layout.fragment_event , container , false);
+
+
+        mEventList = (RecyclerView) mMainView.findViewById(R.id.event_list);
+
+        mCurrent_user_id = mAuth.getCurrentUser().getUid();
+
+        mDatabase.keepSynced(true);
+
+        mEventList.setHasFixedSize(true);
+        mEventList.setLayoutManager(new LinearLayoutManager(getContext()));
+
         mEventList.setAdapter(friendsRecyclerViewAdapter);
+        return mMainView;
+
+
+    }
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder{
