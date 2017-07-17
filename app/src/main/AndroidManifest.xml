@@ -17,7 +17,9 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".Timeline.PostActivity" />
         <activity android:name=".Profile.RegisterActivity" />
-        <activity android:name=".Timeline.MainActivity" />
+        <activity android:name=".Timeline.MainActivity">
+
+        </activity>
         <activity android:name=".Event.EventListActivity" />
         <activity android:name=".Utility.SplashScreen">
             <intent-filter>
