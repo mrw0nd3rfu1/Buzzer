@@ -15,8 +15,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.abhinav.buzzer.College.CollegeName;
-import com.example.abhinav.buzzer.Timeline.PostActivity;
 import com.example.abhinav.buzzer.R;
+import com.example.abhinav.buzzer.Timeline.PostActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.database.DataSnapshot;

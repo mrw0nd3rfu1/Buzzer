@@ -11,9 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abhinav.buzzer.R;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
