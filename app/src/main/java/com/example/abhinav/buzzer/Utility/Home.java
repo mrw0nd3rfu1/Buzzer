@@ -13,7 +13,19 @@ public class Home {
 
     public int With_image;
 
-    private String event, post, image,profile_pic, username,post_id,uid,post_key;
+    private String event;
+    private String post;
+    private String image;
+    private String profile_pic;
+    private String username;
+    private String post_id;
+    private String uid;
+    private String post_key;
+
+
+    private String timestamp;
+
+    private String thumb_profile_pic;
     private long numShares;
     private String deeplinks;
 
@@ -22,7 +34,7 @@ public class Home {
     }
 
 
-    public Home(String event, String post, String image, String profile_pic, String username, String post_id, String uid, String post_key, long numShares, String deeplinks) {
+    public Home(String event, String post, String image, String profile_pic, String username, String post_id, String uid, String post_key, long numShares, String deeplinks,String thumb_profile_pic,String timestamp) {
         this.event = event;
         this.post = post;
         this.image = image;
@@ -33,11 +45,30 @@ public class Home {
         this.post_key = post_key;
         this.numShares = numShares;
         this.deeplinks = deeplinks;
+        this.thumb_profile_pic =thumb_profile_pic;
+        this.timestamp = timestamp;
     }
 
     public long getNumShares() {
         return numShares;
     }
+
+    public String getThumb_profile_pic() {
+        return thumb_profile_pic;
+    }
+
+    public void setThumb_profile_pic(String thumb_profile_pic) {
+        this.thumb_profile_pic = thumb_profile_pic;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
 
     public void setNumShares(long numShares) {
         this.numShares = numShares;

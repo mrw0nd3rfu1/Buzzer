@@ -1,68 +1,66 @@
 package com.example.abhinav.buzzer.Timeline;
 
-        import android.content.Context;
-        import android.content.Intent;
-        import android.net.Uri;
-        import android.os.Build;
-        import android.os.Bundle;
-        import android.os.CountDownTimer;
-        import android.provider.SyncStateContract;
-        import android.support.annotation.NonNull;
-        import android.support.annotation.RequiresApi;
-        import android.support.design.widget.CollapsingToolbarLayout;
-        import android.support.design.widget.FloatingActionButton;
-        import android.support.design.widget.TabLayout;
-        import android.support.v4.view.ViewPager;
-        import android.support.v7.app.ActionBar;
-        import android.support.v7.app.AppCompatActivity;
-        import android.support.v7.widget.LinearLayoutManager;
-        import android.support.v7.widget.RecyclerView;
-        import android.support.v7.widget.Toolbar;
-        import android.text.format.DateFormat;
-        import android.view.LayoutInflater;
-        import android.view.Menu;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.Button;
-        import android.widget.ImageButton;
-        import android.widget.ImageView;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.provider.SyncStateContract;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.example.abhinav.buzzer.College.CollegeListActivity;
-        import com.example.abhinav.buzzer.College.CollegePhotoSelector;
-        import com.example.abhinav.buzzer.Comment.CommentListActivity;
-        import com.example.abhinav.buzzer.Event.EventListActivity;
-        import com.example.abhinav.buzzer.Event.EventSearchActivity;
-        import com.example.abhinav.buzzer.Profile.LoginActivity;
-        import com.example.abhinav.buzzer.Profile.PhoneAuthActivity;
-        import com.example.abhinav.buzzer.Profile.ProfileActivity;
-        import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
-        import com.example.abhinav.buzzer.Profile.SetupActivity;
-        import com.example.abhinav.buzzer.R;
-        import com.example.abhinav.buzzer.Utility.AboutActivity;
-        import com.example.abhinav.buzzer.Utility.Home;
-        import com.firebase.ui.database.FirebaseRecyclerAdapter;
-        import com.google.android.gms.ads.AdListener;
-        import com.google.android.gms.ads.AdRequest;
-        import com.google.android.gms.ads.AdView;
-        import com.google.android.gms.ads.InterstitialAd;
-        import com.google.android.gms.ads.MobileAds;
-        import com.google.android.gms.vision.barcode.Barcode;
-        import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.database.DataSnapshot;
-        import com.google.firebase.database.DatabaseError;
-        import com.google.firebase.database.DatabaseReference;
-        import com.google.firebase.database.FirebaseDatabase;
-        import com.google.firebase.database.Query;
-        import com.google.firebase.database.ValueEventListener;
-        import com.google.firebase.messaging.FirebaseMessaging;
-        import com.google.firebase.storage.FirebaseStorage;
-        import com.google.firebase.storage.StorageReference;
-        import com.squareup.picasso.Picasso;
+import com.example.abhinav.buzzer.College.CollegeListActivity;
+import com.example.abhinav.buzzer.College.CollegePhotoSelector;
+import com.example.abhinav.buzzer.Comment.CommentListActivity;
+import com.example.abhinav.buzzer.Event.EventListActivity;
+import com.example.abhinav.buzzer.Event.EventSearchActivity;
+import com.example.abhinav.buzzer.Profile.LoginActivity;
+import com.example.abhinav.buzzer.Profile.PhoneAuthActivity;
+import com.example.abhinav.buzzer.Profile.ProfileActivity;
+import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
+import com.example.abhinav.buzzer.Profile.SetupActivity;
+import com.example.abhinav.buzzer.R;
+import com.example.abhinav.buzzer.Utility.AboutActivity;
+import com.example.abhinav.buzzer.Utility.Home;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
-        import de.hdodenhof.circleimageview.CircleImageView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -86,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private Query orderData;
+    FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private boolean mProcessLike = false;
     private LinearLayoutManager mLayoutManager;
@@ -101,12 +100,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton imageView;
     private TextView userClgPic;
 
-    private ViewPager mViewPager;
-    private SectionsPagerAdapter mSections;
-    private TabLayout mTab;
-
-    public static String clgID;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        clgID = getIntent().getExtras().getString("colgId");
+        final String clgID = getIntent().getExtras().getString("colgId");
         //  FirebaseMessaging.getInstance().subscribeToTopic("college");
 
         mAuth = FirebaseAuth.getInstance();
@@ -140,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         mtoolbar.setNavigationIcon(null);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle("  ");
+        collapsingToolbarLayout.setTitle("Home");
         mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
         mCollegePic = (ImageView)findViewById(R.id.college_pic);
         imageView = (ImageButton) findViewById(R.id.imageSelect);
@@ -159,14 +152,10 @@ public class MainActivity extends AppCompatActivity {
         mDatabase.keepSynced(true);
         orderData.keepSynced(true);
 
-        //tabs
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mSections = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        mViewPager.setAdapter(mSections);
-
-        mTab = (TabLayout) findViewById(R.id.main_tab);
-        mTab.setupWithViewPager(mViewPager);
+        mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
+        mHomePage.setNestedScrollingEnabled(false);
+        mHomePage.setHasFixedSize(true);
+        mHomePage.setLayoutManager(new LinearLayoutManager(this));
 
         //checking user exists in college
         mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
@@ -202,6 +191,148 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(profileIntent);
             }
         });
+
+
+
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
+
+                Home.class,
+                R.layout.home_row,
+                HomeViewHolder.class,
+                orderData
+
+
+        ) {
+
+
+
+            @Override
+            public int getItemViewType(int position) {
+
+                Home obj = getItem(position );
+                switch (obj.getHas_image()) {
+                    case 0:
+                        return 0;
+                    case 1:
+                        return 1;
+                }
+                return super.getItemViewType(position);
+            }
+
+            @Override
+
+            public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                switch (viewType) {
+                    case 0:
+                        View type1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_wihtout_image, parent, false);
+                        return new HomeViewHolder(type1);
+                    case 1:
+                        View type2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_row, parent, false);
+                        return new HomeViewHolder(type2);
+                }
+
+                return super.onCreateViewHolder(parent, viewType);
+            }
+            @Override
+            protected void populateViewHolder(HomeViewHolder viewHolder, Home model, int position) {
+
+                final String post_key = getRef(position).getKey();
+
+                viewHolder.setEvent(model.getEvent());
+                viewHolder.setPost(model.getPost());
+                if (model.getHas_image() == 1)
+                    viewHolder.setImage(getApplicationContext(), model.getImage());
+                viewHolder.setUsername(model.getUsername());
+                viewHolder.setLikeButton(post_key);
+                viewHolder.setProfile_Pic(getApplicationContext(), model.getThumb_profile_pic());
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                    @Override
+                    public void onClick(View v) {
+                        //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
+
+                        Intent singleHomeIntent = new Intent(MainActivity.this, HomeSingleActivity.class);
+                        singleHomeIntent.putExtra("home_id", post_key);
+                        singleHomeIntent.putExtra("colgId", clgID);
+                        startActivity(singleHomeIntent);
+                    }
+                });
+
+                viewHolder.mCommentButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent commentIntent = new Intent(MainActivity.this, CommentListActivity.class);
+                        commentIntent.putExtra("home_id", post_key);
+                        commentIntent.putExtra("colgId", clgID);
+                        commentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(commentIntent);
+                    }
+                });
+
+                viewHolder.mProfileImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
+                        profileIntent.putExtra("home_id", post_key);
+                        profileIntent.putExtra("colgId", clgID);
+                        profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(profileIntent);
+                    }
+                });
+
+                viewHolder.mUserName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent profileIntent = new Intent(MainActivity.this, ProfileSeeActivity.class);
+                        profileIntent.putExtra("home_id", post_key);
+                        profileIntent.putExtra("colgId", clgID);
+                        profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(profileIntent);
+                    }
+                });
+
+
+                viewHolder.mLikeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mProcessLike = true;
+
+
+                        mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (mProcessLike) {
+
+                                    if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
+
+                                        mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).removeValue();
+                                        mProcessLike = false;
+
+                                    } else {
+                                        mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).setValue("Random Value");
+                                        mProcessLike = false;
+                                    }
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
+                });
+
+
+            }
+        };
+        mLayoutManager = new LinearLayoutManager(MainActivity.this);
+        mHomePage.setLayoutManager(mLayoutManager);
+        mHomePage.setAdapter(firebaseRecyclerAdapter);
 
         checkUserExist();
     }
@@ -421,6 +552,98 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signOut();
     }
 
+    public static String generateDeepLink(String uid){
+        return "https://upr46.app.goo.gl/?link=https://buzzer.com/" + uid +
+                "/&apn=com.example.abhinav.buzzer";
+    }
+
+
+
+    public  static class HomeViewHolder extends RecyclerView.ViewHolder {
+
+        View mView;
+
+        ImageButton mLikeButton;
+        ImageButton mCommentButton;
+
+        CircleImageView mProfileImage;
+        TextView mUserName;
+
+        DatabaseReference mDatabaseLike;
+        FirebaseAuth mAuth;
+
+        HomeViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+
+            mLikeButton = (ImageButton) mView.findViewById(R.id.likeButton);
+            mCommentButton = (ImageButton) mView.findViewById(R.id.commentButton);
+            mProfileImage = (CircleImageView) mView.findViewById(R.id.user_pic);
+            mUserName = (TextView) mView.findViewById(R.id.postUsername);
+
+            mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
+            mAuth = FirebaseAuth.getInstance();
+
+            mDatabaseLike.keepSynced(true);
+        }
+
+        public void setLikeButton(final String post_key) {
+            mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
+
+                        mLikeButton.setImageResource(R.mipmap.ic_launcher);
+                    } else {
+                        mLikeButton.setImageResource(R.mipmap.ic_launcher_unlike);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+        public void setEvent(String event) {
+            TextView post_event = (TextView) mView.findViewById(R.id.post_event);
+            post_event.setText(event);
+
+        }
+
+        public void setPost(String post) {
+
+            TextView post_text = (TextView) mView.findViewById(R.id.post_text);
+            post_text.setText(post);
+
+
+        }
+
+        public void setImage(Context ctx, String image) {
+            ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
+
+            Picasso.with(ctx).load(image).into(post_image);
+
+        }
+
+        public void setUsername(String username) {
+            TextView post_username = (TextView) mView.findViewById(R.id.postUsername);
+            post_username.setText(username);
+        }
+
+        public void setProfile_Pic(Context ctx, String image) {
+            CircleImageView profile_pic = (CircleImageView) mView.findViewById(R.id.user_pic);
+            Picasso.with(ctx).load(image).into(profile_pic);
+
+        }
+
+    }
 }
+
+
 
 

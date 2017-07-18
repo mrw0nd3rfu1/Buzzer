@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -142,6 +143,8 @@ public class PostActivity extends AppCompatActivity
                             newpost.child("uid").setValue(mCurrentUser.getUid());
                             newpost.child("post_id").setValue(postId);
                             newpost.child("profile_pic").setValue(dataSnapshot.child("profile_pic").getValue());
+                            newpost.child("thumb_profile_pic").setValue(dataSnapshot.child("thumb_profile_pic").getValue());
+                           // newpost.child("timestamp").setValue(ServerValue.TIMESTAMP);
                             newpost.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
