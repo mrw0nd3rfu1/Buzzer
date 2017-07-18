@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -16,13 +15,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,21 +31,16 @@ import com.example.abhinav.buzzer.Comment.CommentListActivity;
 import com.example.abhinav.buzzer.Event.EventListActivity;
 import com.example.abhinav.buzzer.Event.EventSearchActivity;
 import com.example.abhinav.buzzer.Profile.LoginActivity;
-import com.example.abhinav.buzzer.Profile.PhoneAuthActivity;
 import com.example.abhinav.buzzer.Profile.ProfileActivity;
 import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
 import com.example.abhinav.buzzer.Profile.SetupActivity;
 import com.example.abhinav.buzzer.R;
 import com.example.abhinav.buzzer.Utility.AboutActivity;
-import com.example.abhinav.buzzer.Utility.GetTimeAgo;
 import com.example.abhinav.buzzer.Utility.Home;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.vision.barcode.Barcode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,7 +48,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -75,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
     private DatabaseReference mCollege;
-    private int previousTotal=0;
-    private boolean loading =true;
-    private int visibleThreshold=5;
+    private int previousTotal = 0;
+    private boolean loading = true;
+    private int visibleThreshold = 5;
     int firstVisibleItem, visibleItemCount, totalItemCount;
 
     private int current_page = 1;
@@ -108,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
         final String clgID = getIntent().getExtras().getString("colgId");
         //  FirebaseMessaging.getInstance().subscribeToTopic("college");
 
@@ -136,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Home");
         mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
-        mCollegePic = (ImageView)findViewById(R.id.college_pic);
+        mCollegePic = (ImageView) findViewById(R.id.college_pic);
         imageView = (ImageButton) findViewById(R.id.imageSelect);
         mNameUser = (TextView) findViewById(R.id.user_name);
         userClgPic = (TextView) findViewById(R.id.user_clg_name);
@@ -175,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent postIntent = new Intent(MainActivity.this, EventListActivity.class);
-                postIntent.putExtra("colgId",clgID);
+                postIntent.putExtra("colgId", clgID);
                 postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(postIntent);
             }
@@ -187,12 +177,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
-                profileIntent.putExtra("colgId",clgID);
+                profileIntent.putExtra("colgId", clgID);
                 profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(profileIntent);
             }
         });
-
 
 
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
@@ -206,11 +195,10 @@ public class MainActivity extends AppCompatActivity {
         ) {
 
 
-
             @Override
             public int getItemViewType(int position) {
 
-                Home obj = getItem(position );
+                Home obj = getItem(position);
                 switch (obj.getHas_image()) {
                     case 0:
                         return 0;
@@ -234,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
 
                 return super.onCreateViewHolder(parent, viewType);
             }
+
             @Override
             protected void populateViewHolder(final HomeViewHolder viewHolder, Home model, int position) {
 
@@ -342,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mAdView = (AdView)findViewById(R.id.adView);
+        mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         mAdView.loadAd(adRequest);
     }
@@ -377,9 +366,7 @@ public class MainActivity extends AppCompatActivity {
         if (!isUserClickedBackButton) {
             Toast.makeText(this, "Press Back button again to Exit", Toast.LENGTH_SHORT).show();
             isUserClickedBackButton = true;
-        }
-        else
-        {
+        } else {
             super.onBackPressed();
         }
         new CountDownTimer(3000, 1000) {
@@ -391,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                isUserClickedBackButton=false;
+                isUserClickedBackButton = false;
             }
         }.start();
     }
@@ -432,7 +419,7 @@ public class MainActivity extends AppCompatActivity {
                                         String college_image = (String) dataSnapshot.child("Image").getValue();
                                         Picasso.with(MainActivity.this).load(college_image).into(mCollegePic);
                                         String college_user_name = (String) dataSnapshot.child("ImagePost").getValue();
-                                        userClgPic.setText("Last Uploaded By "+college_user_name);
+                                        userClgPic.setText("Last Uploaded By " + college_user_name);
                                     }
 
                                     @Override
@@ -448,7 +435,6 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         });
-
 
 
                     }
@@ -478,7 +464,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
 
-        if (item.getItemId() == R.id.item_search){
+        if (item.getItemId() == R.id.item_search) {
             final String clgID = getIntent().getExtras().getString("colgId");
             Intent collegeIntent = new Intent(MainActivity.this, EventSearchActivity.class);
             collegeIntent.putExtra("colgId", clgID);
@@ -490,15 +476,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final String clgID = getIntent().getExtras().getString("colgId");
-                if (dataSnapshot.child("CollegeId").getValue().equals(clgID))
-                { if (item.getItemId() == R.id.item_photo){
-                    Intent collegeIntent = new Intent(MainActivity.this, CollegePhotoSelector.class);
-                    collegeIntent.putExtra("colgId", clgID);
-                    collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(collegeIntent); }
-                }
-                else {
-                    Toast.makeText(MainActivity.this , "You are not present in this college" ,Toast.LENGTH_LONG).show();
+                if (dataSnapshot.child("CollegeId").getValue().equals(clgID)) {
+                    if (item.getItemId() == R.id.item_photo) {
+                        Intent collegeIntent = new Intent(MainActivity.this, CollegePhotoSelector.class);
+                        collegeIntent.putExtra("colgId", clgID);
+                        collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(collegeIntent);
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "You are not present in this college", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -508,7 +494,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (item.getItemId()== R.id.action_college){
+        if (item.getItemId() == R.id.action_college) {
             Intent collegeIntent = new Intent(MainActivity.this, CollegeListActivity.class);
             collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(collegeIntent);
@@ -517,8 +503,6 @@ public class MainActivity extends AppCompatActivity {
 
             logout();
         }
-
-
 
 
         if (item.getItemId() == R.id.action_profile) {
@@ -554,14 +538,13 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signOut();
     }
 
-    public static String generateDeepLink(String uid){
+    public static String generateDeepLink(String uid) {
         return "https://upr46.app.goo.gl/?link=https://buzzer.com/" + uid +
                 "/&apn=com.example.abhinav.buzzer";
     }
 
 
-
-    public  static class HomeViewHolder extends RecyclerView.ViewHolder {
+    public static class HomeViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
 

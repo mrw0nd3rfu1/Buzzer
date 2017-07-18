@@ -13,9 +13,5 @@
         <item name="colorButtonNormal">@color/colorPrimary</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
-    
-    <style name="SplashScreenTheme" >
-        <item name="android:windowBackground">@drawable/splash_layer</item>
-    </style>
 
 </resources>

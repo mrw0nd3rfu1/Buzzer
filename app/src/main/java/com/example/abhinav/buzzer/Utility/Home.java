@@ -2,8 +2,6 @@ package com.example.abhinav.buzzer.Utility;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.util.Date;
-
 /**
  * Created by Abhinav on 23-Jan-17.
  */
