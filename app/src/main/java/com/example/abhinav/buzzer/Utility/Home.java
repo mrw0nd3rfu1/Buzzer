@@ -21,9 +21,8 @@ public class Home {
     private String post_id;
     private String uid;
     private String post_key;
+    private String post_time;
 
-
-    private String timestamp;
 
     private String thumb_profile_pic;
     private long numShares;
@@ -34,7 +33,7 @@ public class Home {
     }
 
 
-    public Home(String event, String post, String image, String profile_pic, String username, String post_id, String uid, String post_key, long numShares, String deeplinks,String thumb_profile_pic,String timestamp) {
+    public Home(String event, String post, String image, String profile_pic, String username, String post_id, String uid, String post_key, long numShares, String deeplinks,String thumb_profile_pic, String post_time) {
         this.event = event;
         this.post = post;
         this.image = image;
@@ -45,8 +44,8 @@ public class Home {
         this.post_key = post_key;
         this.numShares = numShares;
         this.deeplinks = deeplinks;
+        this.post_time = post_time;
         this.thumb_profile_pic =thumb_profile_pic;
-        this.timestamp = timestamp;
     }
 
     public long getNumShares() {
@@ -59,14 +58,6 @@ public class Home {
 
     public void setThumb_profile_pic(String thumb_profile_pic) {
         this.thumb_profile_pic = thumb_profile_pic;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
     }
 
 
@@ -108,6 +99,14 @@ public int getHas_image(){return this.With_image;}
         return username;
     }
     public String getPost_id(){return post_id;}
+
+    public String getPost_time() {
+        return post_time;
+    }
+
+    public void setPost_time(String post_time) {
+        this.post_time = post_time;
+    }
 
 
     public String getProfile_pic() {

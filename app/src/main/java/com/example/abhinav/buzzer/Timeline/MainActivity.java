@@ -40,6 +40,7 @@ import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
 import com.example.abhinav.buzzer.Profile.SetupActivity;
 import com.example.abhinav.buzzer.R;
 import com.example.abhinav.buzzer.Utility.AboutActivity;
+import com.example.abhinav.buzzer.Utility.GetTimeAgo;
 import com.example.abhinav.buzzer.Utility.Home;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdListener;
@@ -234,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                 return super.onCreateViewHolder(parent, viewType);
             }
             @Override
-            protected void populateViewHolder(HomeViewHolder viewHolder, Home model, int position) {
+            protected void populateViewHolder(final HomeViewHolder viewHolder, Home model, int position) {
 
                 final String post_key = getRef(position).getKey();
 
@@ -245,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.setUsername(model.getUsername());
                 viewHolder.setLikeButton(post_key);
                 viewHolder.setProfile_Pic(getApplicationContext(), model.getThumb_profile_pic());
+                viewHolder.setTime(model.getPost_time());
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -638,6 +640,12 @@ public class MainActivity extends AppCompatActivity {
         public void setProfile_Pic(Context ctx, String image) {
             CircleImageView profile_pic = (CircleImageView) mView.findViewById(R.id.user_pic);
             Picasso.with(ctx).load(image).into(profile_pic);
+
+        }
+
+        public void setTime(String time) {
+            TextView post_time = (TextView) mView.findViewById(R.id.timestamp);
+            post_time.setText(time);
 
         }
 
