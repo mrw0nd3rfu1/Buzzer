@@ -41,7 +41,7 @@ public class EventFragment extends Fragment {
     private RecyclerView mEventList;
 
     private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
+
     FirebaseRecyclerAdapter<EventName,EventViewHolder> friendsRecyclerViewAdapter;
     private String mCurrent_user_id;
 
@@ -55,7 +55,7 @@ public class EventFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(MainActivity.clgID).child("Event");
-        mAuth=FirebaseAuth.getInstance();
+
         friendsRecyclerViewAdapter = new FirebaseRecyclerAdapter<EventName, EventViewHolder>(
                 EventName.class,
                 R.layout.event_list,
@@ -99,7 +99,6 @@ public class EventFragment extends Fragment {
 
         mEventList = (RecyclerView) mMainView.findViewById(R.id.event_list);
 
-        mCurrent_user_id = mAuth.getCurrentUser().getUid();
 
         mDatabase.keepSynced(true);
 
@@ -112,12 +111,6 @@ public class EventFragment extends Fragment {
 
     }
 
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder{
 
