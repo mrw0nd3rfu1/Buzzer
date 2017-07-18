@@ -2,8 +2,10 @@ package com.example.abhinav.buzzer.Profile;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +13,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.abhinav.buzzer.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -20,6 +24,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import id.zelory.compressor.Compressor;
 
 public class ProfilePhotoSelector extends AppCompatActivity {
 
@@ -42,7 +53,7 @@ public class ProfilePhotoSelector extends AppCompatActivity {
 
         mProfilePhoto = (ImageButton) findViewById(R.id.imageSelect);
         mSubmit = (Button) findViewById(R.id.submitPhoto);
-        mStorage = FirebaseStorage.getInstance().getReference();
+        mStorage = FirebaseStorage.getInstance().getReference().child("Profile_images");
         mProgress = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
         mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
@@ -78,20 +89,64 @@ public class ProfilePhotoSelector extends AppCompatActivity {
 
             final String user_ID = mAuth.getCurrentUser().getUid();
 
+         final File thumb_filePath = new File(mImageUri.getPath());
+
+          Bitmap thumb_bitmap = new Compressor(this)
+              .setMaxHeight(200)
+              .setMaxWidth(200)
+              .setQuality(75)
+              .compressToBitmap(thumb_filePath);
+
+             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+              thumb_bitmap.compress(Bitmap.CompressFormat.JPEG , 100 ,baos);
+             final byte[] thumb_byte = baos.toByteArray();
+
 
          StorageReference filePath = mStorage.child("Profile_images/"+user_ID);
-            filePath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+         final StorageReference thumb_filepath = mStorage.child("Profile_images").child("thumb").child(user_ID+ ".jpg");
+
+          filePath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                    mProgress.dismiss();
-                    String downloadUrl = taskSnapshot.getDownloadUrl().toString();
 
-                    mDatabaseUser.child("profile_pic").setValue(downloadUrl);
+                    final String downloadUrl = taskSnapshot.getDownloadUrl().toString();
 
-                    Intent mainIntent = new Intent(ProfilePhotoSelector.this, ProfileActivity.class);
-                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(mainIntent);
+
+                    UploadTask uploadTask = thumb_filepath.putBytes(thumb_byte);
+                    uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
+                            @SuppressWarnings("VisibleForTests")
+                            String  thumb_downloadUrl = thumb_task.getResult().getDownloadUrl().toString();
+                            if (thumb_task.isSuccessful()){
+
+                                Map update_HashMap = new HashMap<String, String>();
+                                update_HashMap.put("profile_pic",downloadUrl);
+                                update_HashMap.put("thumb_profile_pic",thumb_downloadUrl);
+
+                                mDatabaseUser.updateChildren(update_HashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            mProgress.dismiss();
+                                            Intent mainIntent = new Intent(ProfilePhotoSelector.this, ProfileActivity.class);
+                                            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(mainIntent);
+                                        }
+                                        else {
+
+                                        }
+                                    }
+                                });
+                            }
+                            else {
+
+                            }
+                        }
+                    });
+
+
 
 
                 }

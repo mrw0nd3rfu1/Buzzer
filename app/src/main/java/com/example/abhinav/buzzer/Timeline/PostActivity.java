@@ -1,15 +1,21 @@
 package com.example.abhinav.buzzer.Timeline;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -25,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -51,6 +58,10 @@ public class PostActivity extends AppCompatActivity
     private StorageReference mStorage;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
+    private Button postTime;
+    int year_x,month_x,day_x;
+    static final int DIALOG_ID = 0;
+    private TextView eventDate;
 
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
@@ -58,6 +69,7 @@ public class PostActivity extends AppCompatActivity
 
     private ProgressDialog progressDialog;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,9 +93,22 @@ public class PostActivity extends AppCompatActivity
         post = (EditText) findViewById(R.id.postWrite);
         submit = (Button) findViewById(R.id.submitPost);
         image = (CircleImageView) findViewById(R.id.user_pic);
+        postTime = (Button) findViewById(R.id.post_time);
+        eventDate = (TextView) findViewById(R.id.eventDate);
 
+        final Calendar cal = Calendar.getInstance();
+        year_x =  cal.get(Calendar.YEAR);
+        month_x = cal.get(Calendar.MONTH);
+        day_x = cal.get(Calendar.DAY_OF_MONTH);
 
         progressDialog = new ProgressDialog(this);
+
+        postTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(DIALOG_ID);
+            }
+        });
 
         imageSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,10 +133,29 @@ public class PostActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        if (id == DIALOG_ID)
+            return new DatePickerDialog(this, dpickerListner , year_x , month_x , day_x);
+        else
+            return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener dpickerListner = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            year_x = year;
+            month_x = month + 1;
+            day_x = dayOfMonth;
+            eventDate.setText(day_x+"/"+month_x+"/"+year_x);
+        }
+    };
+
     private void startPosting()
     {
 
         final String title_post = post.getText().toString().trim();
+        final String post_date = eventDate.getText().toString().trim();
 
         if (!TextUtils.isEmpty(title_post) ) {
 
@@ -142,6 +186,8 @@ public class PostActivity extends AppCompatActivity
                             newpost.child("uid").setValue(mCurrentUser.getUid());
                             newpost.child("post_id").setValue(postId);
                             newpost.child("profile_pic").setValue(dataSnapshot.child("profile_pic").getValue());
+                            newpost.child("thumb_profile_pic").setValue(dataSnapshot.child("thumb_profile_pic").getValue());
+                            newpost.child("post_time").setValue(post_date);
                             newpost.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

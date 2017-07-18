@@ -55,7 +55,7 @@ public class CommentActivity extends ArrayAdapter<CommentPosts> {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String c = (String) dataSnapshot.child("name").getValue();
                 textViewUser.setText(c);
-                String d = (String) dataSnapshot.child("profile_pic").getValue();
+                String d = (String) dataSnapshot.child("thumb_profile_pic").getValue();
                 Picasso.with(context).load(d).into(user_pic);
             }
 

@@ -53,6 +53,18 @@
         android:padding="10dp" />
 
     <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/post_time"
+        android:text="event date"
+        android:onClick="showDatePickerDialog"
+        android:layout_marginBottom="15dp"
+        android:layout_above="@+id/submitPost"
+        android:layout_alignStart="@+id/postWrite"
+        android:layout_marginStart="32dp" />
+
+    <Button
         android:id="@+id/submitPost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,4 +72,14 @@
         android:layout_centerHorizontal="true"
         android:background="@color/colorPrimary"
         android:text="Submit Post" />
+
+    <TextView
+        android:id="@+id/eventDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/post_time"
+        android:layout_alignBottom="@+id/post_time"
+        android:layout_marginStart="62dp"
+        android:layout_toEndOf="@+id/post_time"
+        android:textSize="18sp" />
 </RelativeLayout>
