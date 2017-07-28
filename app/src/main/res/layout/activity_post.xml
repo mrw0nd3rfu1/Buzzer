@@ -22,11 +22,6 @@
         android:id="@+id/singleHomeEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/input_outline"
         android:ems="10"
         android:hint="Event Name"
@@ -34,23 +29,22 @@
         android:padding="10dp"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:layout_below="@+id/imageSelect"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/postWrite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/singleHomeEvent"
-        android:layout_alignLeft="@+id/singleHomeEvent"
-        android:layout_alignRight="@+id/singleHomeEvent"
-        android:layout_alignStart="@+id/singleHomeEvent"
-        android:layout_below="@+id/singleHomeEvent"
-        android:layout_marginTop="20dp"
         android:background="@drawable/input_outline"
         android:ems="10"
         android:hint="Write Post"
         android:inputType="textMultiLine"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:layout_below="@+id/singleHomeEvent"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="11dp" />
 
     <Button
         style="@style/Widget.AppCompat.Button.Colored"
