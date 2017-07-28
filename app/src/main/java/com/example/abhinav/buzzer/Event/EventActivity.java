@@ -28,10 +28,12 @@ public class EventActivity extends ArrayAdapter<EventName> {
         View listViewItem = inflater.inflate(R.layout.event_list, null, true);
 
         TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
+        TextView eventDate = (TextView) listViewItem.findViewById(R.id.eventDate);
+
 
         EventName name = cname.get(position);
         textViewName.setText(name.getEventName());
-
+        eventDate.setText(name.getEventDate());
 
         return listViewItem;
     }

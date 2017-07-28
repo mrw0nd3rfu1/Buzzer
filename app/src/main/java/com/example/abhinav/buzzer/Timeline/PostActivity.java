@@ -46,8 +46,10 @@ public class PostActivity extends AppCompatActivity
     private String postId="";
     private String Event_Id ="";
     private String Event_name="";
+    private String Event_date ="";
     private ImageButton imageSelect;
     private TextView event;
+    private TextView eventTime;
     private EditText post;
     private CircleImageView image;
     private Button submit;
@@ -57,10 +59,6 @@ public class PostActivity extends AppCompatActivity
     private StorageReference mStorage;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
-    private Button postTime;
-    int year_x,month_x,day_x;
-    static final int DIALOG_ID = 0;
-    private TextView eventDate;
 
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
@@ -81,6 +79,7 @@ public class PostActivity extends AppCompatActivity
 
         Event_Id = getIntent().getExtras().getString("EventId");
         Event_name = getIntent().getExtras().getString("EventName");
+        Event_date = getIntent().getExtras().getString("EventDate");
 
         mStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
@@ -89,25 +88,13 @@ public class PostActivity extends AppCompatActivity
         imageSelect = (ImageButton) findViewById(R.id.imageSelect);
         event = (TextView) findViewById(R.id.singleHomeEvent);
         event.setText(Event_name);
+        eventTime = (TextView)findViewById(R.id.singleHomeEventDate);
+        eventTime.setText(Event_date);
         post = (EditText) findViewById(R.id.postWrite);
         submit = (Button) findViewById(R.id.submitPost);
         image = (CircleImageView) findViewById(R.id.user_pic);
-        postTime = (Button) findViewById(R.id.post_time);
-        eventDate = (TextView) findViewById(R.id.eventDate);
-
-        final Calendar cal = Calendar.getInstance();
-        year_x =  cal.get(Calendar.YEAR);
-        month_x = cal.get(Calendar.MONTH);
-        day_x = cal.get(Calendar.DAY_OF_MONTH);
 
         progressDialog = new ProgressDialog(this);
-
-        postTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(DIALOG_ID);
-            }
-        });
 
         imageSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,29 +119,11 @@ public class PostActivity extends AppCompatActivity
         });
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        if (id == DIALOG_ID)
-            return new DatePickerDialog(this, dpickerListner , year_x , month_x , day_x);
-        else
-            return null;
-    }
-
-    private DatePickerDialog.OnDateSetListener dpickerListner = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            year_x = year;
-            month_x = month + 1;
-            day_x = dayOfMonth;
-            eventDate.setText(day_x+"/"+month_x+"/"+year_x);
-        }
-    };
 
     private void startPosting()
     {
 
         final String title_post = post.getText().toString().trim();
-        final String post_date = eventDate.getText().toString().trim();
 
         if (!TextUtils.isEmpty(title_post) ) {
 
@@ -186,7 +155,7 @@ public class PostActivity extends AppCompatActivity
                             newpost.child("post_id").setValue(postId);
                             newpost.child("profile_pic").setValue(dataSnapshot.child("profile_pic").getValue());
                             newpost.child("thumb_profile_pic").setValue(dataSnapshot.child("thumb_profile_pic").getValue());
-                            newpost.child("post_time").setValue(post_date);
+                            newpost.child("post_time").setValue(Event_date);
                             newpost.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

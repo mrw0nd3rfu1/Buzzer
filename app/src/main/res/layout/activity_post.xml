@@ -12,16 +12,18 @@
         android:id="@+id/imageSelect"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        app:srcCompat="@mipmap/add_btn"/>
+        app:srcCompat="@mipmap/add_btn"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/singleHomeEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/input_outline"
         android:ems="10"
         android:hint="Event Name"
@@ -33,6 +35,25 @@
         android:layout_below="@+id/imageSelect"
         android:layout_alignParentStart="true" />
 
+    <TextView
+    android:id="@+id/singleHomeEventDate"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+        android:background="@drawable/input_outline"
+    android:ems="10"
+    android:hint="Event Date"
+    android:inputType="textPersonName"
+    android:padding="10dp"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    android:singleLine="true"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/singleHomeEvent"
+        android:layout_alignParentEnd="true" />
+
+
     <EditText
         android:id="@+id/postWrite"
         android:layout_width="match_parent"
@@ -42,21 +63,10 @@
         android:hint="Write Post"
         android:inputType="textMultiLine"
         android:padding="10dp"
-        android:layout_below="@+id/singleHomeEvent"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="11dp" />
-
-    <Button
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/post_time"
-        android:text="event date"
-        android:onClick="showDatePickerDialog"
-        android:layout_marginBottom="15dp"
-        android:layout_above="@+id/submitPost"
-        android:layout_alignStart="@+id/postWrite"
-        android:layout_marginStart="32dp" />
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/singleHomeEventDate"
+        android:layout_alignStart="@+id/singleHomeEventDate"
+        android:layout_alignEnd="@+id/singleHomeEventDate" />
 
     <Button
         android:id="@+id/submitPost"
@@ -67,13 +77,5 @@
         android:background="@color/colorPrimary"
         android:text="Submit Post" />
 
-    <TextView
-        android:id="@+id/eventDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/post_time"
-        android:layout_alignBottom="@+id/post_time"
-        android:layout_marginStart="62dp"
-        android:layout_toEndOf="@+id/post_time"
-        android:textSize="18sp" />
+
 </RelativeLayout>
