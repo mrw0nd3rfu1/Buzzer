@@ -17,9 +17,7 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".Timeline.PostActivity" />
         <activity android:name=".Profile.RegisterActivity" />
-        <activity android:name=".Timeline.MainActivity">
-
-        </activity>
+        <activity android:name=".Timeline.MainActivity"></activity>
         <activity android:name=".Event.EventListActivity" />
         <activity android:name=".Utility.SplashScreen">
             <intent-filter>
@@ -65,7 +63,12 @@
 
         <activity android:name=".College.CollegePhotoSelector" />
         <activity android:name=".Utility.AboutActivity" />
-        <activity android:name=".Profile.PhoneAuthActivity"></activity>
+        <activity android:name=".Profile.PhoneAuthActivity" />
+
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

@@ -60,18 +60,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/setupSubmitButton" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView"
-        android:layout_toLeftOf="@+id/dobButton"
-        android:layout_toStartOf="@+id/dobButton"
-        android:id="@+id/dob" />
-
-
-
     <Button
         android:id="@+id/changeCollege"
         android:layout_width="wrap_content"
