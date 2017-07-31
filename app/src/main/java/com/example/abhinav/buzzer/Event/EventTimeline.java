@@ -136,7 +136,7 @@ public class EventTimeline extends AppCompatActivity {
 
         mHomePage = (RecyclerView) findViewById(R.id.Home_Page);
         mHomePage.setNestedScrollingEnabled(false);
-        mHomePage.setHasFixedSize(true);
+        //mHomePage.setHasFixedSize(true);
         mHomePage.setLayoutManager(new LinearLayoutManager(this));
 
 
