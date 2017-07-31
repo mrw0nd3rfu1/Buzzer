@@ -84,9 +84,8 @@ public class HomeFragment extends Fragment {
         mAuth=FirebaseAuth.getInstance();
 
         mHomePage = (RecyclerView) mMainView.findViewById(R.id.Home_Page);
-        mHomePage.setHasFixedSize(true);
         mHomePage.setLayoutManager(new LinearLayoutManager(getContext()));
-        mHomePage.setAdapter(firebaseRecyclerAdapter);
+
 
         return mMainView;
 
@@ -95,7 +94,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
 
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Home, HomeViewHolder>(
 
@@ -232,6 +230,8 @@ public class HomeFragment extends Fragment {
 
             }
         };
+        mHomePage.setAdapter(firebaseRecyclerAdapter);
+
 
 
     }

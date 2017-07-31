@@ -50,12 +50,15 @@ public class EventFragment extends Fragment {
     public EventFragment() {
         // Required empty public constructor
     }
-
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(MainActivity.clgID).child("Event");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mMainView = inflater.inflate(R.layout.fragment_event , container , false);
+        mEventList = (RecyclerView) mMainView.findViewById(R.id.event_list);
         mAuth=FirebaseAuth.getInstance();
+        mCurrent_user_id = mAuth.getCurrentUser().getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(MainActivity.clgID).child("Event");
         friendsRecyclerViewAdapter = new FirebaseRecyclerAdapter<EventName, EventViewHolder>(
                 EventName.class,
                 R.layout.event_list,
@@ -77,33 +80,12 @@ public class EventFragment extends Fragment {
                         setup.putExtra("colgId", MainActivity.clgID);
                         setup.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(setup);
-
-
-
-
                     }
                 });
 
             }
         };
-
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        mMainView = inflater.inflate(R.layout.fragment_event , container , false);
-
-
-        mEventList = (RecyclerView) mMainView.findViewById(R.id.event_list);
-
-        mCurrent_user_id = mAuth.getCurrentUser().getUid();
-
         mDatabase.keepSynced(true);
-
-        mEventList.setHasFixedSize(true);
         mEventList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mEventList.setAdapter(friendsRecyclerViewAdapter);
