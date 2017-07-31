@@ -145,6 +145,7 @@ public class HomeFragment extends Fragment {
                 viewHolder.setUsername(model.getUsername());
                 viewHolder.setLikeButton(post_key);
                 viewHolder.setProfile_Pic(getContext(), model.getProfile_pic());
+                viewHolder.setPostTime(model.getPost_time());
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -317,6 +318,11 @@ public class HomeFragment extends Fragment {
             CircleImageView profile_pic = (CircleImageView) mView.findViewById(R.id.user_pic);
             Picasso.with(ctx).load(image).into(profile_pic);
 
+        }
+
+        public void setPostTime(String post_time) {
+            TextView post_timeline = (TextView) mView.findViewById(R.id.timestamp);
+            post_timeline.setText(post_time);
         }
 
     }
