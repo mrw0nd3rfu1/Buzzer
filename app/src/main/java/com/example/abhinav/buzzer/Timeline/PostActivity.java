@@ -1,15 +1,21 @@
 package com.example.abhinav.buzzer.Timeline;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -40,8 +46,10 @@ public class PostActivity extends AppCompatActivity
     private String postId="";
     private String Event_Id ="";
     private String Event_name="";
+    private String Event_date ="";
     private ImageButton imageSelect;
     private TextView event;
+    private TextView eventTime;
     private EditText post;
     private CircleImageView image;
     private Button submit;
@@ -58,6 +66,7 @@ public class PostActivity extends AppCompatActivity
 
     private ProgressDialog progressDialog;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +79,7 @@ public class PostActivity extends AppCompatActivity
 
         Event_Id = getIntent().getExtras().getString("EventId");
         Event_name = getIntent().getExtras().getString("EventName");
+        Event_date = getIntent().getExtras().getString("EventDate");
 
         mStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
@@ -78,10 +88,11 @@ public class PostActivity extends AppCompatActivity
         imageSelect = (ImageButton) findViewById(R.id.imageSelect);
         event = (TextView) findViewById(R.id.singleHomeEvent);
         event.setText(Event_name);
+        eventTime = (TextView)findViewById(R.id.singleHomeEventDate);
+        eventTime.setText(Event_date);
         post = (EditText) findViewById(R.id.postWrite);
         submit = (Button) findViewById(R.id.submitPost);
         image = (CircleImageView) findViewById(R.id.user_pic);
-
 
         progressDialog = new ProgressDialog(this);
 
@@ -107,6 +118,7 @@ public class PostActivity extends AppCompatActivity
             }
         });
     }
+
 
     private void startPosting()
     {
@@ -142,6 +154,8 @@ public class PostActivity extends AppCompatActivity
                             newpost.child("uid").setValue(mCurrentUser.getUid());
                             newpost.child("post_id").setValue(postId);
                             newpost.child("profile_pic").setValue(dataSnapshot.child("profile_pic").getValue());
+                            newpost.child("thumb_profile_pic").setValue(dataSnapshot.child("thumb_profile_pic").getValue());
+                            newpost.child("post_time").setValue(Event_date);
                             newpost.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

@@ -8,13 +8,17 @@ public class EventName {
 
  private String eventName;
 
+
+    private String eventDate;
+
     public EventName(){
        }
 
 
-    public EventName(String eventID , String eventName) {
+    public EventName(String eventID , String eventName, String eventDate) {
         this.eventID = eventID;
         this.eventName = eventName;
+        this.eventDate = eventDate;
       }
 
     public void setEventID(String eventID) {
@@ -23,6 +27,13 @@ public class EventName {
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
+    }
+    public String getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(String eventDate) {
+        this.eventDate = eventDate;
     }
 
 

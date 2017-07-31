@@ -1,7 +1,12 @@
 package com.example.abhinav.buzzer.Event;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,13 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abhinav.buzzer.College.CollegeName;
-import com.example.abhinav.buzzer.Timeline.PostActivity;
 import com.example.abhinav.buzzer.R;
+import com.example.abhinav.buzzer.Timeline.PostActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.database.DataSnapshot;
@@ -36,12 +43,18 @@ public class EventListActivity extends AppCompatActivity {
     ListView listViewEvent;
     Toolbar mToolbar;
     AdView mAdView;
+    private Button postTime;
+    int year_x,month_x,day_x;
+    static final int DIALOG_ID = 0;
+    private TextView eventDate;
+
 
     //a list to store all the artist from firebase database
     List<EventName> cName;
 
     DatabaseReference databaseEvent;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +72,15 @@ public class EventListActivity extends AppCompatActivity {
         editTextName = (EditText) findViewById(R.id.editTextName);
         listViewEvent = (ListView) findViewById(R.id.listViewArtists);
         buttonAddEvent = (Button) findViewById(R.id.buttonAddCollege);
+        eventDate = (TextView) findViewById(R.id.eventDate);
+        postTime = (Button) findViewById(R.id.post_time);
+
+        final Calendar cal = Calendar.getInstance();
+        year_x =  cal.get(Calendar.YEAR);
+        month_x = cal.get(Calendar.MONTH);
+        day_x = cal.get(Calendar.DAY_OF_MONTH);
+
+
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         mToolbar.setTitle("Event Names");
@@ -66,7 +88,12 @@ public class EventListActivity extends AppCompatActivity {
         //list to store artists
         cName = new ArrayList<>();
 
-
+        postTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(DIALOG_ID);
+            }
+        });
 
         buttonAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +113,7 @@ public class EventListActivity extends AppCompatActivity {
                 Intent setup=new Intent(EventListActivity.this,PostActivity.class);
                    setup.putExtra("EventName",artist.getEventName());
                    setup.putExtra("EventId",artist.getEventID());
+                   setup.putExtra("EventDate", artist.getEventDate());
                    setup.putExtra("colgId", clgID);
                    setup.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                    startActivity(setup);
@@ -103,6 +131,24 @@ public class EventListActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        if (id == DIALOG_ID)
+            return new DatePickerDialog(this, dpickerListner , year_x , month_x , day_x);
+        else
+            return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener dpickerListner = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            year_x = year;
+            month_x = month + 1;
+            day_x = dayOfMonth;
+            eventDate.setText(day_x+"/"+month_x+"/"+year_x);
+        }
+    };
 
     @Override
     protected void onStart() {
@@ -134,14 +180,15 @@ public class EventListActivity extends AppCompatActivity {
 
     private void addCollege() {
         String name = editTextName.getText().toString().trim();
+        String date = eventDate.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(name)) {
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(date)) {
 
             //getting a unique id using push().getKey() method
             //it will create a unique id and we will use it as the Primary Key for our Artist
             String id = databaseEvent.push().getKey();
 
-            EventName clg_name = new EventName(id ,name);
+            EventName clg_name = new EventName(id ,name ,date);
 
             databaseEvent.child(id).setValue(clg_name);
 
