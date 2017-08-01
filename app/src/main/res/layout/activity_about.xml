@@ -52,7 +52,7 @@
            android:layout_marginStart="145dp"
            android:layout_marginTop="55dp"
            android:ems="10"
-           android:text="Lead Developer"
+           android:text="Developer"
            android:textStyle="bold" />
 
 
@@ -91,7 +91,7 @@
             android:layout_marginStart="145dp"
             android:layout_marginTop="55dp"
             android:ems="10"
-            android:text="Co Developer"
+            android:text="Developer"
             android:textStyle="bold" />
 
         <TextView

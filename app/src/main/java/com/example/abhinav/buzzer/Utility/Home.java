@@ -20,7 +20,7 @@ public class Home {
     private String uid;
     private String post_key;
     private String post_time;
-
+    private String eventId;
 
     private String thumb_profile_pic;
     private long numShares;
@@ -31,9 +31,10 @@ public class Home {
     }
 
 
-    public Home(String event, String post, String image, String profile_pic, String username, String post_id, String uid, String post_key, long numShares, String deeplinks,String thumb_profile_pic, String post_time) {
+    public Home(String event, String post, String image, String profile_pic, String username, String post_id, String uid, String post_key, long numShares, String deeplinks,String thumb_profile_pic, String post_time,String eventId) {
         this.event = event;
         this.post = post;
+        this.eventId=eventId;
         this.image = image;
         this.profile_pic = profile_pic;
         this.username = username;
@@ -57,7 +58,7 @@ public class Home {
     public void setThumb_profile_pic(String thumb_profile_pic) {
         this.thumb_profile_pic = thumb_profile_pic;
     }
-
+    public String geteventId(){return eventId;}
 
     public void setNumShares(long numShares) {
         this.numShares = numShares;
