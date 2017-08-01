@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.abhinav.buzzer.Event.EventListActivity;
 import com.example.abhinav.buzzer.Event.EventName;
+import com.example.abhinav.buzzer.Event.EventTimeline;
 import com.example.abhinav.buzzer.R;
 import com.example.abhinav.buzzer.Timeline.MainActivity;
 import com.example.abhinav.buzzer.Timeline.PostActivity;
@@ -73,10 +74,10 @@ public class EventFragment extends Fragment {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        Intent setup=new Intent(getContext(),PostActivity.class);
+                        Intent setup=new Intent(getContext(),EventTimeline.class);
                         setup.putExtra("EventName",model.getEventName());
                         setup.putExtra("EventId",model.getEventID());
+                        setup.putExtra("EventDate", model.getEventDate());
                         setup.putExtra("colgId", MainActivity.clgID);
                         setup.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(setup);
