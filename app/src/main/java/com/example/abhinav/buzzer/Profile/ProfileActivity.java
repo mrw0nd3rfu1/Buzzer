@@ -3,6 +3,8 @@ package com.example.abhinav.buzzer.Profile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.abhinav.buzzer.R;
+import com.example.abhinav.buzzer.Profile.SectionsPagerAdapter2;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,8 +50,11 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private String post_image;
-    private Button edit_Name;
-    private  Button edit_Location;
+
+    private ViewPager mViewPager;
+    private SectionsPagerAdapter2 mSections;
+    private TabLayout mTab;
+
 
 
     @Override
@@ -63,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(null);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle("Profile");
+        collapsingToolbarLayout.setTitle("  ");
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -72,13 +78,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        mNameUser = (TextView) findViewById(R.id.nameUser);
-        mCollegeName = (TextView) findViewById(R.id.nameCollege);
-        mLocation = (TextView) findViewById(R.id.nameLocation);
         mProfileImage = (CircleImageView) findViewById(R.id.userPic);
         mCollegeImage = (ImageView) findViewById(R.id.college_pic);
-        edit_Name = (Button) findViewById(R.id.edit_Name);
-        edit_Location = (Button) findViewById(R.id.edit_Location);
 
 
         // Toast.makeText(HomeSingleActivity.this , mPost_key , Toast.LENGTH_SHORT).show();
@@ -90,12 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
                 String post_college_name = (String) dataSnapshot.child("college_name").getValue();
                 post_image = (String) dataSnapshot.child("profile_pic").getValue();
                 //  hasImage=(Integer) dataSnapshot.child("With_image").getValue();
-                String post_uid = (String) dataSnapshot.child("uid").getValue();
-                String post_location = (String) dataSnapshot.child("location").getValue();
                 postId=(String)dataSnapshot.child("post_id").getValue();
-                mNameUser.setText(post_name);
-                mCollegeName.setText(post_college_name);
-                mLocation.setText(post_location);
 
                 Picasso.with(ProfileActivity.this).load(post_image).into(mProfileImage);
 
@@ -123,20 +119,17 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-    edit_Name.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-           updateName();
-        }
-    });
-        edit_Location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                     updateLocation();
+        //tabs
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mSections = new SectionsPagerAdapter2(getSupportFragmentManager());
+
+        mViewPager.setAdapter(mSections);
+
+        mTab = (TabLayout) findViewById(R.id.main_tab);
+        mTab.setupWithViewPager(mViewPager);
 
 
-            }
-        });
+
 
         mProfileImage.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -151,59 +144,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-    }
-    public boolean updateName(){
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ProfileActivity.this);
-        LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.name_update, null);
-        dialogBuilder.setView(dialogView);
-
-        final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
-        final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateArtist);
-
-        final AlertDialog b = dialogBuilder.create();
-        b.show();
-
-
-        buttonUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = editTextName.getText().toString().trim();
-                if (!TextUtils.isEmpty(name)) {
-                    b.dismiss();
-                    mDatabase.child(mAuth.getCurrentUser().getUid()).child("name").setValue(name);
-                }
-            }
-        });
-        return true;
-    }
-
-    public boolean updateLocation (){
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ProfileActivity.this);
-        LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.location_update, null);
-        dialogBuilder.setView(dialogView);
-
-        final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
-        final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateArtist);
-
-        final AlertDialog b = dialogBuilder.create();
-        b.show();
-
-
-        buttonUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = editTextName.getText().toString().trim();
-                if (!TextUtils.isEmpty(name)) {
-                    DatabaseReference dr= mDatabase.child(mAuth.getCurrentUser().getUid()).child("location");
-                    dr.setValue(name);
-                    b.dismiss();
-                }
-            }
-        });
-
-        return true;
     }
 
     @Override
