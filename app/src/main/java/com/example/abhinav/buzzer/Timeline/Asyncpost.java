@@ -24,7 +24,7 @@ public class Asyncpost extends AsyncTask<JSONObject,Void,Void> {
         final MediaType JSON
                 = MediaType.parse("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(JSON, json.toString());
-        Log.d("TAG",json.toString());
+
 
        final String fcm="AAAAsu33J24:APA91bHM2kXnx7Cy2HoMCm2X5qrhjcHXsHhmViLIbyOxf2aFGnF0CWreREf3qFViYM8K1PotbwKw2SeouoSh0jBCqYWco5BuSwSDZlp_MhHAB9G7FeojjnaUWf5CNFSrcbTdkd6gTATj";
         Request request=new Request.Builder()
@@ -33,7 +33,6 @@ public class Asyncpost extends AsyncTask<JSONObject,Void,Void> {
                 .addHeader("Authorization","key="+fcm)
                 .post(body)
                 .build();
-        Log.d("TAG",request.toString());
         OkHttpClient okHttpClient=new OkHttpClient();
         try {
             Response response = okHttpClient.newCall(request).execute();

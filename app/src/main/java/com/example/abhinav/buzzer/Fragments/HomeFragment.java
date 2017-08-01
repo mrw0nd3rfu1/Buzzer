@@ -231,7 +231,6 @@ public class HomeFragment extends Fragment {
                                             .put("body","New Notifications"));
                                             Asyncpost asyncpost=new Asyncpost();
                                             asyncpost.execute(message);
-                                            Log.d("TAG",message.toString());
                                         }
                                         catch(Exception e)
                                         {
