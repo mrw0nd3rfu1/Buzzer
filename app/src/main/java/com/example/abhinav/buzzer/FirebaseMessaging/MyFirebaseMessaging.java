@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
+import com.example.abhinav.buzzer.Profile.SetupActivity;
 import com.example.abhinav.buzzer.R;
 import com.example.abhinav.buzzer.Timeline.MainActivity;
 import com.example.abhinav.buzzer.Utility.SplashScreen;
