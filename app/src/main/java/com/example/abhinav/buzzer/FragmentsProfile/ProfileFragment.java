@@ -76,11 +76,6 @@ public class ProfileFragment extends Fragment {
                 mCollegeName.setText(post_college_name);
                 mLocation.setText(post_location);
 
-
-                String photo = (String) dataSnapshot.child("CollegeId").getValue();
-
-
-
             }
 
             @Override

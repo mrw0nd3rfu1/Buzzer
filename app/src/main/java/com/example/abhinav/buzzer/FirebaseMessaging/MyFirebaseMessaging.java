@@ -8,6 +8,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.example.abhinav.buzzer.R;
 import com.example.abhinav.buzzer.Timeline.MainActivity;
+import com.example.abhinav.buzzer.Utility.SplashScreen;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -20,7 +21,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        Intent intent = new Intent(this , MainActivity.class);
+        Intent intent = new Intent(this , SplashScreen.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 
