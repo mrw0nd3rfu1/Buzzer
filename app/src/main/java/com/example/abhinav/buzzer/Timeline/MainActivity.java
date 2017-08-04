@@ -112,12 +112,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
         clgID = getIntent().getExtras().getString("colgId");
-        //  FirebaseMessaging.getInstance().subscribeToTopic("college");
-
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -130,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
         mfab = (FloatingActionButton) findViewById(R.id.fab);
 
         mtoolbar = (Toolbar) findViewById(R.id.toolbar2);
