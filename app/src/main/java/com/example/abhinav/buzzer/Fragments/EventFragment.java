@@ -70,6 +70,7 @@ public class EventFragment extends Fragment {
             protected void populateViewHolder(EventViewHolder viewHolder,final EventName model, int position) {
 
                 viewHolder.setName(model.getEventName());
+                viewHolder.setDate(model.getEventDate());
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -115,6 +116,11 @@ public class EventFragment extends Fragment {
        public void setName(String event){
             TextView eventView = (TextView) mView.findViewById(R.id.textViewName);
            eventView.setText(event);
+        }
+
+        public void setDate(String eventdate){
+            TextView eventView = (TextView) mView.findViewById(R.id.eventDate);
+            eventView.setText(eventdate);
         }
 
     }

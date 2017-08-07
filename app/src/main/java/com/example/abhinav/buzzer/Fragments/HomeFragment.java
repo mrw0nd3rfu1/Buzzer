@@ -221,6 +221,9 @@ public class HomeFragment extends Fragment {
 
                                     } else {
                                         mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).setValue("Random Value");
+                                        mDatabaseLike.child(post_key).child("post_id").setValue(post_key);
+                                        mDatabaseLike.child(post_key).child("clg_id").setValue(MainActivity.clgID);
+                                        mDatabaseLike.child(post_key).child("liked_by").setValue(mAuth.getCurrentUser().getUid());
                                         FirebaseMessaging.getInstance().subscribeToTopic(model.geteventId());
                                         JSONObject message =new JSONObject();
                                         try

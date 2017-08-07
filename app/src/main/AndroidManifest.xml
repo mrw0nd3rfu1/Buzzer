@@ -46,7 +46,6 @@
         <activity android:name=".College.CollegeListActivity2" />
         <activity android:name=".Comment.CommentListActivity" />
         <activity android:name=".Profile.ProfileSeeActivity" />
-        <activity android:name=".Event.EventSearchActivity" />
         <activity android:name=".Event.EventTimeline" />
         <activity android:name=".Profile.ProfilePhotoSelector" />
 

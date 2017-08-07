@@ -1,14 +1,10 @@
 package com.example.abhinav.buzzer.Timeline;
 
-        import android.content.Context;
         import android.content.Intent;
         import android.net.Uri;
-        import android.os.Build;
         import android.os.Bundle;
         import android.os.CountDownTimer;
-        import android.provider.SyncStateContract;
         import android.support.annotation.NonNull;
-        import android.support.annotation.RequiresApi;
         import android.support.design.widget.CollapsingToolbarLayout;
         import android.support.design.widget.FloatingActionButton;
         import android.support.design.widget.TabLayout;
@@ -18,13 +14,9 @@ package com.example.abhinav.buzzer.Timeline;
         import android.support.v7.widget.LinearLayoutManager;
         import android.support.v7.widget.RecyclerView;
         import android.support.v7.widget.Toolbar;
-        import android.text.format.DateFormat;
-        import android.view.LayoutInflater;
         import android.view.Menu;
         import android.view.MenuItem;
         import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.Button;
         import android.widget.ImageButton;
         import android.widget.ImageView;
         import android.widget.TextView;
@@ -32,24 +24,15 @@ package com.example.abhinav.buzzer.Timeline;
 
         import com.example.abhinav.buzzer.College.CollegeListActivity;
         import com.example.abhinav.buzzer.College.CollegePhotoSelector;
-        import com.example.abhinav.buzzer.Comment.CommentListActivity;
         import com.example.abhinav.buzzer.Event.EventListActivity;
-        import com.example.abhinav.buzzer.Event.EventSearchActivity;
         import com.example.abhinav.buzzer.Profile.LoginActivity;
-        import com.example.abhinav.buzzer.Profile.PhoneAuthActivity;
         import com.example.abhinav.buzzer.Profile.ProfileActivity;
-        import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
         import com.example.abhinav.buzzer.Profile.SetupActivity;
         import com.example.abhinav.buzzer.R;
         import com.example.abhinav.buzzer.Utility.AboutActivity;
-        import com.example.abhinav.buzzer.Utility.Home;
-        import com.firebase.ui.database.FirebaseRecyclerAdapter;
-        import com.google.android.gms.ads.AdListener;
         import com.google.android.gms.ads.AdRequest;
         import com.google.android.gms.ads.AdView;
         import com.google.android.gms.ads.InterstitialAd;
-        import com.google.android.gms.ads.MobileAds;
-        import com.google.android.gms.vision.barcode.Barcode;
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.database.DataSnapshot;
         import com.google.firebase.database.DatabaseError;
@@ -57,7 +40,6 @@ package com.example.abhinav.buzzer.Timeline;
         import com.google.firebase.database.FirebaseDatabase;
         import com.google.firebase.database.Query;
         import com.google.firebase.database.ValueEventListener;
-        import com.google.firebase.messaging.FirebaseMessaging;
         import com.google.firebase.storage.FirebaseStorage;
         import com.google.firebase.storage.StorageReference;
         import com.squareup.picasso.Picasso;
@@ -329,8 +311,6 @@ public class MainActivity extends AppCompatActivity {
 
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-
         getMenuInflater().inflate(R.menu.college_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
@@ -339,13 +319,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
 
-        if (item.getItemId() == R.id.item_search){
-            final String clgID = getIntent().getExtras().getString("colgId");
-            Intent collegeIntent = new Intent(MainActivity.this, EventSearchActivity.class);
-            collegeIntent.putExtra("colgId", clgID);
-            collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(collegeIntent);
-        }
+
 
         mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
