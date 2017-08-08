@@ -121,6 +121,8 @@ public class SetupActivity extends AppCompatActivity{
                     mDatabaseUsers.child(user_ID).child("location").setValue(location);
                     mDatabaseUsers.child(user_ID).child("profile_pic").setValue(downloadUrl);
                     mDatabaseUsers.child(user_ID).child("CollegeId").setValue(clgId);
+                    if(getIntent().hasExtra("phoneNo"))
+                        mDatabaseUsers.child(user_ID).child("phoneNo").setValue(getIntent().getStringExtra("phoneNo"));
 
                     Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
                     mainIntent.putExtra("colgId",clgId);

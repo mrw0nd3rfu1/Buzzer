@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etxtPhone"
-        android:hint="Enter Your Phone Number Here.."
+        android:hint="@string/enter_your_phone_number_here"
         android:inputType="phone"
         android:paddingTop="20dp"/>
 
@@ -34,7 +34,7 @@
         android:onClick="requestCode"
         android:paddingTop="10dp"
         android:layout_gravity="center"
-        android:text="Send me an Sms" />
+        android:text="@string/send_me_an_sms" />
 
     <TextView
         android:layout_width="match_parent"
