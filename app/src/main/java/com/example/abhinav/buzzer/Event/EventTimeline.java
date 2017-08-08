@@ -3,12 +3,12 @@ package com.example.abhinav.buzzer.Event;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,16 +20,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.abhinav.buzzer.Comment.CommentListActivity;
-import com.example.abhinav.buzzer.Utility.Home;
-import com.example.abhinav.buzzer.Timeline.HomeSingleActivity;
 import com.example.abhinav.buzzer.Profile.LoginActivity;
 import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
 import com.example.abhinav.buzzer.R;
+import com.example.abhinav.buzzer.Timeline.HomeSingleActivity;
+import com.example.abhinav.buzzer.Utility.Home;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,11 +42,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EventTimeline extends AppCompatActivity {
 
+    private static final int HEADER_VIEW = 2;
     Toolbar mtoolbar;
     FloatingActionButton mfab;
     InterstitialAd mInterstitialAd;
     String LIST_STATE_KEY = "";
-    private static final int HEADER_VIEW = 2;
+    int firstVisibleItem, visibleItemCount, totalItemCount;
+    FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter;
     private RecyclerView mHomePage;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
@@ -56,14 +57,10 @@ public class EventTimeline extends AppCompatActivity {
     private int previousTotal=0;
     private boolean loading =true;
     private int visibleThreshold=5;
-    int firstVisibleItem, visibleItemCount, totalItemCount;
-
     private int current_page = 1;
     private DatabaseReference mDatabaseLike;
     private FirebaseAuth mAuth;
-
     private Query orderData;
-    FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private boolean mProcessLike = false;
     private LinearLayoutManager mLayoutManager;
@@ -120,6 +117,7 @@ public class EventTimeline extends AppCompatActivity {
         mtoolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(mtoolbar);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         mtoolbar.setNavigationIcon(null);
         mtoolbar.setTitle(evntName);

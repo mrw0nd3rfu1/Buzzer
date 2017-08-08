@@ -29,7 +29,6 @@ public class PhoneAuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_auth);
-
         etxtPhone = (EditText)findViewById(R.id.etxtPhone);
         etxtPhoneCode = (EditText)findViewById(R.id.etxtPhoneCode);
         mAuth =FirebaseAuth.getInstance();

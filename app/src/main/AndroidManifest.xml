@@ -63,11 +63,6 @@
         <activity android:name=".College.CollegePhotoSelector" />
         <activity android:name=".Utility.AboutActivity" />
         <activity android:name=".Profile.PhoneAuthActivity" />
-
-        <service
-            android:name=".MyService"
-            android:enabled="true"
-            android:exported="true"></service>
     </application>
 
 </manifest>

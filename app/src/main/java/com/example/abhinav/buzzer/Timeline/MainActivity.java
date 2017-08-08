@@ -1,94 +1,70 @@
 package com.example.abhinav.buzzer.Timeline;
 
-        import android.content.Intent;
-        import android.net.Uri;
-        import android.os.Bundle;
-        import android.os.CountDownTimer;
-        import android.support.annotation.NonNull;
-        import android.support.design.widget.CollapsingToolbarLayout;
-        import android.support.design.widget.FloatingActionButton;
-        import android.support.design.widget.TabLayout;
-        import android.support.v4.view.ViewPager;
-        import android.support.v7.app.ActionBar;
-        import android.support.v7.app.AppCompatActivity;
-        import android.support.v7.widget.LinearLayoutManager;
-        import android.support.v7.widget.RecyclerView;
-        import android.support.v7.widget.Toolbar;
-        import android.view.Menu;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.ImageButton;
-        import android.widget.ImageView;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.example.abhinav.buzzer.College.CollegeListActivity;
-        import com.example.abhinav.buzzer.College.CollegePhotoSelector;
-        import com.example.abhinav.buzzer.Event.EventListActivity;
-        import com.example.abhinav.buzzer.Profile.LoginActivity;
-        import com.example.abhinav.buzzer.Profile.ProfileActivity;
-        import com.example.abhinav.buzzer.Profile.SetupActivity;
-        import com.example.abhinav.buzzer.R;
-        import com.example.abhinav.buzzer.Utility.AboutActivity;
-        import com.google.android.gms.ads.AdRequest;
-        import com.google.android.gms.ads.AdView;
-        import com.google.android.gms.ads.InterstitialAd;
-        import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.database.DataSnapshot;
-        import com.google.firebase.database.DatabaseError;
-        import com.google.firebase.database.DatabaseReference;
-        import com.google.firebase.database.FirebaseDatabase;
-        import com.google.firebase.database.Query;
-        import com.google.firebase.database.ValueEventListener;
-        import com.google.firebase.storage.FirebaseStorage;
-        import com.google.firebase.storage.StorageReference;
-        import com.squareup.picasso.Picasso;
+import com.example.abhinav.buzzer.College.CollegeListActivity;
+import com.example.abhinav.buzzer.College.CollegePhotoSelector;
+import com.example.abhinav.buzzer.Event.EventListActivity;
+import com.example.abhinav.buzzer.Profile.LoginActivity;
+import com.example.abhinav.buzzer.Profile.ProfileActivity;
+import com.example.abhinav.buzzer.Profile.SetupActivity;
+import com.example.abhinav.buzzer.R;
+import com.example.abhinav.buzzer.Utility.AboutActivity;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
-        import de.hdodenhof.circleimageview.CircleImageView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int GALLERY_REQUEST = 1;
+    public static String clgID;
     Toolbar mtoolbar;
     FloatingActionButton mfab;
-    InterstitialAd mInterstitialAd;
-    String LIST_STATE_KEY = "";
-    private static final int HEADER_VIEW = 2;
-    private RecyclerView mHomePage;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
     private DatabaseReference mCollege;
-    private int previousTotal=0;
-    private boolean loading =true;
-    private int visibleThreshold=5;
-    int firstVisibleItem, visibleItemCount, totalItemCount;
-
-    private int current_page = 1;
     private DatabaseReference mDatabaseLike;
     private FirebaseAuth mAuth;
-
     private Query orderData;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private boolean mProcessLike = false;
-    private LinearLayoutManager mLayoutManager;
     private AdView mAdView;
-    private InterstitialAd interstitial;
     private boolean isUserClickedBackButton = false;
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     private CircleImageView mProfileImage;
     private ImageView mCollegePic;
-    private Uri imageUri;
     private TextView mNameUser;
-    private StorageReference mStorage;
     private ImageButton imageView;
     private TextView userClgPic;
-
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSections;
     private TabLayout mTab;
-
-    public static String clgID;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,9 +98,6 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageButton) findViewById(R.id.imageSelect);
         mNameUser = (TextView) findViewById(R.id.user_name);
         userClgPic = (TextView) findViewById(R.id.user_clg_name);
-
-
-        mStorage = FirebaseStorage.getInstance().getReference();
         mCollege = FirebaseDatabase.getInstance().getReference().child("College").child(clgID);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
