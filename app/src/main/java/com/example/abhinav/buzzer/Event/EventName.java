@@ -10,7 +10,6 @@ public class EventName {
 
 
     private String eventDate;
-
     public EventName(){
        }
 
@@ -19,6 +18,7 @@ public class EventName {
         this.eventID = eventID;
         this.eventName = eventName;
         this.eventDate = eventDate;
+
       }
 
     public void setEventID(String eventID) {

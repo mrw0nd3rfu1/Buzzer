@@ -3,7 +3,6 @@ package com.example.abhinav.buzzer.Event;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -33,6 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 public class EventListActivity extends AppCompatActivity {
@@ -47,7 +48,7 @@ public class EventListActivity extends AppCompatActivity {
     int year_x,month_x,day_x;
     static final int DIALOG_ID = 0;
     private TextView eventDate;
-
+    String sortDate="",sortmonth="",sortday="",sortyear="";
 
     //a list to store all the artist from firebase database
     List<EventName> cName;
@@ -147,6 +148,18 @@ public class EventListActivity extends AppCompatActivity {
             month_x = month + 1;
             day_x = dayOfMonth;
             eventDate.setText(day_x+"/"+month_x+"/"+year_x);
+            if(month_x <10)
+                sortmonth="0"+Integer.toString(month_x);
+            else
+                sortmonth=Integer.toString(month_x);
+            if(day_x <10)
+                sortday="0"+Integer.toString(day_x);
+            else
+                sortday=Integer.toString(day_x);
+            sortyear=Integer.toString(year_x);
+            sortDate=sortyear+sortmonth+sortday;
+            sortDate= Integer.toString(0-Integer.parseInt(sortDate));
+
         }
     };
 
@@ -164,6 +177,7 @@ public class EventListActivity extends AppCompatActivity {
                     EventName artist = postSnapshot.getValue(EventName.class);
                     cName.add(artist);
                 }
+                Collections.reverse(cName);
 
                 //creating adapter
                 EventActivity collegeAdapter = new EventActivity(EventListActivity.this, cName);
@@ -189,8 +203,9 @@ public class EventListActivity extends AppCompatActivity {
             String id = databaseEvent.push().getKey();
 
             EventName clg_name = new EventName(id ,name ,date);
-
             databaseEvent.child(id).setValue(clg_name);
+            databaseEvent.child(id).child("sortDate").setValue(Integer.parseInt(sortDate));
+
 
             //setting edit text to blank again
             editTextName.setText("");

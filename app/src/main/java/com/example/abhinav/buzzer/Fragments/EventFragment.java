@@ -29,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -41,7 +42,6 @@ public class EventFragment extends Fragment {
 
     private RecyclerView mEventList;
 
-    private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     FirebaseRecyclerAdapter<EventName,EventViewHolder> friendsRecyclerViewAdapter;
     private String mCurrent_user_id;
@@ -59,12 +59,15 @@ public class EventFragment extends Fragment {
         mEventList = (RecyclerView) mMainView.findViewById(R.id.event_list);
         mAuth=FirebaseAuth.getInstance();
         mCurrent_user_id = mAuth.getCurrentUser().getUid();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(MainActivity.clgID).child("Event");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child(MainActivity.clgID).child("Event");
+        Query query= mDatabase.orderByChild("sortDate");
+        query.keepSynced(true);
+
         friendsRecyclerViewAdapter = new FirebaseRecyclerAdapter<EventName, EventViewHolder>(
                 EventName.class,
                 R.layout.event_list,
                 EventViewHolder.class,
-                mDatabase
+                query
         ) {
             @Override
             protected void populateViewHolder(EventViewHolder viewHolder,final EventName model, int position) {
