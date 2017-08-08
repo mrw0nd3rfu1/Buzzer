@@ -2,7 +2,6 @@ package com.example.abhinav.buzzer.Profile;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,10 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.abhinav.buzzer.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -37,18 +33,6 @@ public class PhoneAuthActivity extends AppCompatActivity {
         etxtPhone = (EditText)findViewById(R.id.etxtPhone);
         etxtPhoneCode = (EditText)findViewById(R.id.etxtPhoneCode);
         mAuth =FirebaseAuth.getInstance();
-       /* mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() != null){
-                    Toast.makeText(PhoneAuthActivity.this , "Now you are verified..", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(PhoneAuthActivity.this , MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        }; */
-
     }
 
     public void requestCode(View view){
