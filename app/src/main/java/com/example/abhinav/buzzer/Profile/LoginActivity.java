@@ -62,11 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseUsers.keepSynced(true);
-
-        logo = (ImageView)findViewById(R.id.logo);
-        logo.setImageResource(R.drawable.iclaunch);
-
-
         mGoogleButton = (SignInButton) findViewById(R.id.googleButton);
 
         mLoginEmailField = (EditText) findViewById(R.id.loginEmailfield);

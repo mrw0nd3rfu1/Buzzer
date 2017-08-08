@@ -56,7 +56,7 @@
                     android:layout_centerInParent="true"
                     android:layout_gravity="left|center"
                     android:paddingBottom="10dp"
-                   app:civ_border_color="@color/colorPrimaryDark"
+                    app:civ_border_color="@color/colorPrimaryDark"
                     app:civ_border_width="2dp" />
 
                 <TextView
@@ -72,7 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
-                   android:layout_gravity="top|left"
+                    android:layout_gravity="top|left"
                     android:paddingTop="25dp"
                     android:textSize="15dp" />
 
@@ -96,11 +96,12 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/Home_Page"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
         </android.support.v4.widget.NestedScrollView>
 
 

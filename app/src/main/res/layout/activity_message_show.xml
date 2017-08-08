@@ -20,21 +20,12 @@
     </android.support.v7.widget.Toolbar>
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:text="Current Events"
-        android:textAlignment="center"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <ListView
         android:id="@+id/listViewArtists"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView">
+        android:layout_below="@+id/toolbar">
 
     </ListView>
 

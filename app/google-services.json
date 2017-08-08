@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "768496576366-75tq4gevceh215ptl582nb6pk3evqjta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.abhinav.buzzer",
+            "certificate_hash": "e17d3eb01ce059ce45485a79554db7e60af19824"
+          }
+        },
+        {
           "client_id": "768496576366-ssl7utqvf1nlvcmeogmi369okd0cbesf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

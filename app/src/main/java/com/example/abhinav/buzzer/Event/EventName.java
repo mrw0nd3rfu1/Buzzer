@@ -8,17 +8,13 @@ public class EventName {
 
  private String eventName;
 
-
-    private String eventDate;
-
     public EventName(){
        }
 
 
-    public EventName(String eventID , String eventName, String eventDate) {
+    public EventName(String eventID , String eventName) {
         this.eventID = eventID;
         this.eventName = eventName;
-        this.eventDate = eventDate;
       }
 
     public void setEventID(String eventID) {

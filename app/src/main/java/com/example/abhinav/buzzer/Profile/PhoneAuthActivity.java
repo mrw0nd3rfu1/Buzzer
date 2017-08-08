@@ -27,6 +27,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
  //   private FirebaseAuth.AuthStateListener mAuthListener;
     private EditText etxtPhoneCode;
     private String mVerificationId;
+    private String phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
     }
 
     public void requestCode(View view){
-        String phoneNumber = etxtPhone.getText().toString();
+        phoneNumber = etxtPhone.getText().toString();
         if (TextUtils.isEmpty(phoneNumber))
             return;
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -87,18 +88,11 @@ public class PhoneAuthActivity extends AppCompatActivity {
 
     private void signInWithCredential(PhoneAuthCredential phoneAuthCredential){
 
-        mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-
                 Toast.makeText(PhoneAuthActivity.this , "Now you are verified..", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(PhoneAuthActivity.this , SetupActivity.class) ;
+                intent.putExtra("phoneNo",phoneNumber);
                 startActivity(intent);
                 finish();
-            }
-            }
-        });
 
     }
 

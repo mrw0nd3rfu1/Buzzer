@@ -3,7 +3,6 @@ package com.example.abhinav.buzzer.Event;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -26,6 +25,7 @@ import com.example.abhinav.buzzer.R;
 import com.example.abhinav.buzzer.Timeline.PostActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +33,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 public class EventListActivity extends AppCompatActivity {
@@ -47,7 +49,8 @@ public class EventListActivity extends AppCompatActivity {
     int year_x,month_x,day_x;
     static final int DIALOG_ID = 0;
     private TextView eventDate;
-
+    String sortDate="",sortmonth="",sortday="",sortyear="";
+    private FirebaseAuth mAuth;
 
     //a list to store all the artist from firebase database
     List<EventName> cName;
@@ -67,6 +70,7 @@ public class EventListActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
         databaseEvent = FirebaseDatabase.getInstance().getReference().child(clgID).child("Event");
+        mAuth = FirebaseAuth.getInstance();
 
         //getting views
         editTextName = (EditText) findViewById(R.id.editTextName);
@@ -111,12 +115,12 @@ public class EventListActivity extends AppCompatActivity {
                 EventName artist = cName.get(i);
 
                 Intent setup=new Intent(EventListActivity.this,PostActivity.class);
-                   setup.putExtra("EventName",artist.getEventName());
-                   setup.putExtra("EventId",artist.getEventID());
-                   setup.putExtra("EventDate", artist.getEventDate());
-                   setup.putExtra("colgId", clgID);
-                   setup.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                   startActivity(setup);
+                setup.putExtra("EventName",artist.getEventName());
+                setup.putExtra("EventId",artist.getEventID());
+                setup.putExtra("EventDate", artist.getEventDate());
+                setup.putExtra("colgId", clgID);
+                setup.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(setup);
 
                 //starting the activity with intent
             }
@@ -124,12 +128,29 @@ public class EventListActivity extends AppCompatActivity {
 
         listViewEvent.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                EventName clg_name = cName.get(i);
-                showUpdateDeleteDialog(clg_name.getEventID(), clg_name.getEventName());
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                final EventName clg_name = cName.get(i);
+                databaseEvent.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String uid = dataSnapshot.child(clg_name.getEventID()).child("userUid").getValue().toString();
+                        if (mAuth.getCurrentUser().getUid().equals(uid)){
+                            showUpdateDeleteDialog(clg_name.getEventID(), clg_name.getEventName());
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
                 return true;
             }
         });
+
+
+
     }
 
     @Override
@@ -147,6 +168,18 @@ public class EventListActivity extends AppCompatActivity {
             month_x = month + 1;
             day_x = dayOfMonth;
             eventDate.setText(day_x+"/"+month_x+"/"+year_x);
+            if(month_x <10)
+                sortmonth="0"+Integer.toString(month_x);
+            else
+                sortmonth=Integer.toString(month_x);
+            if(day_x <10)
+                sortday="0"+Integer.toString(day_x);
+            else
+                sortday=Integer.toString(day_x);
+            sortyear=Integer.toString(year_x);
+            sortDate=sortyear+sortmonth+sortday;
+            sortDate= Integer.toString(0-Integer.parseInt(sortDate));
+
         }
     };
 
@@ -157,13 +190,14 @@ public class EventListActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                 cName.clear();
+                cName.clear();
 
                 //iterating through all the nodes
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     EventName artist = postSnapshot.getValue(EventName.class);
                     cName.add(artist);
                 }
+                Collections.reverse(cName);
 
                 //creating adapter
                 EventActivity collegeAdapter = new EventActivity(EventListActivity.this, cName);
@@ -189,8 +223,10 @@ public class EventListActivity extends AppCompatActivity {
             String id = databaseEvent.push().getKey();
 
             EventName clg_name = new EventName(id ,name ,date);
-
             databaseEvent.child(id).setValue(clg_name);
+            databaseEvent.child(id).child("sortDate").setValue(Integer.parseInt(sortDate));
+            databaseEvent.child(id).child("userUid").setValue(mAuth.getCurrentUser().getUid());
+
 
             //setting edit text to blank again
             editTextName.setText("");
@@ -224,6 +260,8 @@ public class EventListActivity extends AppCompatActivity {
 
         final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateArtist);
+        final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteArtist);
+
 
         dialogBuilder.setTitle(collegeName);
         final AlertDialog b = dialogBuilder.create();
@@ -241,5 +279,30 @@ public class EventListActivity extends AppCompatActivity {
             }
         });
 
+
+
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                deleteComment(collegeId);
+                b.dismiss();
+            }
+        });
+
+    }
+
+    private boolean deleteComment(String id) {
+        //getting the specified artist reference
+        final String clgID = getIntent().getExtras().getString("colgId");
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference().child(clgID).child("Event").child(id);;
+
+        //removing artist
+        dR.removeValue();
+
+
+        Toast.makeText(getApplicationContext(), "Event Deleted", Toast.LENGTH_LONG).show();
+
+        return true;
     }
 }

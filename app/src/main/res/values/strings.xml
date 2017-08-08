@@ -3,5 +3,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="banner_ad_unit_id">ca-app-pub-7607893686244125/8673701491</string>
-
+    <string name="send_me_an_sms">Send me an Sms</string>
+    <string name="enter_your_phone_number_here">Enter Your Phone Number Here..</string>
 </resources>

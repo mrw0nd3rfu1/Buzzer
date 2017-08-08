@@ -33,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -138,6 +139,7 @@ public class PostActivity extends AppCompatActivity
 
                             newpost.child("event").setValue(Event_name);
                             newpost.child("eventId").setValue(Event_Id);
+                            FirebaseMessaging.getInstance().subscribeToTopic(Event_Id);
                             newpost.child("post").setValue(title_post);
                             newpost.child("post_key").setValue(newpost.getKey());
                             if(imageUri!=null){

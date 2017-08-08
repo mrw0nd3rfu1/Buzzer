@@ -2,10 +2,8 @@ package com.example.abhinav.buzzer.Profile;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,9 +15,7 @@ import android.widget.Toast;
 import com.example.abhinav.buzzer.College.CollegeListActivity2;
 import com.example.abhinav.buzzer.R;
 import com.example.abhinav.buzzer.Timeline.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,13 +24,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
-import id.zelory.compressor.Compressor;
 
 public class SetupActivity extends AppCompatActivity{
 
@@ -52,6 +41,7 @@ public class SetupActivity extends AppCompatActivity{
     private StorageReference mStorageImage;
     private Uri mImageUri = null;
     private ProgressDialog mProgress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,73 +104,31 @@ public class SetupActivity extends AppCompatActivity{
         final String user_ID = mAuth.getCurrentUser().getUid();
 
 
-        final File thumb_filePath = new File(mImageUri.getPath());
-
-        Bitmap thumb_bitmap = new Compressor(this)
-                .setMaxHeight(200)
-                .setMaxWidth(200)
-                .setQuality(75)
-                .compressToBitmap(thumb_filePath);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        thumb_bitmap.compress(Bitmap.CompressFormat.JPEG , 100 ,baos);
-        final byte[] thumb_byte = baos.toByteArray();
-
         if (!TextUtils.isEmpty(name) && mImageUri != null && !college_name.equals("None")){
 
             mProgress.setMessage("Saving the Profile");
             mProgress.show();
 
             StorageReference filePath = mStorageImage.child("Profile_images/"+user_ID);
-            final StorageReference thumb_filepath = mStorageImage.child("Profile_images").child("thumb").child(user_ID+ ".jpg");
-
-
             filePath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                     mProgress.dismiss();
-                    final String downloadUrl = taskSnapshot.getDownloadUrl().toString();
+                    String downloadUrl = taskSnapshot.getDownloadUrl().toString();
 
-                    UploadTask uploadTask = thumb_filepath.putBytes(thumb_byte);
-                    uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
-                            @SuppressWarnings("VisibleForTests")
-                            String  thumb_downloadUrl = thumb_task.getResult().getDownloadUrl().toString();
-                            if (thumb_task.isSuccessful()){
+                    mDatabaseUsers.child(user_ID).child("name").setValue(name);
+                    mDatabaseUsers.child(user_ID).child("college_name").setValue(college_name);
+                    mDatabaseUsers.child(user_ID).child("location").setValue(location);
+                    mDatabaseUsers.child(user_ID).child("profile_pic").setValue(downloadUrl);
+                    mDatabaseUsers.child(user_ID).child("CollegeId").setValue(clgId);
+                    if(getIntent().hasExtra("phoneNo"))
+                        mDatabaseUsers.child(user_ID).child("phoneNo").setValue(getIntent().getStringExtra("phoneNo"));
 
-                                Map update_HashMap = new HashMap<String, String>();
-                                update_HashMap.put("profile_pic",downloadUrl);
-                                update_HashMap.put("thumb_profile_pic",thumb_downloadUrl);
-                                update_HashMap.put("name" ,name);
-                                update_HashMap.put("college_name" , college_name);
-                                update_HashMap.put("location" , location);
-                                update_HashMap.put("CollegeId" ,clgId );
-
-                                mDatabaseUsers.child(user_ID).updateChildren(update_HashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()){
-
-                                            Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
-                                            mainIntent.putExtra("colgId",clgId);
-                                            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(mainIntent);
-                                        }
-                                        else {
-
-                                        }
-                                    }
-                                });
-                            }
-                            else {
-
-                            }
-                        }
-                    });
-
-
+                    Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
+                    mainIntent.putExtra("colgId",clgId);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(mainIntent);
                 }
             });
         }
@@ -211,7 +159,7 @@ public class SetupActivity extends AppCompatActivity{
             clgId=data.getStringExtra("CollegeId");
         }
 
-      else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
 
