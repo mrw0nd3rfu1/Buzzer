@@ -42,6 +42,7 @@ public class SetupActivity extends AppCompatActivity{
     private Uri mImageUri = null;
     private ProgressDialog mProgress;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
