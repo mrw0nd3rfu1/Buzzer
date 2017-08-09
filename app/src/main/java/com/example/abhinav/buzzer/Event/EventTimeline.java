@@ -23,6 +23,7 @@ import com.example.abhinav.buzzer.Comment.CommentListActivity;
 import com.example.abhinav.buzzer.Profile.LoginActivity;
 import com.example.abhinav.buzzer.Profile.ProfileSeeActivity;
 import com.example.abhinav.buzzer.R;
+import com.example.abhinav.buzzer.Timeline.Asyncpost;
 import com.example.abhinav.buzzer.Timeline.HomeSingleActivity;
 import com.example.abhinav.buzzer.Utility.Home;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -36,7 +37,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -99,6 +103,7 @@ public class EventTimeline extends AppCompatActivity {
         final String evntID = getIntent().getExtras().getString("EventId");
         final String evntName = getIntent().getExtras().getString("EventName");
 
+
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -120,7 +125,8 @@ public class EventTimeline extends AppCompatActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         mtoolbar.setNavigationIcon(null);
-        mtoolbar.setTitle(evntName);
+        getSupportActionBar().setTitle(evntName);
+
 
         mDatabaseEvent = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
         mQuery = mDatabaseEvent.orderByChild("eventId").equalTo(evntID);
@@ -179,7 +185,7 @@ public class EventTimeline extends AppCompatActivity {
 
 
             @Override
-            protected void populateViewHolder(EventTimeline.HomeViewHolder viewHolder, Home model, int position) {
+            protected void populateViewHolder(EventTimeline.HomeViewHolder viewHolder, final Home model, int position) {
 
                 final String post_key = getRef(position).getKey();
 
@@ -254,9 +260,23 @@ public class EventTimeline extends AppCompatActivity {
 
                                         mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).removeValue();
                                         mProcessLike = false;
+                                        FirebaseMessaging.getInstance().unsubscribeFromTopic(model.geteventId());
+
 
                                     } else {
                                         mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).setValue("Random Value");
+                                        FirebaseMessaging.getInstance().subscribeToTopic(model.geteventId());
+                                        JSONObject message = new JSONObject();
+                                        try {
+                                            message.put("to", "/topics/" + model.geteventId());
+                                            message.put("notification", new JSONObject()
+                                                    .put("title", "New Notifications")
+                                                    .put("body", "New Notifications"));
+                                            Asyncpost asyncpost = new Asyncpost();
+                                            asyncpost.execute(message);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
                                         mProcessLike = false;
                                     }
 

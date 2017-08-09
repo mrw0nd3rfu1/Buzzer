@@ -249,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
                                         Picasso.with(MainActivity.this).load(college_image).into(mCollegePic);
                                         String college_user_name = (String) dataSnapshot.child("ImagePost").getValue();
                                         userClgPic.setText("Last Uploaded By "+college_user_name);
+
                                     }
 
                                     @Override

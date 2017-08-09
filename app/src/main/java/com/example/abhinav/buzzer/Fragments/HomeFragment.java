@@ -3,18 +3,12 @@ package com.example.abhinav.buzzer.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +24,6 @@ import com.example.abhinav.buzzer.Timeline.HomeSingleActivity;
 import com.example.abhinav.buzzer.Timeline.MainActivity;
 import com.example.abhinav.buzzer.Utility.Home;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,11 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,15 +43,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class HomeFragment extends Fragment {
 
+    FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter;
     private RecyclerView mHomePage;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
     private DatabaseReference mCollege;
     private DatabaseReference mDatabaseLike;
     private FirebaseAuth mAuth;
-
     private Query orderData;
-    FirebaseRecyclerAdapter<Home, HomeViewHolder> firebaseRecyclerAdapter;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private boolean mProcessLike = false;
     private LinearLayoutManager mLayoutManager;
@@ -219,9 +207,6 @@ public class HomeFragment extends Fragment {
 
                                     } else {
                                         mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).setValue("Random Value");
-                                        mDatabaseLike.child(post_key).child("post_id").setValue(post_key);
-                                        mDatabaseLike.child(post_key).child("clg_id").setValue(MainActivity.clgID);
-                                        mDatabaseLike.child(post_key).child("liked_by").setValue(mAuth.getCurrentUser().getUid());
                                         FirebaseMessaging.getInstance().subscribeToTopic(model.geteventId());
                                         JSONObject message =new JSONObject();
                                         try

@@ -4,7 +4,6 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.abhinav.buzzer.Timeline.MainActivity"
@@ -15,9 +14,9 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_above="@+id/adView"
         android:fitsSystemWindows="true"
-        android:layout_above="@+id/adView">
+        android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -63,17 +62,17 @@
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
                     android:layout_gravity="center"
+                    android:textColor="@android:color/white"
                     android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/user_clg_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                   android:layout_gravity="top|left"
+                    android:layout_gravity="top|left"
                     android:paddingTop="25dp"
+                    android:textColor="@android:color/white"
                     android:textSize="15dp" />
 
                 <android.support.design.widget.TabLayout
@@ -114,17 +113,17 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/adView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="14dp"
-        android:src="@android:drawable/ic_menu_edit"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal"
-        android:layout_marginRight="28dp"
         android:layout_marginEnd="28dp"
-        android:layout_above="@+id/adView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:visibility="invisible"/>
+        android:layout_marginRight="28dp"
+        android:src="@android:drawable/ic_menu_edit"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="normal" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
