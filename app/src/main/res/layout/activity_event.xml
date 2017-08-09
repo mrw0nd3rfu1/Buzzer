@@ -54,7 +54,8 @@
         android:id="@+id/listViewArtists"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView">
+        android:layout_below="@+id/textView"
+        android:layout_above="@+id/adView">
 
     </ListView>
 
