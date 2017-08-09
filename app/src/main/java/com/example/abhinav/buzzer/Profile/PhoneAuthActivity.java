@@ -24,6 +24,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
     private EditText etxtPhoneCode;
     private String mVerificationId;
     private String phoneNumber;
+    private EditText code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +32,16 @@ public class PhoneAuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_phone_auth);
         etxtPhone = (EditText)findViewById(R.id.etxtPhone);
         etxtPhoneCode = (EditText)findViewById(R.id.etxtPhoneCode);
+        code = (EditText) findViewById(R.id.code);
+        code.setText("+91");
+        code.setEnabled(false);
         mAuth =FirebaseAuth.getInstance();
 
     }
 
     public void requestCode(View view){
         phoneNumber = etxtPhone.getText().toString();
+        phoneNumber = "+91" + phoneNumber;
         if (TextUtils.isEmpty(phoneNumber))
             return;
         PhoneAuthProvider.getInstance().verifyPhoneNumber(

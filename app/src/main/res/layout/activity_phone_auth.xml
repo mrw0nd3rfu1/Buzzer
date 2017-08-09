@@ -18,12 +18,23 @@
     </android.support.v7.widget.Toolbar>
 
     <EditText
+        android:id="@+id/code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="Country Code"
+        android:inputType="phone"
+        android:paddingTop="20dp" />
+
+
+    <EditText
         android:id="@+id/etxtPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
         android:hint="@string/enter_your_phone_number_here"
         android:inputType="phone"
-        android:paddingTop="20dp"/>
+        android:paddingTop="20dp" />
 
     <Button
         style="@style/Widget.AppCompat.Button.Colored"
