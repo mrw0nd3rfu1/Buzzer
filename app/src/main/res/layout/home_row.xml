@@ -39,11 +39,12 @@
 
 
         <TextView
-
             android:id="@+id/postUsername"
             android:layout_width="271dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="25dp"
+            android:inputType="textPersonName"
             android:paddingBottom="15dp"
             android:paddingLeft="1dp"
             android:paddingRight="15dp"
@@ -87,11 +88,11 @@
                 android:id="@+id/commentButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/ic_launcher_comment"
-                android:text="Button"
+                android:layout_alignBottom="@+id/likeButton"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/likeButton"
-                android:layout_alignBottom="@+id/likeButton" />
+                android:background="@mipmap/ic_launcher_comment"
+                android:text="Button" />
 
 
         </RelativeLayout>

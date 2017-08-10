@@ -18,8 +18,8 @@
 
             <Button
                 android:id="@+id/edit_Name"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="right"
                 android:background="@drawable/ic_mode_edit"
                 />
@@ -34,7 +34,8 @@
                     android:layout_width="285dp"
                     android:layout_height="wrap_content"
                     android:text="Name"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
 
 
@@ -62,12 +63,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="College Name"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/nameCollege"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/nameCollege"
                     android:textSize="18sp"/>
 
             </LinearLayout>
@@ -79,8 +81,8 @@
 
             <Button
                 android:id="@+id/edit_Location"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="right"
                 android:background="@drawable/ic_mode_edit"
                 />
@@ -97,12 +99,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Location"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/nameLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/nameLocation"
                     android:textSize="18sp"/>
 
             </LinearLayout>

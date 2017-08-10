@@ -155,8 +155,10 @@ public class SetupActivity extends AppCompatActivity{
         }
         else  if (requestCode ==COLLEGE_REQUEST)
         {
-            mCollegeField.setText(data.getStringExtra("CollegeName"));
-            clgId=data.getStringExtra("CollegeId");
+            if (data != null) {
+                mCollegeField.setText(data.getStringExtra("CollegeName"));
+                clgId = data.getStringExtra("CollegeId");
+            }
         }
 
       else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
