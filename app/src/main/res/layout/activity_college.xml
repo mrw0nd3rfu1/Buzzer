@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:hint="Enter College name if not present"
+        android:inputType="textPersonName"
         android:padding="20dp" />
 
        <Button

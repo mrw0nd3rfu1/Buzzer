@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/toolbar"
+        android:inputType="textPersonName"
         android:layout_toStartOf="@+id/post_time"
         android:hint="Enter Event Name if not present"
         android:padding="20dp" />
