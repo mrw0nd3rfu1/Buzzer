@@ -6,7 +6,6 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class CollegeName {
     private String collegeID;
     private String collegeName;
-    private String LastPost,FirstPost;
 
     public CollegeName(){
        }
@@ -15,16 +14,14 @@ public class CollegeName {
     public CollegeName(String collegeID , String collegeName,String LastPost,String FirstPost) {
         this.collegeID = collegeID;
         this.collegeName = collegeName;
-        this.LastPost=LastPost;
-        this.FirstPost=FirstPost;
        }
 //    public Integer getLastPost(){return Integer.parseInt(LastPost);}
 
-    public String getCollegeID() {
+    String getCollegeID() {
         return collegeID;
     }
 
-    public String getCollegeName(){
+    String getCollegeName() {
         return collegeName;
     }
 
