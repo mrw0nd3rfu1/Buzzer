@@ -1,6 +1,7 @@
 package com.example.abhinav.buzzer.Profile;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -12,14 +13,20 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.abhinav.buzzer.College.CollegeListActivity;
+import com.example.abhinav.buzzer.College.CollegePhotoSelector;
 import com.example.abhinav.buzzer.R;
 import com.example.abhinav.buzzer.Profile.SectionsPagerAdapter2;
+import com.example.abhinav.buzzer.Timeline.MainActivity;
+import com.example.abhinav.buzzer.Utility.AboutActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView mCollegeName;
     private TextView mLocation;
     private ImageView mCollegeImage;
+    private DatabaseReference mDatabaseUsers;
 
     private FirebaseAuth mAuth;
 
@@ -81,6 +89,7 @@ public class ProfileActivity extends AppCompatActivity {
         mProfileImage = (CircleImageView) findViewById(R.id.userPic);
         mCollegeImage = (ImageView) findViewById(R.id.college_pic);
 
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
 
         // Toast.makeText(HomeSingleActivity.this , mPost_key , Toast.LENGTH_SHORT).show();
 
@@ -153,4 +162,66 @@ public class ProfileActivity extends AppCompatActivity {
 
          return true;
     }
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+
+
+
+        mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               if (dataSnapshot.child("CollegeId").getValue().equals(MainActivity.clgID))
+                { if (item.getItemId() == R.id.item_photo){
+                    Intent collegeIntent = new Intent(ProfileActivity.this, CollegePhotoSelector.class);
+                    collegeIntent.putExtra("colgId", MainActivity.clgID);
+                    collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(collegeIntent); }
+                }
+                else {
+                    Toast.makeText(ProfileActivity.this , "You are not present in this college" ,Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        if (item.getItemId()== R.id.action_college){
+            Intent collegeIntent = new Intent(ProfileActivity.this, CollegeListActivity.class);
+            collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(collegeIntent);
+        }
+        if (item.getItemId() == R.id.action_logout) {
+
+            logout();
+        }
+
+
+
+
+        if (item.getItemId() == R.id.action_profile) {
+            Intent profileIntent = new Intent(ProfileActivity.this, ProfileActivity.class);
+            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(profileIntent);
+
+        }
+
+
+        if (item.getItemId() == R.id.action_about) {
+
+            Intent profileIntent = new Intent(ProfileActivity.this, AboutActivity.class);
+            profileIntent.putExtra("colgId", MainActivity.clgID);
+            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(profileIntent);
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        mAuth.signOut();
+    }
+
 }
