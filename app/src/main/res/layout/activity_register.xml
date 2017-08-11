@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/animation_list"
-    tools:context="com.example.abhinav.buzzer.Profile.RegisterActivity">
+    tools:context="com.tech.abhinav.buzzer.Profile.RegisterActivity">
 
     <ImageView
         android:layout_width="match_parent"

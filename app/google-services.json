@@ -65,6 +65,66 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768496576366:android:5aac9edc56435385",
+        "android_client_info": {
+          "package_name": "com.tech.abhinav.buzzer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768496576366-qp7pvr369vo0vd6afp5g2udkf1db67ha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tech.abhinav.buzzer",
+            "certificate_hash": "ef0209bdced812c76bc7b823d3bc058d16da393d"
+          }
+        },
+        {
+          "client_id": "768496576366-rt2dlv90k9qhstusbru78n9gdoljje1q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tech.abhinav.buzzer",
+            "certificate_hash": "63475cf5ddfb1cc6002ef0778543261c1dbedd3f"
+          }
+        },
+        {
+          "client_id": "768496576366-oj5ovopif4subs54jof91ut4d8hns9jj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tech.abhinav.buzzer",
+            "certificate_hash": "e17d3eb01ce059ce45485a79554db7e60af19824"
+          }
+        },
+        {
+          "client_id": "768496576366-v7jmhgng5tj900rqc1k0etvgst1itcu8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBotyLopQAV2TvA3iA7bAYd3I14lz-UnE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768496576366-v7jmhgng5tj900rqc1k0etvgst1itcu8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

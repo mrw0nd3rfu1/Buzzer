@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.abhinav.buzzer">
+    package="com.tech.abhinav.buzzer">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,23 +11,23 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Profile.LoginActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.Profile.LoginActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".Timeline.PostActivity" />
-        <activity android:name=".Profile.RegisterActivity" />
-        <activity android:name=".Timeline.MainActivity"></activity>
-        <activity android:name=".Event.EventListActivity" />
-        <activity android:name=".Utility.SplashScreen">
+        <activity android:name="com.tech.abhinav.buzzer.Timeline.PostActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.Profile.RegisterActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.Timeline.MainActivity"></activity>
+        <activity android:name="com.tech.abhinav.buzzer.Event.EventListActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.Utility.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Profile.SetupActivity" />
-        <activity android:name=".Timeline.HomeSingleActivity">
+        <activity android:name="com.tech.abhinav.buzzer.Profile.SetupActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.Timeline.HomeSingleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -40,29 +40,29 @@
                 <data android:pathPattern="." />
             </intent-filter>
         </activity>
-        <activity android:name=".Timeline.LikedActivity" />
-        <activity android:name=".Profile.ProfileActivity" />
-        <activity android:name=".College.CollegeListActivity" />
-        <activity android:name=".College.CollegeListActivity2" />
-        <activity android:name=".Comment.CommentListActivity" />
-        <activity android:name=".Profile.ProfileSeeActivity" />
-        <activity android:name=".Event.EventTimeline" />
-        <activity android:name=".Profile.ProfilePhotoSelector" />
+        <activity android:name="com.tech.abhinav.buzzer.Timeline.LikedActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.Profile.ProfileActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.College.CollegeListActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.College.CollegeListActivity2" />
+        <activity android:name="com.tech.abhinav.buzzer.Comment.CommentListActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.Profile.ProfileSeeActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.Event.EventTimeline" />
+        <activity android:name="com.tech.abhinav.buzzer.Profile.ProfilePhotoSelector" />
 
-        <service android:name=".FirebaseMessaging.MyFirebaseInstance">
+        <service android:name="com.tech.abhinav.buzzer.FirebaseMessaging.MyFirebaseInstance">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".FirebaseMessaging.MyFirebaseMessaging">
+        <service android:name="com.tech.abhinav.buzzer.FirebaseMessaging.MyFirebaseMessaging">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".College.CollegePhotoSelector" />
-        <activity android:name=".Utility.AboutActivity" />
-        <activity android:name=".Profile.PhoneAuthActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.College.CollegePhotoSelector" />
+        <activity android:name="com.tech.abhinav.buzzer.Utility.AboutActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.Profile.PhoneAuthActivity" />
     </application>
 
 </manifest>

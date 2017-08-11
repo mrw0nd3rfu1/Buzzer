@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.abhinav.buzzer.Fragments.HomeFragment">
+    tools:context="com.tech.abhinav.buzzer.Fragments.HomeFragment">
 
      <android.support.v7.widget.RecyclerView
         android:id="@+id/Home_Page"
