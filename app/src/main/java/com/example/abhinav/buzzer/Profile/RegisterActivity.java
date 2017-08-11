@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.abhinav.buzzer.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         String email = mEmailField.getText().toString().trim();
         String password = mPasswordField.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && password.length()>6 && Patterns.EMAIL_ADDRESS.matcher(email).matches()){
 
             mProgress.setMessage("Signing Up..");
             mProgress.show();
@@ -83,6 +85,8 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
 
+        }else {
+            Toast.makeText(RegisterActivity.this , "Your Password or Email is not appropriate" ,Toast.LENGTH_LONG).show();
         }
 
     }
