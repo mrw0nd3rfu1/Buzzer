@@ -8,66 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:768496576366:android:cd5aded36e166c3c",
-        "android_client_info": {
-          "package_name": "com.example.abhinav.buzzer"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "768496576366-75tq4gevceh215ptl582nb6pk3evqjta.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.abhinav.buzzer",
-            "certificate_hash": "e17d3eb01ce059ce45485a79554db7e60af19824"
-          }
-        },
-        {
-          "client_id": "768496576366-ssl7utqvf1nlvcmeogmi369okd0cbesf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.abhinav.buzzer",
-            "certificate_hash": "63475cf5ddfb1cc6002ef0778543261c1dbedd3f"
-          }
-        },
-        {
-          "client_id": "768496576366-pnj18p2g4rl7qpop6j4375mrfldvthlg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.abhinav.buzzer",
-            "certificate_hash": "ef0209bdced812c76bc7b823d3bc058d16da393d"
-          }
-        },
-        {
-          "client_id": "768496576366-v7jmhgng5tj900rqc1k0etvgst1itcu8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDBotyLopQAV2TvA3iA7bAYd3I14lz-UnE"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "768496576366-v7jmhgng5tj900rqc1k0etvgst1itcu8.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:768496576366:android:5aac9edc56435385",
         "android_client_info": {
           "package_name": "com.tech.abhinav.buzzer"
@@ -75,23 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "768496576366-qp7pvr369vo0vd6afp5g2udkf1db67ha.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tech.abhinav.buzzer",
-            "certificate_hash": "ef0209bdced812c76bc7b823d3bc058d16da393d"
-          }
-        },
-        {
-          "client_id": "768496576366-rt2dlv90k9qhstusbru78n9gdoljje1q.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tech.abhinav.buzzer",
-            "certificate_hash": "63475cf5ddfb1cc6002ef0778543261c1dbedd3f"
-          }
-        },
-        {
-          "client_id": "768496576366-oj5ovopif4subs54jof91ut4d8hns9jj.apps.googleusercontent.com",
+          "client_id": "768496576366-t27oke8b6714cs4vori387fn2pn1839s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.tech.abhinav.buzzer",
@@ -99,7 +23,15 @@
           }
         },
         {
-          "client_id": "768496576366-v7jmhgng5tj900rqc1k0etvgst1itcu8.apps.googleusercontent.com",
+          "client_id": "768496576366-svlfgm3kbo5vqcjdl3oumdrhv6lcpaoc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tech.abhinav.buzzer",
+            "certificate_hash": "c44edf7d41faff3e6f4c288924f5eaf855e6ec91"
+          }
+        },
+        {
+          "client_id": "768496576366-jlafma460eo67omitki9h4usv6sijv2t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -116,7 +48,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "768496576366-v7jmhgng5tj900rqc1k0etvgst1itcu8.apps.googleusercontent.com",
+              "client_id": "768496576366-jlafma460eo67omitki9h4usv6sijv2t.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
