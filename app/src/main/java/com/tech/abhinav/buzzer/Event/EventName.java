@@ -1,15 +1,16 @@
 package com.tech.abhinav.buzzer.Event;
 
-import com.google.firebase.database.IgnoreExtraProperties;
+import android.support.annotation.Keep;
 
-@IgnoreExtraProperties
+@Keep
+
 public class EventName {
-    private String eventID;
+    public String eventID;
 
- private String eventName;
+    public String eventName;
 
 
-    private String eventDate;
+    public String eventDate;
     public EventName(){
        }
 
@@ -21,13 +22,6 @@ public class EventName {
 
       }
 
-    public void setEventID(String eventID) {
-        this.eventID = eventID;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
     public String getEventDate() {
         return eventDate;
     }
@@ -36,14 +30,20 @@ public class EventName {
         this.eventDate = eventDate;
     }
 
-
-
     public String getEventID() {
         return eventID;
     }
 
+    public void setEventID(String eventID) {
+        this.eventID = eventID;
+    }
+
     public String getEventName(){
         return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
 

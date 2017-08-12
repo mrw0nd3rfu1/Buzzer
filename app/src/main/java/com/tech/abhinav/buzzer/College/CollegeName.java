@@ -1,14 +1,17 @@
 package com.tech.abhinav.buzzer.College;
 
-import com.google.firebase.database.IgnoreExtraProperties;
 
-@IgnoreExtraProperties
+import android.support.annotation.Keep;
+
+@Keep
+
 public class CollegeName {
-    private String collegeID;
-    private String collegeName;
+    public String collegeID;
+    public String collegeName;
 
     public CollegeName(){
-       }
+
+    }
 
 
     public CollegeName(String collegeID , String collegeName,String LastPost,String FirstPost) {

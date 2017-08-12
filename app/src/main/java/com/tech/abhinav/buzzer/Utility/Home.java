@@ -1,30 +1,32 @@
 package com.tech.abhinav.buzzer.Utility;
 
-import com.google.firebase.database.IgnoreExtraProperties;
+import android.support.annotation.Keep;
+
+@Keep
 
 /**
  * Created by Abhinav on 23-Jan-17.
  */
-@IgnoreExtraProperties
+
 
 public class Home {
 
     public int With_image;
 
-    private String event;
-    private String post;
-    private String image;
-    private String profile_pic;
-    private String username;
-    private String post_id;
-    private String uid;
-    private String post_key;
-    private String post_time;
-    private String eventId;
+    public String event;
+    public String post;
+    public String image;
+    public String profile_pic;
+    public String username;
+    public String post_id;
+    public String uid;
+    public String post_key;
+    public String post_time;
+    public String eventId;
 
-    private String thumb_profile_pic;
-    private long numShares;
-    private String deeplinks;
+    public String thumb_profile_pic;
+    public long numShares;
+    public String deeplinks;
 
     public Home() {
 
@@ -51,6 +53,10 @@ public class Home {
         return numShares;
     }
 
+    public void setNumShares(long numShares) {
+        this.numShares = numShares;
+    }
+
     public String getThumb_profile_pic() {
         return thumb_profile_pic;
     }
@@ -58,10 +64,9 @@ public class Home {
     public void setThumb_profile_pic(String thumb_profile_pic) {
         this.thumb_profile_pic = thumb_profile_pic;
     }
-    public String geteventId(){return eventId;}
 
-    public void setNumShares(long numShares) {
-        this.numShares = numShares;
+    public String geteventId() {
+        return eventId;
     }
 
     public String getDeeplinks() {

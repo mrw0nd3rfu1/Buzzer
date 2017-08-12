@@ -1,12 +1,13 @@
 package com.tech.abhinav.buzzer.Comment;
 
-import com.google.firebase.database.IgnoreExtraProperties;
+import android.support.annotation.Keep;
 
-@IgnoreExtraProperties
+@Keep
+
 public class CommentPosts {
-    private String commentID;
-    private String userName;
-    private String comment;
+    public String commentID;
+    public String userName;
+    public String comment;
 
 
     public CommentPosts(){
