@@ -4,15 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.tech.abhinav.buzzer.Profile.LoginActivity;
-import com.tech.abhinav.buzzer.R;
-import com.tech.abhinav.buzzer.Timeline.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tech.abhinav.buzzer.Profile.LoginActivity;
+import com.tech.abhinav.buzzer.R;
+import com.tech.abhinav.buzzer.Timeline.MainActivity;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -50,7 +50,7 @@ public class SplashScreen extends AppCompatActivity {
                                 intent.putExtra("colgId", clgID);
                                 startActivity(intent);
                                 }
-                                finish();
+
                             }
 
                             @Override
@@ -69,5 +69,11 @@ public class SplashScreen extends AppCompatActivity {
 
         };
         myThread.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 }
