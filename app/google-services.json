@@ -15,15 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "768496576366-t27oke8b6714cs4vori387fn2pn1839s.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tech.abhinav.buzzer",
-            "certificate_hash": "e17d3eb01ce059ce45485a79554db7e60af19824"
-          }
-        },
-        {
-          "client_id": "768496576366-svlfgm3kbo5vqcjdl3oumdrhv6lcpaoc.apps.googleusercontent.com",
+          "client_id": "768496576366-0k6v90bdpsuc8knihtle9n94g6lnclhi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.tech.abhinav.buzzer",
@@ -33,6 +25,14 @@
         {
           "client_id": "768496576366-jlafma460eo67omitki9h4usv6sijv2t.apps.googleusercontent.com",
           "client_type": 3
+        },
+        {
+          "client_id": "768496576366-t27oke8b6714cs4vori387fn2pn1839s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tech.abhinav.buzzer",
+            "certificate_hash": "e17d3eb01ce059ce45485a79554db7e60af19824"
+          }
         }
       ],
       "api_key": [
