@@ -33,7 +33,7 @@ public class EventFragment extends Fragment {
     FirebaseRecyclerAdapter<EventName,EventViewHolder> friendsRecyclerViewAdapter;
     private String mCurrent_user_id;
 
-    private View mMainView;
+    public View mMainView;
 
     public EventFragment() {
         // Required empty public constructor

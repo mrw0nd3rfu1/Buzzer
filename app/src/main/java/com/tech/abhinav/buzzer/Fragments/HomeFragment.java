@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
     private boolean mProcessLike = false;
     private LinearLayoutManager mLayoutManager;
 
-    private View mMainView;
+    public View mMainView;
 
     public HomeFragment() {
         // Required empty public constructor

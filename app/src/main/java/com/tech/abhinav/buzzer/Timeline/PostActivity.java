@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tech.abhinav.buzzer.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -179,6 +180,9 @@ public class PostActivity extends AppCompatActivity
 
 
                 }
+                else{
+            Toast.makeText(PostActivity.this,"Enter Post to Submit", Toast.LENGTH_LONG).show();
+        }
 
         }
     @Override
