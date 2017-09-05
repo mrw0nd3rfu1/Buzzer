@@ -7,9 +7,13 @@ import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -41,12 +45,14 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final int GALLERY_REQUEST = 1;
     public static String clgID;
     Toolbar mtoolbar;
     FloatingActionButton mfab;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseUsers;
     private DatabaseReference mCollege;
@@ -65,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSections;
     private TabLayout mTab;
+    private View hview ;
+    private TextView nav_user ;
+    private CircleImageView nav_pic;
+    private ImageView nav_col_pic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +93,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout , R.string.open , R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView navigationview = (NavigationView) findViewById(R.id.nav_view);
+        hview = navigationview.getHeaderView(0);
+        nav_user = (TextView) hview.findViewById(R.id.menu_username);
+        nav_pic = (CircleImageView) hview.findViewById(R.id.menu_profile_pic);
+        nav_col_pic = (ImageView) hview.findViewById(R.id.menu_college_pic);
+        navigationview.setNavigationItemSelectedListener(this);
+
         mfab = (FloatingActionButton) findViewById(R.id.fab);
 
         mtoolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -94,10 +117,10 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("  ");
         mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
-        mCollegePic = (ImageView)findViewById(R.id.college_pic);
+        /*mCollegePic = (ImageView)findViewById(R.id.college_pic);
         imageView = (ImageButton) findViewById(R.id.imageSelect);
         mNameUser = (TextView) findViewById(R.id.user_name);
-        userClgPic = (TextView) findViewById(R.id.user_clg_name);
+        userClgPic = (TextView) findViewById(R.id.user_clg_name); */
         mCollege = FirebaseDatabase.getInstance().getReference().child("College").child(clgID);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(clgID).child("Post");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -145,10 +168,7 @@ public class MainActivity extends AppCompatActivity {
         mProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
-                profileIntent.putExtra("colgId",clgID);
-                profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(profileIntent);
+               mDrawerLayout.openDrawer(GravityCompat.START);
             }
         });
 
@@ -238,17 +258,20 @@ public class MainActivity extends AppCompatActivity {
                         mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+                                String profile_name = (String) dataSnapshot.child("name").getValue();
                                 String profile_image = (String) dataSnapshot.child("profile_pic").getValue();
                                 Picasso.with(MainActivity.this).load(profile_image).into(mProfileImage);
-                                String post_name = (String) dataSnapshot.child("name").getValue();
-                                mNameUser.setText(post_name);
+                                 Picasso.with(MainActivity.this).load(profile_image).into(nav_pic);
+                                 nav_user.setText(profile_name);
                                 mCollege.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         String college_image = (String) dataSnapshot.child("Image").getValue();
-                                        Picasso.with(MainActivity.this).load(college_image).into(mCollegePic);
+                                        /*Picasso.with(MainActivity.this).load(college_image).into(mCollegePic);
                                         String college_user_name = (String) dataSnapshot.child("ImagePost").getValue();
-                                        userClgPic.setText("Last Uploaded By "+college_user_name);
+                                        userClgPic.setText("Last Uploaded By "+college_user_name); */
+                                        Picasso.with(MainActivity.this).load(college_image).into(nav_col_pic);
+
 
                                     }
 
@@ -283,9 +306,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.main_menu, menu);
 
-        getMenuInflater().inflate(R.menu.college_menu, menu);
+    //    getMenuInflater().inflate(R.menu.main_menu, menu);
+
+   //     getMenuInflater().inflate(R.menu.college_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -293,7 +317,79 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
 
+        if (mToggle.onOptionsItemSelected(item)) {
 
+
+            mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    final String clgID = getIntent().getExtras().getString("colgId");
+                    if (dataSnapshot.child("CollegeId").getValue().equals(clgID)) {
+                        if (item.getItemId() == R.id.item_photo) {
+                            Intent collegeIntent = new Intent(MainActivity.this, CollegePhotoSelector.class);
+                            collegeIntent.putExtra("colgId", clgID);
+                            collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(collegeIntent);
+                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, "You are not present in this college", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            if (item.getItemId() == R.id.action_college) {
+                Intent collegeIntent = new Intent(MainActivity.this, CollegeListActivity.class);
+                collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(collegeIntent);
+            }
+            if (item.getItemId() == R.id.action_logout) {
+
+                logout();
+            }
+
+
+            if (item.getItemId() == R.id.action_profile) {
+                Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(profileIntent);
+
+            }
+
+
+            if (item.getItemId() == R.id.action_about) {
+                final String clgID = getIntent().getExtras().getString("colgId");
+
+                Intent profileIntent = new Intent(MainActivity.this, AboutActivity.class);
+                profileIntent.putExtra("colgId", clgID);
+                profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(profileIntent);
+
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
+            Uri imageUri = data.getData();
+            imageView.setImageURI(imageUri);
+        }
+
+    }
+
+    private void logout() {
+        mAuth.signOut();
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
 
         mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -317,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (item.getItemId()== R.id.action_college){
+        if (item.getItemId() == R.id.action_college){
             Intent collegeIntent = new Intent(MainActivity.this, CollegeListActivity.class);
             collegeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(collegeIntent);
@@ -326,9 +422,6 @@ public class MainActivity extends AppCompatActivity {
 
             logout();
         }
-
-
-
 
         if (item.getItemId() == R.id.action_profile) {
             Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
@@ -347,21 +440,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(profileIntent);
 
         }
-        return super.onOptionsItemSelected(item);
+
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
-            Uri imageUri = data.getData();
-            imageView.setImageURI(imageUri);
-        }
 
-    }
-
-    private void logout() {
-        mAuth.signOut();
-    }
 
 }
 
