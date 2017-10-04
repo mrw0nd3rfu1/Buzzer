@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.tech.abhinav.buzzer.College.CollegeListActivity2;
 import com.tech.abhinav.buzzer.R;
 import com.tech.abhinav.buzzer.Timeline.MainActivity;
@@ -117,11 +118,14 @@ public class SetupActivity extends AppCompatActivity{
                     mProgress.dismiss();
                     String downloadUrl = taskSnapshot.getDownloadUrl().toString();
 
+                    String tokenId = FirebaseInstanceId.getInstance().getToken();
+
                     mDatabaseUsers.child(user_ID).child("name").setValue(name);
                     mDatabaseUsers.child(user_ID).child("college_name").setValue(college_name);
                     mDatabaseUsers.child(user_ID).child("location").setValue(location);
                     mDatabaseUsers.child(user_ID).child("profile_pic").setValue(downloadUrl);
                     mDatabaseUsers.child(user_ID).child("CollegeId").setValue(clgId);
+                    mDatabaseUsers.child(user_ID).child("device_token").setValue(tokenId);
                     if(getIntent().hasExtra("phoneNo"))
                         mDatabaseUsers.child(user_ID).child("phoneNo").setValue(getIntent().getStringExtra("phoneNo"));
 

@@ -16,6 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.tech.abhinav.buzzer.Chat.MainChatActivity;
 import com.tech.abhinav.buzzer.R;
 import com.tech.abhinav.buzzer.Timeline.MainActivity;
 import com.google.android.gms.auth.api.Auth;
@@ -222,11 +225,24 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.hasChild(user_ID)) {
-                        String collegeId=(String)dataSnapshot.child((user_ID)).child("CollegeId").getValue();
-                        Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        mainIntent.putExtra("colgId",collegeId);
-                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(mainIntent);
+
+
+                        String current_userId = mAuth.getCurrentUser().getUid();
+                        String tokenId = FirebaseInstanceId.getInstance().getToken();
+                        DatabaseReference mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+
+                        final String collegeId=(String)dataSnapshot.child((user_ID)).child("CollegeId").getValue();
+                        mUserDatabase.child(current_userId).child("device_token").setValue(tokenId).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                mainIntent.putExtra("colgId",collegeId);
+                                mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(mainIntent);
+                                finish();
+                            }
+                        });
+
 
                     } else {
                         Intent setupIntent = new Intent(LoginActivity.this, SetupActivity.class);

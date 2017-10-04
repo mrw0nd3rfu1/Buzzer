@@ -161,6 +161,27 @@
         app:fabSize="normal"
         app:srcCompat="@android:drawable/sym_action_email" />
 
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/prof_send_req_btn"
+        android:layout_width="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="69dp"
+        android:text="Send Friend Request"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/prof_decline_btn"
+        android:layout_gravity="bottom|center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp"
+        android:text="Decline Friend Request" />
 
 
 </android.support.design.widget.CoordinatorLayout>

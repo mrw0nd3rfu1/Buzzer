@@ -143,7 +143,7 @@ public class PostsFragment extends Fragment {
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onClick(View v) {
-                        //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainChatActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
                         Intent singleHomeIntent = new Intent(getContext(), HomeSingleActivity.class);
                         singleHomeIntent.putExtra("home_id", post_key);

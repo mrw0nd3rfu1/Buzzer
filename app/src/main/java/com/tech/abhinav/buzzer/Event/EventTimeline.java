@@ -85,7 +85,7 @@ public class EventTimeline extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
         // Prepare the Interstitial Ad
-     /*   interstitial = new InterstitialAd(MainActivity.this);
+     /*   interstitial = new InterstitialAd(MainChatActivity.this);
         // Insert the Ad Unit ID
         interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
 
@@ -203,7 +203,7 @@ public class EventTimeline extends AppCompatActivity {
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onClick(View v) {
-                        //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainChatActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
                         Intent singleHomeIntent = new Intent(EventTimeline.this, HomeSingleActivity.class);
                         singleHomeIntent.putExtra("home_id", post_key);

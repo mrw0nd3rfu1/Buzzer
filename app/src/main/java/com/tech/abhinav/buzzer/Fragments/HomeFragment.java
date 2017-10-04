@@ -144,7 +144,7 @@ public class HomeFragment extends Fragment {
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onClick(View v) {
-                        //Toast.makeText(MainActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainChatActivity.this , "You clicked a view" , Toast.LENGTH_SHORT).show();
 
                         Intent singleHomeIntent = new Intent(getContext(), HomeSingleActivity.class);
                         singleHomeIntent.putExtra("home_id", post_key);
@@ -169,6 +169,7 @@ public class HomeFragment extends Fragment {
                     public void onClick(View v) {
                         Intent profileIntent = new Intent(getContext(), ProfileSeeActivity.class);
                         profileIntent.putExtra("home_id", post_key);
+                        profileIntent.putExtra("user_id","");
                         profileIntent.putExtra("colgId", MainActivity.clgID);
                         profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(profileIntent);
@@ -180,6 +181,7 @@ public class HomeFragment extends Fragment {
                     public void onClick(View v) {
                         Intent profileIntent = new Intent(getContext(), ProfileSeeActivity.class);
                         profileIntent.putExtra("home_id", post_key);
+                        profileIntent.putExtra("user_id","");
                         profileIntent.putExtra("colgId", MainActivity.clgID);
                         profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(profileIntent);

@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tech.abhinav.buzzer.Chat.MainChatActivity;
+import com.tech.abhinav.buzzer.Chat.UActivity;
 import com.tech.abhinav.buzzer.College.CollegeListActivity;
 import com.tech.abhinav.buzzer.College.CollegePhotoSelector;
 import com.tech.abhinav.buzzer.Event.EventListActivity;
@@ -267,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         String college_image = (String) dataSnapshot.child("Image").getValue();
-                                        /*Picasso.with(MainActivity.this).load(college_image).into(mCollegePic);
+                                        /*Picasso.with(MainChatActivity.this).load(college_image).into(mCollegePic);
                                         String college_user_name = (String) dataSnapshot.child("ImagePost").getValue();
                                         userClgPic.setText("Last Uploaded By "+college_user_name); */
                                         Picasso.with(MainActivity.this).load(college_image).into(nav_col_pic);
@@ -425,6 +427,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (item.getItemId() == R.id.action_profile) {
             Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(profileIntent);
+
+        }
+
+
+        if (item.getItemId() == R.id.action_messaging) {
+            Intent profileIntent = new Intent(MainActivity.this, MainChatActivity.class);
+            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(profileIntent);
+
+        }
+
+        if (item.getItemId() == R.id.action_users) {
+            Intent profileIntent = new Intent(MainActivity.this, UActivity.class);
             profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(profileIntent);
 

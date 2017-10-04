@@ -63,6 +63,10 @@
         <activity android:name="com.tech.abhinav.buzzer.College.CollegePhotoSelector" />
         <activity android:name="com.tech.abhinav.buzzer.Utility.AboutActivity" />
         <activity android:name="com.tech.abhinav.buzzer.Profile.PhoneAuthActivity" />
+
+        <activity android:name="com.tech.abhinav.buzzer.Chat.MainChatActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.Chat.UActivity" />
+        <activity android:name="com.tech.abhinav.buzzer.Chat.ChatActivity" />
     </application>
 
 </manifest>
