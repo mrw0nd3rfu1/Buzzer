@@ -96,8 +96,6 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -109,10 +107,84 @@
         android:layout_marginBottom="14dp"
         android:layout_marginEnd="28dp"
         android:layout_marginRight="28dp"
-        android:src="@android:drawable/ic_menu_edit"
+        android:src="@drawable/ic_add_white_24dp"
         android:visibility="invisible"
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal" />
+
+    <LinearLayout
+        android:id="@+id/eventLayout"
+        android:layout_above="@+id/postLayout"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="14dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginRight="28dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADD EVENT"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="5dp"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:id="@+id/add_event"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/eventButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:clickable="true"
+            ads:backgroundTint="@color/blue_500"
+            ads:fabSize="mini"
+            ads:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/postLayout"
+        android:layout_above="@+id/fab"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="14dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginRight="35dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:text="POST"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/add_post"/>
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/postButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            ads:fabSize="mini"
+            ads:backgroundTint="@color/blue_500"
+            ads:srcCompat="@android:drawable/ic_menu_edit"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+    </LinearLayout>
+
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

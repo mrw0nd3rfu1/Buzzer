@@ -19,11 +19,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.text.Line;
 import com.tech.abhinav.buzzer.Chat.MainChatActivity;
 import com.tech.abhinav.buzzer.Chat.UActivity;
 import com.tech.abhinav.buzzer.College.CollegeListActivity;
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static String clgID;
     Toolbar mtoolbar;
     FloatingActionButton mfab;
+    FloatingActionButton mfabPost;
+    FloatingActionButton mfabEvent;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private DatabaseReference mDatabase;
@@ -109,6 +115,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationview.setNavigationItemSelectedListener(this);
 
         mfab = (FloatingActionButton) findViewById(R.id.fab);
+        mfabPost = (FloatingActionButton) findViewById(R.id.postButton);
+        mfabEvent = (FloatingActionButton) findViewById(R.id.eventButton);
+        final LinearLayout mPostLayout = (LinearLayout) findViewById(R.id.postLayout);
+        final LinearLayout mEventLayout = (LinearLayout) findViewById(R.id.eventLayout);
+        final Animation mShowButton = AnimationUtils.loadAnimation(MainActivity.this , R.anim.show_button);
+        final Animation mHideButton = AnimationUtils.loadAnimation(MainActivity.this , R.anim.hide_button);
+        final Animation mShowLayout = AnimationUtils.loadAnimation(MainActivity.this , R.anim.show_layout);
+        final Animation mHideLayout = AnimationUtils.loadAnimation(MainActivity.this , R.anim.hide_layout);
 
         mtoolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(mtoolbar);
@@ -155,9 +169,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+
         mfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mPostLayout.getVisibility() == View.VISIBLE && mEventLayout.getVisibility() == View.VISIBLE){
+                    mPostLayout.setVisibility(View.GONE);
+                    mEventLayout.setVisibility(View.GONE);
+                    mPostLayout.startAnimation(mHideLayout);
+                    mEventLayout.startAnimation(mHideLayout);
+                    mfab.startAnimation(mHideButton);
+                }
+                else
+                {
+                    mPostLayout.setVisibility(View.VISIBLE);
+                    mEventLayout.setVisibility(View.VISIBLE);
+                    mPostLayout.startAnimation(mShowLayout);
+                    mEventLayout.startAnimation(mShowLayout);
+                    mfab.startAnimation(mShowButton);
+                }
+
+            }
+        });
+        mfabPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPostLayout.setVisibility(View.GONE);
+                mEventLayout.setVisibility(View.GONE);
+                mPostLayout.startAnimation(mHideLayout);
+                mEventLayout.startAnimation(mHideLayout);
+                mfab.startAnimation(mHideButton);
                 Intent postIntent = new Intent(MainActivity.this, EventListActivity.class);
                 postIntent.putExtra("colgId",clgID);
                 postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
