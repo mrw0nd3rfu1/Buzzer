@@ -120,7 +120,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String online = dataSnapshot.child("online").getValue().toString();
-                String image = dataSnapshot.child("thumb_image").getValue().toString();
+                String image = dataSnapshot.child("profile_pic").getValue().toString();
 
                 Picasso.with(getApplicationContext()).load(image).into(mProfileImage);
 

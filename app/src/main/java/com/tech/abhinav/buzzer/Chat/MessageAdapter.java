@@ -72,7 +72,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
            userData.child(current_user_id).addListenerForSingleValueEvent(new ValueEventListener() {
                @Override
                public void onDataChange(DataSnapshot dataSnapshot) {
-                   String image = dataSnapshot.child("thumb_image").getValue().toString();
+                   String image = dataSnapshot.child("profile_pic").getValue().toString();
                    String name = dataSnapshot.child("name").getValue().toString();
                    Picasso.with(context).load(image).into(holder.profileImage);
                    holder.nameText.setText(name);
@@ -90,7 +90,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
            userData.child(from_user).addListenerForSingleValueEvent(new ValueEventListener() {
                @Override
                public void onDataChange(DataSnapshot dataSnapshot) {
-                   String image = dataSnapshot.child("thumb_image").getValue().toString();
+                   String image = dataSnapshot.child("profile_pic").getValue().toString();
                    String name = dataSnapshot.child("name").getValue().toString();
                    holder.nameText.setText(name);
                    Picasso.with(context).load(image).into(holder.profileImage);
