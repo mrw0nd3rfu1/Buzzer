@@ -338,9 +338,9 @@ public class EventTimeline extends AppCompatActivity {
 
                     if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
 
-                        mLikeButton.setImageResource(R.mipmap.ic_launcher);
+                        mLikeButton.setImageResource(R.drawable.ic_liked);
                     } else {
-                        mLikeButton.setImageResource(R.mipmap.ic_launcher_unlike);
+                        mLikeButton.setImageResource(R.drawable.ic_like);
 
                     }
                 }

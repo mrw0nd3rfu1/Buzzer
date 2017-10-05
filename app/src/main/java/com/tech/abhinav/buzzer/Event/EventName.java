@@ -9,6 +9,21 @@ public class EventName {
     public String eventContact;
     public String eventDes;
     public String image;
+    public String eventName;
+    public String eventDate;
+
+    public EventName(){
+       }
+
+
+    public EventName(String eventID, String eventContact, String image, String eventDes, String eventName, String eventDate) {
+        this.eventID = eventID;
+        this.eventContact = eventContact;
+        this.image = image;
+        this.eventDes = eventDes;
+        this.eventName = eventName;
+        this.eventDate = eventDate;
+    }
 
     public String getEventContact() {
         return eventContact;
@@ -33,24 +48,6 @@ public class EventName {
     public void setEventDes(String eventDes) {
         this.eventDes = eventDes;
     }
-
-    public String eventName;
-
-
-    public String eventDate;
-    public EventName(){
-       }
-
-
-    public EventName(String eventID, String eventContact, String image, String eventDes, String eventName, String eventDate) {
-        this.eventID = eventID;
-        this.eventContact = eventContact;
-        this.image = image;
-        this.eventDes = eventDes;
-        this.eventName = eventName;
-        this.eventDate = eventDate;
-    }
-
 
     public String getEventDate() {
         return eventDate;

@@ -50,7 +50,6 @@
             android:paddingTop="15dp"
             android:text="Username"
             android:textSize="16dp"
-
             android:textStyle="normal|bold" />
 
 
@@ -72,25 +71,27 @@
 
             <ImageButton
                 android:id="@+id/likeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="15dp"
+                android:scaleType="fitXY"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@android:drawable/screen_background_light_transparent"
-                android:paddingLeft="10dp"
+
               />
 
 
             <ImageButton
                 android:id="@+id/commentButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="fitXY"
                 android:layout_alignBottom="@+id/likeButton"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/likeButton"
-                android:background="@mipmap/ic_launcher_comment"
+                android:background="@drawable/ic_comment"
                 android:text="Button" />
 
 

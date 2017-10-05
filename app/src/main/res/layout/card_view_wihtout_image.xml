@@ -35,51 +35,54 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
+
 
 
         <TextView
-
             android:id="@+id/postUsername"
             android:layout_width="271dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginStart="65dp"
+            android:inputType="textPersonName"
             android:paddingBottom="15dp"
             android:paddingLeft="1dp"
             android:paddingRight="15dp"
             android:paddingTop="15dp"
             android:text="Username"
             android:textSize="16dp"
-
             android:textStyle="normal|bold" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <ImageButton
                 android:id="@+id/likeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="15dp"
+                android:scaleType="fitXY"
                 android:layout_marginRight="10dp"
-                android:layout_marginStart="18dp"
                 android:layout_weight="1"
                 android:background="@android:drawable/screen_background_light_transparent"
-                android:paddingLeft="5dp"
-                app:srcCompat="@mipmap/ic_thumb_up_white_24dp" />
+
+                />
+
 
             <ImageButton
                 android:id="@+id/commentButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/ic_launcher_comment"
-                android:text="Button"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="fitXY"
+                android:layout_alignBottom="@+id/likeButton"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/likeButton"
-                android:layout_marginStart="13dp" />
+                android:background="@drawable/ic_comment"
+                android:text="Button" />
 
 
         </RelativeLayout>

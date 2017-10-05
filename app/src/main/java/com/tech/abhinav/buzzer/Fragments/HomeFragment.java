@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,6 +56,7 @@ public class HomeFragment extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private boolean mProcessLike = false;
     private LinearLayoutManager mLayoutManager;
+    public static Context baseContext;
 
     public View mMainView;
 
@@ -261,6 +264,7 @@ public class HomeFragment extends Fragment {
 
         CircleImageView mProfileImage;
         TextView mUserName;
+        Animation mLike;
 
         DatabaseReference mDatabaseLike;
         FirebaseAuth mAuth;
@@ -273,6 +277,9 @@ public class HomeFragment extends Fragment {
             mCommentButton = (ImageButton) mView.findViewById(R.id.commentButton);
             mProfileImage = (CircleImageView) mView.findViewById(R.id.user_pic);
             mUserName = (TextView) mView.findViewById(R.id.postUsername);
+
+      //      mLike = AnimationUtils.loadAnimation(baseContext , R.anim.show_layout);
+
 
             mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Like");
             mAuth = FirebaseAuth.getInstance();
@@ -287,9 +294,12 @@ public class HomeFragment extends Fragment {
 
                     if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
 
-                        mLikeButton.setImageResource(R.mipmap.ic_launcher);
+                        mLikeButton.setImageResource(R.drawable.ic_liked);
+                //        mLikeButton.startAnimation(mLike);
+
                     } else {
-                        mLikeButton.setImageResource(R.mipmap.ic_launcher_unlike);
+                        mLikeButton.setImageResource(R.drawable.ic_like);
+                   //     mLikeButton.startAnimation(mLike);
 
                     }
                 }
