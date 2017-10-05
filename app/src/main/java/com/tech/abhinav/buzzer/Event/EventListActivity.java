@@ -73,40 +73,20 @@ public class EventListActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //getting views
-        editTextName = (EditText) findViewById(R.id.editTextName);
+       // editTextName = (EditText) findViewById(R.id.editTextName);
         listViewEvent = (ListView) findViewById(R.id.listViewArtists);
-        buttonAddEvent = (Button) findViewById(R.id.buttonAddCollege);
-        eventDate = (TextView) findViewById(R.id.eventDate);
-        postTime = (Button) findViewById(R.id.post_time);
-
-        final Calendar cal = Calendar.getInstance();
-        year_x =  cal.get(Calendar.YEAR);
-        month_x = cal.get(Calendar.MONTH);
-        day_x = cal.get(Calendar.DAY_OF_MONTH);
-
+        //buttonAddEvent = (Button) findViewById(R.id.buttonAddCollege);
+       // eventDate = (TextView) findViewById(R.id.eventDate);
+       // postTime = (Button) findViewById(R.id.post_time);
 
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
-        mToolbar.setTitle("Event Names");
+        mToolbar.setTitle("  ");
 
         //list to store artists
         cName = new ArrayList<>();
 
-        postTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(DIALOG_ID);
-            }
-        });
 
-        buttonAddEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //the method is defined below
-                //this method is actually performing the write operation
-                addCollege();
-            }
-        });
 
         listViewEvent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -153,35 +133,6 @@ public class EventListActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        if (id == DIALOG_ID)
-            return new DatePickerDialog(this, dpickerListner , year_x , month_x , day_x);
-        else
-            return null;
-    }
-
-    private DatePickerDialog.OnDateSetListener dpickerListner = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            year_x = year;
-            month_x = month + 1;
-            day_x = dayOfMonth;
-            eventDate.setText(day_x+"/"+month_x+"/"+year_x);
-            if(month_x <10)
-                sortmonth="0"+Integer.toString(month_x);
-            else
-                sortmonth=Integer.toString(month_x);
-            if(day_x <10)
-                sortday="0"+Integer.toString(day_x);
-            else
-                sortday=Integer.toString(day_x);
-            sortyear=Integer.toString(year_x);
-            sortDate=sortyear+sortmonth+sortday;
-            sortDate= Integer.toString(0-Integer.parseInt(sortDate));
-
-        }
-    };
 
     @Override
     protected void onStart() {
@@ -212,7 +163,7 @@ public class EventListActivity extends AppCompatActivity {
         });
     }
 
-    private void addCollege() {
+   /* private void addCollege() {
         String name = editTextName.getText().toString().trim();
         String date = eventDate.getText().toString().trim();
 
@@ -222,7 +173,7 @@ public class EventListActivity extends AppCompatActivity {
             //it will create a unique id and we will use it as the Primary Key for our Artist
             String id = databaseEvent.push().getKey();
 
-            EventName clg_name = new EventName(id ,name ,date);
+            EventName clg_name = new EventName(id ,name ,date , contact , des);
             databaseEvent.child(id).setValue(clg_name);
             databaseEvent.child(id).child("sortDate").setValue(Integer.parseInt(sortDate));
             databaseEvent.child(id).child("userUid").setValue(mAuth.getCurrentUser().getUid());
@@ -237,7 +188,7 @@ public class EventListActivity extends AppCompatActivity {
             //if the value is not given displaying a toast
             Toast.makeText(this, "Please enter event name and date", Toast.LENGTH_LONG).show();
         }
-    }
+    } */
 
     private boolean updateCollege(String id, String name) {
         //getting the specified artist reference

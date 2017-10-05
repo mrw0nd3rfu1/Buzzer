@@ -6,6 +6,33 @@ import android.support.annotation.Keep;
 
 public class EventName {
     public String eventID;
+    public String eventContact;
+    public String eventDes;
+    public String image;
+
+    public String getEventContact() {
+        return eventContact;
+    }
+
+    public void setEventContact(String eventContact) {
+        this.eventContact = eventContact;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getEventDes() {
+        return eventDes;
+    }
+
+    public void setEventDes(String eventDes) {
+        this.eventDes = eventDes;
+    }
 
     public String eventName;
 
@@ -15,12 +42,15 @@ public class EventName {
        }
 
 
-    public EventName(String eventID , String eventName, String eventDate) {
+    public EventName(String eventID, String eventContact, String image, String eventDes, String eventName, String eventDate) {
         this.eventID = eventID;
+        this.eventContact = eventContact;
+        this.image = image;
+        this.eventDes = eventDes;
         this.eventName = eventName;
         this.eventDate = eventDate;
+    }
 
-      }
 
     public String getEventDate() {
         return eventDate;

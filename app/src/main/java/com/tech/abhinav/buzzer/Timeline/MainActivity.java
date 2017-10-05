@@ -28,10 +28,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.text.Line;
+import com.google.firebase.database.ServerValue;
 import com.tech.abhinav.buzzer.Chat.MainChatActivity;
 import com.tech.abhinav.buzzer.Chat.UActivity;
 import com.tech.abhinav.buzzer.College.CollegeListActivity;
 import com.tech.abhinav.buzzer.College.CollegePhotoSelector;
+import com.tech.abhinav.buzzer.Event.AddEventActivity;
 import com.tech.abhinav.buzzer.Event.EventListActivity;
 import com.tech.abhinav.buzzer.Profile.LoginActivity;
 import com.tech.abhinav.buzzer.Profile.ProfileActivity;
@@ -209,6 +211,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(postIntent);
             }
         });
+        mfabEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPostLayout.setVisibility(View.GONE);
+                mEventLayout.setVisibility(View.GONE);
+                mPostLayout.startAnimation(mHideLayout);
+                mEventLayout.startAnimation(mHideLayout);
+                mfab.startAnimation(mHideButton);
+                mShadowView.setVisibility(View.GONE);
+                Intent postIntent = new Intent(MainActivity.this, AddEventActivity.class);
+                postIntent.putExtra("colgId",clgID);
+                postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(postIntent);
+            }
+        });
 
         mAuth.addAuthStateListener(mAuthListener);
 
@@ -228,6 +245,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         mAdView.loadAd(adRequest);
+        mAuth.addAuthStateListener(mAuthListener);
+        mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).child("online").setValue("true");
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+            mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).child("online").setValue(ServerValue.TIMESTAMP);
+        }
+
     }
 
     @Override

@@ -93,7 +93,7 @@ public class FriendsFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final String userName = dataSnapshot.child("name").getValue().toString();
-                        String user_thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
+                        String user_thumb_image = dataSnapshot.child("profile_pic").getValue().toString();
 
                         if (dataSnapshot.hasChild("online")){
                             String userOnline = dataSnapshot.child("online").getValue().toString();

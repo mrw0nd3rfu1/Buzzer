@@ -2,6 +2,7 @@ package com.tech.abhinav.buzzer.Fragments;
 
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,8 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.tech.abhinav.buzzer.Event.EventName;
 import com.tech.abhinav.buzzer.Event.EventTimeline;
 import com.tech.abhinav.buzzer.R;
@@ -61,6 +65,9 @@ public class EventFragment extends Fragment {
 
                 viewHolder.setName(model.getEventName());
                 viewHolder.setDate(model.getEventDate());
+                viewHolder.setContact(model.getEventContact());
+                viewHolder.setDes(model.getEventDes());
+                viewHolder.setImage(getContext() , model.getImage());
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -111,6 +118,19 @@ public class EventFragment extends Fragment {
         public void setDate(String eventdate){
             TextView eventView = (TextView) mView.findViewById(R.id.eventDate);
             eventView.setText(eventdate);
+        }
+
+        public void setContact(String eventContact){
+            TextView eventView = (TextView) mView.findViewById(R.id.eventContact);
+            eventView.setText(eventContact);
+        }
+        public void setDes(String eventDes){
+            TextView eventView = (TextView) mView.findViewById(R.id.eventDes);
+            eventView.setText(eventDes);
+        }
+        public void setImage(Context ctx , String image){
+            ImageView eventView = (ImageView) mView.findViewById(R.id.eventImage);
+            Picasso.with(ctx).load(image).into(eventView);
         }
 
     }
