@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final Animation mHideButton = AnimationUtils.loadAnimation(MainActivity.this , R.anim.hide_button);
         final Animation mShowLayout = AnimationUtils.loadAnimation(MainActivity.this , R.anim.show_layout);
         final Animation mHideLayout = AnimationUtils.loadAnimation(MainActivity.this , R.anim.hide_layout);
+        final View mShadowView = (View) findViewById(R.id.shadowView);
 
         mtoolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(mtoolbar);
@@ -179,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     mPostLayout.startAnimation(mHideLayout);
                     mEventLayout.startAnimation(mHideLayout);
                     mfab.startAnimation(mHideButton);
+                    mShadowView.setVisibility(View.GONE);
                 }
                 else
                 {
@@ -187,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     mPostLayout.startAnimation(mShowLayout);
                     mEventLayout.startAnimation(mShowLayout);
                     mfab.startAnimation(mShowButton);
+                    mShadowView.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -199,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mPostLayout.startAnimation(mHideLayout);
                 mEventLayout.startAnimation(mHideLayout);
                 mfab.startAnimation(mHideButton);
+                mShadowView.setVisibility(View.GONE);
                 Intent postIntent = new Intent(MainActivity.this, EventListActivity.class);
                 postIntent.putExtra("colgId",clgID);
                 postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

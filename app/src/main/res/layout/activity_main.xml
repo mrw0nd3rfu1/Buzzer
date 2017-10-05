@@ -96,6 +96,13 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
+    <View
+        android:id="@+id/shadowView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F2FFFFFF"
+        android:visibility="gone"/>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -142,6 +149,7 @@
             android:layout_height="wrap_content"
              android:clickable="true"
             ads:backgroundTint="@color/blue_500"
+            app:elevation="0dp"
             ads:fabSize="mini"
             ads:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
@@ -177,6 +185,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
+            app:elevation="0dp"
             ads:fabSize="mini"
             ads:backgroundTint="@color/blue_500"
             ads:srcCompat="@android:drawable/ic_menu_edit"
