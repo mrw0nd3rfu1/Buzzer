@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/tools"
-    android:layout_margin="20dp"
+    android:layout_margin="10dp"
     card_view:cardElevation="16dp"
     android:clickable="true"
     android:focusable="true">
@@ -38,8 +38,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical"
-        android:background="@drawable/gradientblack"
         >
 
 
@@ -58,38 +58,6 @@
             android:textSize="16dp"
             android:textStyle="normal|bold" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <ImageButton
-                android:id="@+id/likeButton"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="15dp"
-                android:scaleType="fitXY"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@android:drawable/screen_background_light_transparent"
-
-                />
-
-
-            <ImageButton
-                android:id="@+id/commentButton"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:scaleType="fitXY"
-                android:layout_alignBottom="@+id/likeButton"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/likeButton"
-                android:background="@drawable/ic_comment"
-                android:text="Button" />
-
-
-        </RelativeLayout>
 
         <TextView
             android:id="@+id/post_event"
@@ -97,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingLeft="15dp"
+            android:layout_marginTop="10dp"
             android:paddingRight="15dp"
             android:text="Post Event Here"
             android:textSize="16dp"
@@ -116,6 +85,40 @@
             android:text="Write Post Here"
             android:textSize="16dp"
             android:transitionName="myPost" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageButton
+                android:id="@+id/likeButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+
+                />
+
+
+            <ImageButton
+                android:id="@+id/commentButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="fitXY"
+                android:layout_alignBottom="@+id/likeButton"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/likeButton"
+                android:background="@drawable/ic_comment"
+                android:text="Button" />
+
+
+        </RelativeLayout>
+
 
 
     </LinearLayout>
