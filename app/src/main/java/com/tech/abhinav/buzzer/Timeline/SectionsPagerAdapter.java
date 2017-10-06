@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.tech.abhinav.buzzer.Fragments.Clubfragment;
 import com.tech.abhinav.buzzer.Fragments.EventFragment;
 import com.tech.abhinav.buzzer.Fragments.HomeFragment;
 
@@ -21,11 +22,10 @@ class SectionsPagerAdapter extends FragmentPagerAdapter {
         switch (position)
         {
             case 0 :
-                HomeFragment requestsFragment = new HomeFragment();
-                return requestsFragment;
+                return new HomeFragment();
             case 1 :
-                EventFragment chatsFragment = new EventFragment();
-                return chatsFragment;
+                return new EventFragment();
+            case 2: return Clubfragment.newInstance();
            default:
                 return null;
         }
@@ -35,7 +35,7 @@ class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     public CharSequence getPageTitle (int position){
