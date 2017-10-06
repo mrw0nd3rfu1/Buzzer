@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private View hview ;
     private TextView nav_user ;
     private CircleImageView nav_pic;
+    private ImageButton mChat;
     private ImageView nav_col_pic;
 
     @Override
@@ -136,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("  ");
         mProfileImage = (CircleImageView) findViewById(R.id.profile_pic);
+        mChat = (ImageButton) findViewById(R.id.messagingAcitivity);
         /*mCollegePic = (ImageView)findViewById(R.id.college_pic);
         imageView = (ImageButton) findViewById(R.id.imageSelect);
         mNameUser = (TextView) findViewById(R.id.user_name);
@@ -158,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mTab = (TabLayout) findViewById(R.id.main_tab);
         mTab.setupWithViewPager(mViewPager);
+        setupTabIcons();
 
         //checking user exists in college
         mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
@@ -236,7 +239,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        mChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent profileIntent = new Intent(MainActivity.this, MainChatActivity.class);
+                profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(profileIntent);
+
+            }
+        });
+
         checkUserExist();
+    }
+
+    private void setupTabIcons() {
+        mTab.getTabAt(0).setIcon(R.drawable.ic_home_white_24dp);
+        mTab.getTabAt(1).setIcon(R.drawable.ic_event_white_24dp);
     }
 
     @Override
