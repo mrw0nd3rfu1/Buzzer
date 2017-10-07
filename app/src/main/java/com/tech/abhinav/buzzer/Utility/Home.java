@@ -97,7 +97,7 @@ public  void setHas_image(){this.With_image=1;}
     }
 public int getHas_image(){return this.With_image;}
 
-    String getPost_key(){return post_key;}
+    public String getPost_key(){return post_key;}
 
     public String getUsername() {
         return username;

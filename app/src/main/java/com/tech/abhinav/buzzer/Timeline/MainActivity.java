@@ -39,6 +39,7 @@ import com.tech.abhinav.buzzer.Profile.LoginActivity;
 import com.tech.abhinav.buzzer.Profile.ProfileActivity;
 import com.tech.abhinav.buzzer.Profile.SetupActivity;
 import com.tech.abhinav.buzzer.R;
+import com.tech.abhinav.buzzer.Test.TestActivity;
 import com.tech.abhinav.buzzer.Utility.AboutActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FloatingActionButton mfab;
     FloatingActionButton mfabPost;
     FloatingActionButton mfabEvent;
+    FloatingActionButton mfabClub;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private DatabaseReference mDatabase;
@@ -120,8 +122,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mfab = (FloatingActionButton) findViewById(R.id.fab);
         mfabPost = (FloatingActionButton) findViewById(R.id.postButton);
         mfabEvent = (FloatingActionButton) findViewById(R.id.eventButton);
+        mfabClub = (FloatingActionButton) findViewById(R.id.clubButton);
         final LinearLayout mPostLayout = (LinearLayout) findViewById(R.id.postLayout);
         final LinearLayout mEventLayout = (LinearLayout) findViewById(R.id.eventLayout);
+        final LinearLayout mClubLayout = (LinearLayout) findViewById(R.id.clubLayout);
         final Animation mShowButton = AnimationUtils.loadAnimation(MainActivity.this , R.anim.show_button);
         final Animation mHideButton = AnimationUtils.loadAnimation(MainActivity.this , R.anim.hide_button);
         final Animation mShowLayout = AnimationUtils.loadAnimation(MainActivity.this , R.anim.show_layout);
@@ -179,11 +183,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPostLayout.getVisibility() == View.VISIBLE && mEventLayout.getVisibility() == View.VISIBLE){
+                if (mPostLayout.getVisibility() == View.VISIBLE && mEventLayout.getVisibility() == View.VISIBLE && mClubLayout.getVisibility() == View.VISIBLE){
                     mPostLayout.setVisibility(View.GONE);
                     mEventLayout.setVisibility(View.GONE);
+                    mClubLayout.setVisibility(View.GONE);
                     mPostLayout.startAnimation(mHideLayout);
                     mEventLayout.startAnimation(mHideLayout);
+                    mClubLayout.startAnimation(mHideLayout);
                     mfab.startAnimation(mHideButton);
                     mShadowView.setVisibility(View.GONE);
                 }
@@ -191,8 +197,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 {
                     mPostLayout.setVisibility(View.VISIBLE);
                     mEventLayout.setVisibility(View.VISIBLE);
+                    mClubLayout.setVisibility(View.VISIBLE);
                     mPostLayout.startAnimation(mShowLayout);
                     mEventLayout.startAnimation(mShowLayout);
+                    mClubLayout.startAnimation(mShowLayout);
                     mfab.startAnimation(mShowButton);
                     mShadowView.setVisibility(View.VISIBLE);
                 }
@@ -204,8 +212,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 mPostLayout.setVisibility(View.GONE);
                 mEventLayout.setVisibility(View.GONE);
+                mClubLayout.setVisibility(View.GONE);
                 mPostLayout.startAnimation(mHideLayout);
                 mEventLayout.startAnimation(mHideLayout);
+                mClubLayout.startAnimation(mHideLayout);
                 mfab.startAnimation(mHideButton);
                 mShadowView.setVisibility(View.GONE);
                 Intent postIntent = new Intent(MainActivity.this, EventListActivity.class);
@@ -219,14 +229,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 mPostLayout.setVisibility(View.GONE);
                 mEventLayout.setVisibility(View.GONE);
+                mClubLayout.setVisibility(View.GONE);
                 mPostLayout.startAnimation(mHideLayout);
                 mEventLayout.startAnimation(mHideLayout);
+                mClubLayout.startAnimation(mHideLayout);
                 mfab.startAnimation(mHideButton);
                 mShadowView.setVisibility(View.GONE);
                 Intent postIntent = new Intent(MainActivity.this, AddEventActivity.class);
                 postIntent.putExtra("colgId",clgID);
                 postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(postIntent);
+            }
+        });
+        mfabClub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPostLayout.setVisibility(View.GONE);
+                mEventLayout.setVisibility(View.GONE);
+                mClubLayout.setVisibility(View.GONE);
+                mPostLayout.startAnimation(mHideLayout);
+                mEventLayout.startAnimation(mHideLayout);
+                mClubLayout.startAnimation(mHideLayout);
+                mfab.startAnimation(mHideButton);
+                mShadowView.setVisibility(View.GONE);
+                Intent postIntent = new Intent(MainActivity.this, AddEventActivity.class);
+                postIntent.putExtra("colgId",clgID);
+                postIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(postIntent);
+            }
+        });
+        mShadowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPostLayout.setVisibility(View.GONE);
+                mEventLayout.setVisibility(View.GONE);
+                mClubLayout.setVisibility(View.GONE);
+                mPostLayout.startAnimation(mHideLayout);
+                mEventLayout.startAnimation(mHideLayout);
+                mClubLayout.startAnimation(mHideLayout);
+                mfab.startAnimation(mHideButton);
+                mShadowView.setVisibility(View.GONE);
+
             }
         });
 
@@ -535,6 +578,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (item.getItemId() == R.id.action_users) {
             Intent profileIntent = new Intent(MainActivity.this, UActivity.class);
+            profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(profileIntent);
+
+        }
+
+        if (item.getItemId() == R.id.action_test) {
+            Intent profileIntent = new Intent(MainActivity.this, TestActivity.class);
             profileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(profileIntent);
 

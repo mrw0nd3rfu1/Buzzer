@@ -132,6 +132,43 @@
         app:fabSize="normal" />
 
     <LinearLayout
+        android:id="@+id/clubLayout"
+        android:layout_above="@+id/eventLayout"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="14dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginRight="28dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADD CLUB"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="5dp"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:id="@+id/add_club"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/clubButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            ads:backgroundTint="@color/blue_500"
+            ads:fabSize="mini"
+            ads:srcCompat="@drawable/ic_club_icon"
+            app:elevation="0dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/eventLayout"
         android:layout_above="@+id/postLayout"
         android:visibility="gone"

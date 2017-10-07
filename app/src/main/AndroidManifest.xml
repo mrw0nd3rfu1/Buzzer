@@ -65,9 +65,16 @@
         <activity android:name=".Utility.AboutActivity" />
         <activity android:name=".Profile.PhoneAuthActivity" />
         <activity android:name=".Chat.MainChatActivity" />
-        <activity android:name=".Chat.UActivity" />
+        <activity android:name=".Chat.UActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.SEARCH" />
+
+        </intent-filter>
+
+           </activity>
         <activity android:name=".Chat.ChatActivity" />
         <activity android:name=".Event.AddEventActivity"></activity>
+        <activity android:name=".Test.TestActivity"></activity>
     </application>
 
 </manifest>

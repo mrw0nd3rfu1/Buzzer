@@ -68,6 +68,13 @@ public class MainChatActivity extends AppCompatActivity {
 
         mTabLayout = (TabLayout) findViewById(R.id.main_tab);
         mTabLayout.setupWithViewPager(mViewPager);
+        setupTabIcons();
+    }
+
+    private void setupTabIcons() {
+        mTabLayout.getTabAt(0).setIcon(R.drawable.ic_chat_icon);
+        mTabLayout.getTabAt(1).setIcon(R.drawable.ic_friends);
+
     }
 
     @Override
