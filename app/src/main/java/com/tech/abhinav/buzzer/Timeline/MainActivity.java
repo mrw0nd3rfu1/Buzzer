@@ -76,10 +76,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean isUserClickedBackButton = false;
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     private CircleImageView mProfileImage;
-    private ImageView mCollegePic;
-    private TextView mNameUser;
+
+
     private ImageButton imageView;
-    private TextView userClgPic;
+
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSections;
     private TabLayout mTab;
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final Animation mHideButton = AnimationUtils.loadAnimation(MainActivity.this , R.anim.hide_button);
         final Animation mShowLayout = AnimationUtils.loadAnimation(MainActivity.this , R.anim.show_layout);
         final Animation mHideLayout = AnimationUtils.loadAnimation(MainActivity.this , R.anim.hide_layout);
-        final View mShadowView = (View) findViewById(R.id.shadowView);
+        final View mShadowView =  findViewById(R.id.shadowView);
 
         mtoolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(mtoolbar);
@@ -298,6 +298,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setupTabIcons() {
         mTab.getTabAt(0).setIcon(R.drawable.ic_home_white_24dp);
         mTab.getTabAt(1).setIcon(R.drawable.ic_event_white_24dp);
+        mTab.getTabAt(2).setIcon(R.drawable.ic_club_icon);
     }
 
     @Override

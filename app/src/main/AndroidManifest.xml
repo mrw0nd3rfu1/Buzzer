@@ -75,6 +75,7 @@
         <activity android:name=".Chat.ChatActivity" />
         <activity android:name=".Event.AddEventActivity"></activity>
         <activity android:name=".Test.TestActivity"></activity>
+        <activity android:name=".Clubs.ClubDetails"></activity>
     </application>
 
 </manifest>
