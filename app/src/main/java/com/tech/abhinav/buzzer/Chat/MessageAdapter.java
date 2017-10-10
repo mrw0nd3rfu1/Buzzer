@@ -2,6 +2,7 @@ package com.tech.abhinav.buzzer.Chat;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public TextView messageText ;
         public TextView nameText;
         public CircleImageView profileImage;
+        public TextView messageTime;
 
         public MessageViewHolder(View itemView) {
             super(itemView);
@@ -52,6 +54,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             nameText = (TextView) itemView.findViewById(R.id.name_text_layout) ;
             messageText = (TextView) itemView.findViewById(R.id.message_text_layout);
             profileImage = (CircleImageView) itemView.findViewById(R.id.message_profile_layout);
+            messageTime = (TextView) itemView.findViewById(R.id.time_text_layout);
             mAuth = FirebaseAuth.getInstance();
         }
     }
@@ -66,6 +69,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         String from_user = c.getFrom();
 
         DatabaseReference userData = FirebaseDatabase.getInstance().getReference().child("Users");
+        DatabaseReference userTime = FirebaseDatabase.getInstance().getReference().child("Messages");
 
 
        if (from_user.equals(current_user_id)){
@@ -106,6 +110,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             holder.messageText.setTextColor(Color.WHITE); */
         }
         holder.messageText.setText(c.getMessage());
+
+                String online = String.valueOf(c.getTime());
+                GetTimeAgo getTimeAgo = new GetTimeAgo();
+                long lastTime = Long.parseLong(online);
+                String lastSeenTime = getTimeAgo.getTimeAgo(lastTime, context);
+
+                holder.messageTime.setText(lastSeenTime);
+
 
     }
 
